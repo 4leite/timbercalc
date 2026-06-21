@@ -25,6 +25,7 @@
     "test": "pnpm test:unit && pnpm test:e2e",
     "test:unit": "pnpm vitest run",
     "test:e2e": "pnpm playwright",
+    "test:e2e:reference": "playwright test -c test/playwright.reference.config.ts",
     "test:e2e:smoke": "pnpm playwright --project smoke",
     "validate": "pnpm lint && pnpm tsc && pnpm test:unit && pnpm test:e2e",
     "vitest": "vitest  -c test/vitest.config.ts",
