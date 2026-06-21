@@ -32,6 +32,30 @@ jobs:
       - name: Check
         run: pnpm check
 
+  unit:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Use Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: "24.x"
+          package-manager-cache: false
+      - name: Corepack
+        run: corepack enable pnpm
+      - name: Enable pnpm cache
+        uses: actions/setup-node@v6
+        with:
+          cache: pnpm
+      - name: Install
+        run: pnpm i
+      - name: Vitest
+        run: pnpm test:unit
+
   e2e:
     name: E2E Tests
     runs-on: ubuntu-latest
