@@ -7,7 +7,9 @@
   },
   "scripts": {
     "build": "vite build",
+    "check": "pnpm format:check && pnpm lint && pnpm tsc",
     "deploy": "pnpm run build && wrangler deploy",
+    "deploy:dry-run": "pnpm build && wrangler deploy --dry-run",
     "dev": "vite dev --port 3000",
     "format": "oxfmt .",
     "format:check": "oxfmt --check .",
@@ -16,7 +18,16 @@
     "preview": "vite preview",
     "start": "vite preview --strictPort",
     "test": "vitest run",
-    "tsc": "tsc --pretty"
+    "typegen": "wrangler types",
+    "tsc": "tsc --pretty",
+    "playwright": "playwright test -c test/playwright.config.ts",
+    "prepare": "simple-git-hooks",
+    "test:unit": "pnpm vitest run",
+    "test:e2e": "pnpm playwright",
+    "test:e2e:smoke": "pnpm playwright --project smoke",
+    "validate": "pnpm lint && pnpm tsc && pnpm test:unit && pnpm test:e2e",
+    "vitest": "vitest  -c test/vitest.config.ts",
+    "wrangler": "wrangler"
   },
   "dependencies": {
     "@fontsource-variable/geist": "^5.2.9",

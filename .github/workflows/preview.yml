@@ -1,0 +1,17 @@
+name: Preview
+
+on:
+  pull_request:
+    branches:
+      - main
+
+concurrency:
+  group: "${{ github.workflow }} @ pr-${{ github.event.pull_request.number }}"
+  cancel-in-progress: true
+
+jobs:
+  ci:
+    name: CI
+    uses: ./.github/workflows/call-ci.yml
+    with:
+      environment: Preview
