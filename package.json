@@ -67,7 +67,7 @@
     "pre-commit": "pnpm lint-staged"
   },
   "lint-staged": {
-    "**/*.{ts,tsx,js,jsx,json,css,md}": "oxfmt"
+    "**/*.{ts,tsx,js,jsx,json,css,md}": "oxfmt --no-error-on-unmatched-pattern"
   },
   "pnpm": {
     "onlyBuiltDependencies": [
