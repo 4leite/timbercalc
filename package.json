@@ -17,11 +17,11 @@
     "lint:fix": "oxlint --fix",
     "preview": "vite preview",
     "start": "vite preview --strictPort",
-    "test": "vitest run",
     "typegen": "wrangler types",
     "tsc": "tsc --pretty",
     "playwright": "playwright test -c test/playwright.config.ts",
     "prepare": "simple-git-hooks",
+    "test": "pnpm test:unit && pnpm test:e2e",
     "test:unit": "pnpm vitest run",
     "test:e2e": "pnpm playwright",
     "test:e2e:smoke": "pnpm playwright --project smoke",
@@ -41,13 +41,13 @@
     "@tohuhono/ui": "^0.16.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
+    "simple-git-hooks": "^2.13.1",
     "tailwindcss": "^4.1.18"
   },
   "devDependencies": {
+    "@playwright/test": "^1.61.0",
     "@tailwindcss/typography": "^0.5.16",
     "@tanstack/devtools-vite": "latest",
-    "@testing-library/dom": "^10.4.1",
-    "@testing-library/react": "^16.3.0",
     "@types/node": "^22.10.2",
     "@types/react": "^19.2.0",
     "@types/react-dom": "^19.2.0",
@@ -60,6 +60,9 @@
     "vite": "^8.0.0",
     "vitest": "^4.1.5",
     "wrangler": "^4.70.0"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "pnpm format"
   },
   "pnpm": {
     "onlyBuiltDependencies": [

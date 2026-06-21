@@ -7,6 +7,7 @@ import { AppProvider } from "#/components/AppProvider"
 import Footer from "#/components/Footer"
 import Header from "#/components/Header"
 import { Layout } from "#/components/Layout"
+import { NotFound } from "#/components/NotFound"
 
 import appCss from "#/app.css?url"
 
@@ -43,6 +44,7 @@ export const Route = createRootRoute({
       },
     ],
   }),
+  notFoundComponent: NotFound,
   shellComponent: RootDocument,
   component: RootComponent,
 })
