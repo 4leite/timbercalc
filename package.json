@@ -32,37 +32,41 @@
   "dependencies": {
     "@fontsource-variable/geist": "^5.2.9",
     "@radix-ui/react-icons": "^1.3.2",
-    "@tailwindcss/vite": "^4.1.18",
+    "@tailwindcss/vite": "^4.3.1",
     "@tanstack/react-devtools": "latest",
     "@tanstack/react-router": "latest",
     "@tanstack/react-router-devtools": "latest",
     "@tanstack/react-start": "latest",
-    "@tanstack/router-plugin": "^1.132.0",
+    "@tanstack/router-plugin": "^1.168.18",
     "@tohuhono/ui": "^0.16.0",
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
     "simple-git-hooks": "^2.13.1",
-    "tailwindcss": "^4.1.18"
+    "tailwindcss": "^4.3.1"
   },
   "devDependencies": {
     "@playwright/test": "^1.61.0",
-    "@tailwindcss/typography": "^0.5.16",
+    "@tailwindcss/typography": "^0.5.20",
     "@tanstack/devtools-vite": "latest",
-    "@types/node": "^22.10.2",
-    "@types/react": "^19.2.0",
-    "@types/react-dom": "^19.2.0",
-    "@vitejs/plugin-react": "^6.0.1",
+    "@types/node": "^22.19.21",
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.2",
     "eslint-plugin-better-tailwindcss": "^4.6.0",
     "jsdom": "^28.1.0",
+    "lint-staged": "^17.0.7",
     "oxfmt": "^0.55.0",
     "oxlint": "^1.70.0",
-    "typescript": "^6.0.2",
-    "vite": "^8.0.0",
-    "vitest": "^4.1.5",
-    "wrangler": "^4.70.0"
+    "typescript": "^6.0.3",
+    "vite": "^8.0.16",
+    "vitest": "^4.1.9",
+    "wrangler": "^4.103.0"
   },
   "simple-git-hooks": {
-    "pre-commit": "pnpm format"
+    "pre-commit": "pnpm lint-staged"
+  },
+  "lint-staged": {
+    "**/*.{ts,tsx,js,jsx,json,css,md}": "oxfmt"
   },
   "pnpm": {
     "onlyBuiltDependencies": [
