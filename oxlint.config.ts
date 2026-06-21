@@ -18,6 +18,7 @@ export default defineConfig({
     ".tanstack/**/*",
     ".playwright/**/*",
     "node_modules/**/*",
+    "reference-site/**/*",
     "dist/**/*",
     ".rollup.cache/**/*",
     ".playwright/e2e-runtime/**",

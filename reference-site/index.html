@@ -1,0 +1,3194 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Timberborn Calculator — Production Ratios &amp; Needs</title>
+    <meta
+      name="description"
+      content="Complete calculator for Timberborn 1.0 : production, beaver needs, power, water &amp; food storage, district planning, and an interactive dam planner (3D). Optimize your beaver colony."
+    />
+    <link rel="canonical" href="https://timberborn.calcspirit.com/" />
+    <meta name="theme-color" content="#152722" />
+    <meta name="application-name" content="Timberborn Calculator" />
+    <meta
+      name="keywords"
+      content="Timberborn, calculator, production ratios, beaver needs, Mechanistry, colony planner, dam planner, water, food, power, storage, district planning"
+    />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:site_name" content="Timberborn Calculator" />
+    <meta property="og:url" content="https://timberborn.calcspirit.com/" />
+    <meta property="og:title" content="Timberborn Calculator — Production Ratios &amp; Needs" />
+    <meta
+      property="og:description"
+      content="Complete calculator for Timberborn 1.0 : production, beaver needs, power, water &amp; food storage, district planning, and an interactive dam planner (3D). Optimize your beaver colony."
+    />
+    <meta property="og:image" content="images/others/timberborn_steampage.png" />
+    <meta property="og:image:width" content="469" />
+    <meta property="og:image:height" content="198" />
+    <meta
+      property="og:image:alt"
+      content="Timberborn — colony-building game on Steam (1.0 calculator)"
+    />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Timberborn Calculator for 1.0" />
+    <meta
+      name="twitter:description"
+      content="Complete calculator for Timberborn 1.0 : production, beaver needs, power, water &amp; food storage, district planning, and an interactive dam planner (3D). Optimize your beaver colony."
+    />
+    <meta
+      name="twitter:image"
+      content="https://timberborn.calcspirit.com/images/others/timberborn_steampage.png"
+    />
+    <meta
+      name="twitter:image:alt"
+      content="Timberborn — colony-building game on Steam (1.0 calculator)"
+    />
+
+    <link rel="icon" type="image/png" href="images/others/ironbot.png" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Timberborn Calculator",
+        "url": "https://timberborn.calcspirit.com/",
+        "description": "Unofficial fan-made Timberborn calculator for production ratios, beaver needs, power and storage, plus an interactive dam planner.",
+        "applicationCategory": "GameApplication",
+        "operatingSystem": "Web browser",
+        "browserRequirements": "Requires JavaScript",
+        "inLanguage": "en",
+        "isAccessibleForFree": true,
+        "publisher": {
+          "@type": "Organization",
+          "name": "CalcSpirit.com",
+          "url": "https://timberborn.calcspirit.com/"
+        },
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        }
+      }
+    </script>
+    <script type="module" crossorigin="" src="assets/index-DoD9nACF.js"></script>
+    <link rel="stylesheet" crossorigin="" href="assets/index-CYYpEnTn.css" />
+    <link rel="manifest" href="manifest.webmanifest" />
+    <script id="vite-plugin-pwa:register-sw" src="registerSW.js"></script>
+    <style id="vuetify-theme-stylesheet" type="text/css">
+      @layer vuetify-utilities {
+        @layer theme-base {
+          :root {
+            color-scheme: dark;
+          }
+          :root {
+            --v-theme-background: 21, 39, 34;
+            --v-theme-background-overlay-multiplier: 1;
+            --v-theme-surface: 30, 58, 48;
+            --v-theme-surface-overlay-multiplier: 1;
+            --v-theme-surface-bright: 204, 191, 214;
+            --v-theme-surface-bright-overlay-multiplier: 2;
+            --v-theme-surface-light: 66, 66, 66;
+            --v-theme-surface-light-overlay-multiplier: 1;
+            --v-theme-surface-variant: 200, 200, 200;
+            --v-theme-surface-variant-overlay-multiplier: 2;
+            --v-theme-on-surface-variant: 0, 0, 0;
+            --v-theme-primary: 93, 166, 122;
+            --v-theme-primary-overlay-multiplier: 2;
+            --v-theme-primary-darken-1: 39, 124, 193;
+            --v-theme-primary-darken-1-overlay-multiplier: 2;
+            --v-theme-secondary: 84, 182, 178;
+            --v-theme-secondary-overlay-multiplier: 2;
+            --v-theme-secondary-darken-1: 72, 169, 166;
+            --v-theme-secondary-darken-1-overlay-multiplier: 2;
+            --v-theme-error: 207, 102, 121;
+            --v-theme-error-overlay-multiplier: 2;
+            --v-theme-info: 33, 150, 243;
+            --v-theme-info-overlay-multiplier: 2;
+            --v-theme-success: 76, 175, 80;
+            --v-theme-success-overlay-multiplier: 2;
+            --v-theme-warning: 251, 140, 0;
+            --v-theme-warning-overlay-multiplier: 2;
+            --v-theme-on-background: 232, 240, 236;
+            --v-theme-on-surface: 232, 240, 236;
+            --v-theme-on-surface-bright: 0, 0, 0;
+            --v-theme-on-surface-light: 255, 255, 255;
+            --v-theme-on-primary: 255, 255, 255;
+            --v-theme-on-primary-darken-1: 255, 255, 255;
+            --v-theme-on-secondary: 255, 255, 255;
+            --v-theme-on-secondary-darken-1: 255, 255, 255;
+            --v-theme-on-error: 255, 255, 255;
+            --v-theme-on-info: 255, 255, 255;
+            --v-theme-on-success: 255, 255, 255;
+            --v-theme-on-warning: 255, 255, 255;
+            --v-border-color: 255, 255, 255;
+            --v-border-opacity: 0.12;
+            --v-shadow-color: 0, 0, 0;
+            --v-high-emphasis-opacity: 1;
+            --v-medium-emphasis-opacity: 0.7;
+            --v-disabled-opacity: 0.5;
+            --v-idle-opacity: 0.1;
+            --v-hover-opacity: 0.04;
+            --v-focus-opacity: 0.12;
+            --v-selected-opacity: 0.08;
+            --v-activated-opacity: 0.12;
+            --v-pressed-opacity: 0.16;
+            --v-dragged-opacity: 0.08;
+            --v-theme-kbd: 66, 66, 66;
+            --v-theme-on-kbd: 255, 255, 255;
+            --v-theme-code: 52, 52, 52;
+            --v-theme-on-code: 204, 204, 204;
+            --v-theme-on-dark: 255, 255, 255;
+            --v-theme-on-light: 0, 0, 0;
+            --v-elevation-overlay-color: white;
+            --v-elevation-overlay-opacity-step: 2%;
+          }
+          .v-theme--light {
+            color-scheme: normal;
+            --v-theme-background: 255, 255, 255;
+            --v-theme-background-overlay-multiplier: 1;
+            --v-theme-surface: 255, 255, 255;
+            --v-theme-surface-overlay-multiplier: 1;
+            --v-theme-surface-bright: 255, 255, 255;
+            --v-theme-surface-bright-overlay-multiplier: 1;
+            --v-theme-surface-light: 238, 238, 238;
+            --v-theme-surface-light-overlay-multiplier: 1;
+            --v-theme-surface-variant: 66, 66, 66;
+            --v-theme-surface-variant-overlay-multiplier: 2;
+            --v-theme-on-surface-variant: 238, 238, 238;
+            --v-theme-primary: 24, 103, 192;
+            --v-theme-primary-overlay-multiplier: 2;
+            --v-theme-primary-darken-1: 31, 85, 146;
+            --v-theme-primary-darken-1-overlay-multiplier: 2;
+            --v-theme-secondary: 72, 169, 166;
+            --v-theme-secondary-overlay-multiplier: 1;
+            --v-theme-secondary-darken-1: 1, 135, 134;
+            --v-theme-secondary-darken-1-overlay-multiplier: 1;
+            --v-theme-error: 176, 0, 32;
+            --v-theme-error-overlay-multiplier: 2;
+            --v-theme-info: 33, 150, 243;
+            --v-theme-info-overlay-multiplier: 1;
+            --v-theme-success: 76, 175, 80;
+            --v-theme-success-overlay-multiplier: 1;
+            --v-theme-warning: 251, 140, 0;
+            --v-theme-warning-overlay-multiplier: 1;
+            --v-theme-on-background: 0, 0, 0;
+            --v-theme-on-surface: 0, 0, 0;
+            --v-theme-on-surface-bright: 0, 0, 0;
+            --v-theme-on-surface-light: 0, 0, 0;
+            --v-theme-on-primary: 255, 255, 255;
+            --v-theme-on-primary-darken-1: 255, 255, 255;
+            --v-theme-on-secondary: 255, 255, 255;
+            --v-theme-on-secondary-darken-1: 255, 255, 255;
+            --v-theme-on-error: 255, 255, 255;
+            --v-theme-on-info: 255, 255, 255;
+            --v-theme-on-success: 255, 255, 255;
+            --v-theme-on-warning: 255, 255, 255;
+            --v-border-color: 0, 0, 0;
+            --v-border-opacity: 0.12;
+            --v-shadow-color: 0, 0, 0;
+            --v-high-emphasis-opacity: 0.87;
+            --v-medium-emphasis-opacity: 0.6;
+            --v-disabled-opacity: 0.38;
+            --v-idle-opacity: 0.04;
+            --v-hover-opacity: 0.04;
+            --v-focus-opacity: 0.12;
+            --v-selected-opacity: 0.08;
+            --v-activated-opacity: 0.12;
+            --v-pressed-opacity: 0.12;
+            --v-dragged-opacity: 0.08;
+            --v-theme-kbd: 238, 238, 238;
+            --v-theme-on-kbd: 0, 0, 0;
+            --v-theme-code: 245, 245, 245;
+            --v-theme-on-code: 0, 0, 0;
+            --v-theme-on-dark: 255, 255, 255;
+            --v-theme-on-light: 0, 0, 0;
+            --v-elevation-overlay-color: black;
+            --v-elevation-overlay-opacity-step: 2%;
+          }
+          .v-theme--dark {
+            color-scheme: dark;
+            --v-theme-background: 18, 18, 18;
+            --v-theme-background-overlay-multiplier: 1;
+            --v-theme-surface: 33, 33, 33;
+            --v-theme-surface-overlay-multiplier: 1;
+            --v-theme-surface-bright: 204, 191, 214;
+            --v-theme-surface-bright-overlay-multiplier: 2;
+            --v-theme-surface-light: 66, 66, 66;
+            --v-theme-surface-light-overlay-multiplier: 1;
+            --v-theme-surface-variant: 200, 200, 200;
+            --v-theme-surface-variant-overlay-multiplier: 2;
+            --v-theme-on-surface-variant: 0, 0, 0;
+            --v-theme-primary: 33, 150, 243;
+            --v-theme-primary-overlay-multiplier: 2;
+            --v-theme-primary-darken-1: 39, 124, 193;
+            --v-theme-primary-darken-1-overlay-multiplier: 2;
+            --v-theme-secondary: 84, 182, 178;
+            --v-theme-secondary-overlay-multiplier: 2;
+            --v-theme-secondary-darken-1: 72, 169, 166;
+            --v-theme-secondary-darken-1-overlay-multiplier: 2;
+            --v-theme-error: 207, 102, 121;
+            --v-theme-error-overlay-multiplier: 2;
+            --v-theme-info: 33, 150, 243;
+            --v-theme-info-overlay-multiplier: 2;
+            --v-theme-success: 76, 175, 80;
+            --v-theme-success-overlay-multiplier: 2;
+            --v-theme-warning: 251, 140, 0;
+            --v-theme-warning-overlay-multiplier: 2;
+            --v-theme-on-background: 255, 255, 255;
+            --v-theme-on-surface: 255, 255, 255;
+            --v-theme-on-surface-bright: 0, 0, 0;
+            --v-theme-on-surface-light: 255, 255, 255;
+            --v-theme-on-primary: 255, 255, 255;
+            --v-theme-on-primary-darken-1: 255, 255, 255;
+            --v-theme-on-secondary: 255, 255, 255;
+            --v-theme-on-secondary-darken-1: 255, 255, 255;
+            --v-theme-on-error: 255, 255, 255;
+            --v-theme-on-info: 255, 255, 255;
+            --v-theme-on-success: 255, 255, 255;
+            --v-theme-on-warning: 255, 255, 255;
+            --v-border-color: 255, 255, 255;
+            --v-border-opacity: 0.12;
+            --v-shadow-color: 0, 0, 0;
+            --v-high-emphasis-opacity: 1;
+            --v-medium-emphasis-opacity: 0.7;
+            --v-disabled-opacity: 0.5;
+            --v-idle-opacity: 0.1;
+            --v-hover-opacity: 0.04;
+            --v-focus-opacity: 0.12;
+            --v-selected-opacity: 0.08;
+            --v-activated-opacity: 0.12;
+            --v-pressed-opacity: 0.16;
+            --v-dragged-opacity: 0.08;
+            --v-theme-kbd: 66, 66, 66;
+            --v-theme-on-kbd: 255, 255, 255;
+            --v-theme-code: 52, 52, 52;
+            --v-theme-on-code: 204, 204, 204;
+            --v-theme-on-dark: 255, 255, 255;
+            --v-theme-on-light: 0, 0, 0;
+            --v-elevation-overlay-color: white;
+            --v-elevation-overlay-opacity-step: 2%;
+          }
+          .v-theme--timberbornDark {
+            color-scheme: dark;
+            --v-theme-background: 21, 39, 34;
+            --v-theme-background-overlay-multiplier: 1;
+            --v-theme-surface: 30, 58, 48;
+            --v-theme-surface-overlay-multiplier: 1;
+            --v-theme-surface-bright: 204, 191, 214;
+            --v-theme-surface-bright-overlay-multiplier: 2;
+            --v-theme-surface-light: 66, 66, 66;
+            --v-theme-surface-light-overlay-multiplier: 1;
+            --v-theme-surface-variant: 200, 200, 200;
+            --v-theme-surface-variant-overlay-multiplier: 2;
+            --v-theme-on-surface-variant: 0, 0, 0;
+            --v-theme-primary: 93, 166, 122;
+            --v-theme-primary-overlay-multiplier: 2;
+            --v-theme-primary-darken-1: 39, 124, 193;
+            --v-theme-primary-darken-1-overlay-multiplier: 2;
+            --v-theme-secondary: 84, 182, 178;
+            --v-theme-secondary-overlay-multiplier: 2;
+            --v-theme-secondary-darken-1: 72, 169, 166;
+            --v-theme-secondary-darken-1-overlay-multiplier: 2;
+            --v-theme-error: 207, 102, 121;
+            --v-theme-error-overlay-multiplier: 2;
+            --v-theme-info: 33, 150, 243;
+            --v-theme-info-overlay-multiplier: 2;
+            --v-theme-success: 76, 175, 80;
+            --v-theme-success-overlay-multiplier: 2;
+            --v-theme-warning: 251, 140, 0;
+            --v-theme-warning-overlay-multiplier: 2;
+            --v-theme-on-background: 232, 240, 236;
+            --v-theme-on-surface: 232, 240, 236;
+            --v-theme-on-surface-bright: 0, 0, 0;
+            --v-theme-on-surface-light: 255, 255, 255;
+            --v-theme-on-primary: 255, 255, 255;
+            --v-theme-on-primary-darken-1: 255, 255, 255;
+            --v-theme-on-secondary: 255, 255, 255;
+            --v-theme-on-secondary-darken-1: 255, 255, 255;
+            --v-theme-on-error: 255, 255, 255;
+            --v-theme-on-info: 255, 255, 255;
+            --v-theme-on-success: 255, 255, 255;
+            --v-theme-on-warning: 255, 255, 255;
+            --v-border-color: 255, 255, 255;
+            --v-border-opacity: 0.12;
+            --v-shadow-color: 0, 0, 0;
+            --v-high-emphasis-opacity: 1;
+            --v-medium-emphasis-opacity: 0.7;
+            --v-disabled-opacity: 0.5;
+            --v-idle-opacity: 0.1;
+            --v-hover-opacity: 0.04;
+            --v-focus-opacity: 0.12;
+            --v-selected-opacity: 0.08;
+            --v-activated-opacity: 0.12;
+            --v-pressed-opacity: 0.16;
+            --v-dragged-opacity: 0.08;
+            --v-theme-kbd: 66, 66, 66;
+            --v-theme-on-kbd: 255, 255, 255;
+            --v-theme-code: 52, 52, 52;
+            --v-theme-on-code: 204, 204, 204;
+            --v-theme-on-dark: 255, 255, 255;
+            --v-theme-on-light: 0, 0, 0;
+            --v-elevation-overlay-color: white;
+            --v-elevation-overlay-opacity-step: 2%;
+          }
+        }
+        @layer theme-background {
+          .bg-background {
+            --v-theme-overlay-multiplier: var(--v-theme-background-overlay-multiplier);
+            background-color: rgb(var(--v-theme-background));
+            color: rgb(var(--v-theme-on-background));
+          }
+          .bg-surface {
+            --v-theme-overlay-multiplier: var(--v-theme-surface-overlay-multiplier);
+            background-color: rgb(var(--v-theme-surface));
+            color: rgb(var(--v-theme-on-surface));
+          }
+          .bg-surface-bright {
+            --v-theme-overlay-multiplier: var(--v-theme-surface-bright-overlay-multiplier);
+            background-color: rgb(var(--v-theme-surface-bright));
+            color: rgb(var(--v-theme-on-surface-bright));
+          }
+          .bg-surface-light {
+            --v-theme-overlay-multiplier: var(--v-theme-surface-light-overlay-multiplier);
+            background-color: rgb(var(--v-theme-surface-light));
+            color: rgb(var(--v-theme-on-surface-light));
+          }
+          .bg-surface-variant {
+            --v-theme-overlay-multiplier: var(--v-theme-surface-variant-overlay-multiplier);
+            background-color: rgb(var(--v-theme-surface-variant));
+            color: rgb(var(--v-theme-on-surface-variant));
+          }
+          .bg-primary {
+            --v-theme-overlay-multiplier: var(--v-theme-primary-overlay-multiplier);
+            background-color: rgb(var(--v-theme-primary));
+            color: rgb(var(--v-theme-on-primary));
+          }
+          .bg-primary-darken-1 {
+            --v-theme-overlay-multiplier: var(--v-theme-primary-darken-1-overlay-multiplier);
+            background-color: rgb(var(--v-theme-primary-darken-1));
+            color: rgb(var(--v-theme-on-primary-darken-1));
+          }
+          .bg-secondary {
+            --v-theme-overlay-multiplier: var(--v-theme-secondary-overlay-multiplier);
+            background-color: rgb(var(--v-theme-secondary));
+            color: rgb(var(--v-theme-on-secondary));
+          }
+          .bg-secondary-darken-1 {
+            --v-theme-overlay-multiplier: var(--v-theme-secondary-darken-1-overlay-multiplier);
+            background-color: rgb(var(--v-theme-secondary-darken-1));
+            color: rgb(var(--v-theme-on-secondary-darken-1));
+          }
+          .bg-error {
+            --v-theme-overlay-multiplier: var(--v-theme-error-overlay-multiplier);
+            background-color: rgb(var(--v-theme-error));
+            color: rgb(var(--v-theme-on-error));
+          }
+          .bg-info {
+            --v-theme-overlay-multiplier: var(--v-theme-info-overlay-multiplier);
+            background-color: rgb(var(--v-theme-info));
+            color: rgb(var(--v-theme-on-info));
+          }
+          .bg-success {
+            --v-theme-overlay-multiplier: var(--v-theme-success-overlay-multiplier);
+            background-color: rgb(var(--v-theme-success));
+            color: rgb(var(--v-theme-on-success));
+          }
+          .bg-warning {
+            --v-theme-overlay-multiplier: var(--v-theme-warning-overlay-multiplier);
+            background-color: rgb(var(--v-theme-warning));
+            color: rgb(var(--v-theme-on-warning));
+          }
+        }
+        @layer theme-foreground {
+          .text-background {
+            color: rgb(var(--v-theme-background));
+          }
+          .border-background {
+            --v-border-color: var(--v-theme-background);
+          }
+          .text-surface {
+            color: rgb(var(--v-theme-surface));
+          }
+          .border-surface {
+            --v-border-color: var(--v-theme-surface);
+          }
+          .text-surface-bright {
+            color: rgb(var(--v-theme-surface-bright));
+          }
+          .border-surface-bright {
+            --v-border-color: var(--v-theme-surface-bright);
+          }
+          .text-surface-light {
+            color: rgb(var(--v-theme-surface-light));
+          }
+          .border-surface-light {
+            --v-border-color: var(--v-theme-surface-light);
+          }
+          .text-surface-variant {
+            color: rgb(var(--v-theme-surface-variant));
+          }
+          .border-surface-variant {
+            --v-border-color: var(--v-theme-surface-variant);
+          }
+          .on-surface-variant {
+            color: rgb(var(--v-theme-on-surface-variant));
+          }
+          .text-primary {
+            color: rgb(var(--v-theme-primary));
+          }
+          .border-primary {
+            --v-border-color: var(--v-theme-primary);
+          }
+          .text-primary-darken-1 {
+            color: rgb(var(--v-theme-primary-darken-1));
+          }
+          .border-primary-darken-1 {
+            --v-border-color: var(--v-theme-primary-darken-1);
+          }
+          .text-secondary {
+            color: rgb(var(--v-theme-secondary));
+          }
+          .border-secondary {
+            --v-border-color: var(--v-theme-secondary);
+          }
+          .text-secondary-darken-1 {
+            color: rgb(var(--v-theme-secondary-darken-1));
+          }
+          .border-secondary-darken-1 {
+            --v-border-color: var(--v-theme-secondary-darken-1);
+          }
+          .text-error {
+            color: rgb(var(--v-theme-error));
+          }
+          .border-error {
+            --v-border-color: var(--v-theme-error);
+          }
+          .text-info {
+            color: rgb(var(--v-theme-info));
+          }
+          .border-info {
+            --v-border-color: var(--v-theme-info);
+          }
+          .text-success {
+            color: rgb(var(--v-theme-success));
+          }
+          .border-success {
+            --v-border-color: var(--v-theme-success);
+          }
+          .text-warning {
+            color: rgb(var(--v-theme-warning));
+          }
+          .border-warning {
+            --v-border-color: var(--v-theme-warning);
+          }
+          .on-background {
+            color: rgb(var(--v-theme-on-background));
+          }
+          .on-surface {
+            color: rgb(var(--v-theme-on-surface));
+          }
+          .on-surface-bright {
+            color: rgb(var(--v-theme-on-surface-bright));
+          }
+          .on-surface-light {
+            color: rgb(var(--v-theme-on-surface-light));
+          }
+          .on-primary {
+            color: rgb(var(--v-theme-on-primary));
+          }
+          .on-primary-darken-1 {
+            color: rgb(var(--v-theme-on-primary-darken-1));
+          }
+          .on-secondary {
+            color: rgb(var(--v-theme-on-secondary));
+          }
+          .on-secondary-darken-1 {
+            color: rgb(var(--v-theme-on-secondary-darken-1));
+          }
+          .on-error {
+            color: rgb(var(--v-theme-on-error));
+          }
+          .on-info {
+            color: rgb(var(--v-theme-on-info));
+          }
+          .on-success {
+            color: rgb(var(--v-theme-on-success));
+          }
+          .on-warning {
+            color: rgb(var(--v-theme-on-warning));
+          }
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app" data-v-app="">
+      <div data-v-182539b8="" class="app-shell">
+        <header data-v-182539b8="" class="app-header">
+          <div data-v-182539b8="" class="logo">
+            <span data-v-182539b8="" class="logo-line1">Timberborn</span
+            ><span data-v-182539b8="" class="logo-line2">Calculator</span>
+          </div>
+          <nav data-v-182539b8="" class="tool-nav" aria-label="Main sections">
+            <button data-v-182539b8="" type="button" class="tool-btn active">Calculator</button
+            ><button data-v-182539b8="" type="button" class="tool-btn">Dam planner (BETA)</button>
+          </nav>
+          <a
+            class="steam-page-cta"
+            href="https://store.steampowered.com/app/1062090/Timberborn/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Visit Timberborn Steam page"
+            data-v-182539b8=""
+            ><span class="steam-page-cta__text" data-v-182539b8=""
+              ><span class="steam-page-cta__line" data-v-182539b8="">Visit Timberborn</span
+              ><span class="steam-page-cta__line" data-v-182539b8="">Steam page</span></span
+            ><span class="steam-page-cta__thumb" data-v-182539b8=""
+              ><img
+                src="images/others/timberborn_steampage.png"
+                alt=""
+                width="460"
+                height="215"
+                data-v-182539b8="" /></span
+          ></a>
+        </header>
+        <main data-v-182539b8="" class="app-main">
+          <div data-v-342f470e="" data-v-182539b8="" class="calculator-layout">
+            <div data-v-342f470e="" class="panel-left">
+              <div data-v-342f470e="" class="main-content">
+                <div data-v-16df6199="" data-v-342f470e="" class="need-tab">
+                  <div data-v-16df6199="" class="pop-panel">
+                    <div
+                      data-v-16df6199=""
+                      class="panel-header panel-header--clickable"
+                      role="button"
+                      tabindex="0"
+                      aria-label="Scroll to top of Needs configuration"
+                    >
+                      <span data-v-16df6199="" class="calc-section-heading"
+                        >Needs configuration</span
+                      >
+                    </div>
+                    <button
+                      data-v-16df6199=""
+                      type="button"
+                      class="section-header-row section-header-row--beavers section-header-row--collapsible"
+                      aria-expanded="true"
+                      aria-controls="beaver-needs-section"
+                    >
+                      <div data-v-16df6199="" class="section-header-main">
+                        <div data-v-16df6199="" class="pop-section-label">
+                          <img
+                            data-v-16df6199=""
+                            src="images/others/folktails_adult.png"
+                            class="section-icon"
+                            alt=""
+                          /><span data-v-16df6199="">Beavers</span>
+                        </div>
+                        <div
+                          data-v-16df6199=""
+                          class="wb-stats-row wb-stats-row--section wb-stats-row--bots"
+                        >
+                          <div data-v-16df6199="" class="wb-stat">
+                            <span data-v-16df6199="" class="wb-label">Working Speed</span
+                            ><span data-v-16df6199="" class="wb-value">0% </span>
+                          </div>
+                          <div data-v-16df6199="" class="wb-stat">
+                            <span data-v-16df6199="" class="wb-label">Growth Speed</span
+                            ><span data-v-16df6199="" class="wb-value"
+                              >0% <span data-v-16df6199="" class="wb-detail">| 6.00 d</span></span
+                            >
+                          </div>
+                          <div data-v-16df6199="" class="wb-stat">
+                            <span data-v-16df6199="" class="wb-label">Movement Speed</span
+                            ><span data-v-16df6199="" class="wb-value bonus-positive">+5% </span>
+                          </div>
+                          <div data-v-16df6199="" class="wb-stat">
+                            <span data-v-16df6199="" class="wb-label">Life Expectancy</span
+                            ><span data-v-16df6199="" class="wb-value"
+                              >0% <span data-v-16df6199="" class="wb-detail">| 50 d</span></span
+                            >
+                          </div>
+                          <div data-v-16df6199="" class="wb-score">
+                            <img
+                              data-v-16df6199=""
+                              src="images/others/well_being.png"
+                              class="wb-icon"
+                              alt="Well-being"
+                            /><span data-v-16df6199="" class="wb-score-pill">4</span>
+                          </div>
+                        </div>
+                      </div></button
+                    ><button
+                      data-v-16df6199=""
+                      type="button"
+                      class="section-expand-banner"
+                      aria-expanded="true"
+                      aria-controls="beaver-needs-section"
+                    >
+                      <span data-v-16df6199="" class="section-expand-arrow" aria-hidden="true"
+                        >▲</span
+                      >
+                    </button>
+                    <div data-v-16df6199="" id="beaver-needs-section" class="needs-section">
+                      <div data-v-16df6199="" class="needs-controls">
+                        <span data-v-16df6199="" class="needs-header-label">Needs</span>
+                        <div data-v-16df6199="" class="needs-filter-btns">
+                          <button data-v-16df6199="" type="button" class="ctrl-btn ctrl-btn--all">
+                            All</button
+                          ><button data-v-16df6199="" type="button" class="ctrl-btn ctrl-btn--type">
+                            Basic</button
+                          ><button data-v-16df6199="" type="button" class="ctrl-btn ctrl-btn--type">
+                            Nutrition</button
+                          ><button data-v-16df6199="" type="button" class="ctrl-btn ctrl-btn--type">
+                            Fun</button
+                          ><button data-v-16df6199="" type="button" class="ctrl-btn ctrl-btn--type">
+                            Social Life</button
+                          ><button data-v-16df6199="" type="button" class="ctrl-btn ctrl-btn--type">
+                            Aesthetics</button
+                          ><button data-v-16df6199="" type="button" class="ctrl-btn ctrl-btn--type">
+                            Awe
+                          </button>
+                        </div>
+                      </div>
+                      <div data-v-16df6199="" class="needs-by-type">
+                        <!---->
+                        <div data-v-16df6199="" class="need-type-line">
+                          <span data-v-16df6199="" class="need-group-label-inline">Basic</span>
+                          <div data-v-16df6199="" class="needs-grid needs-grid--row">
+                            <div data-v-16df6199="" class="need-card" role="button" tabindex="0">
+                              <img
+                                data-v-16df6199=""
+                                src="images/others/hunger.png"
+                                class="need-img"
+                                alt="Hunger"
+                              /><span data-v-16df6199="" class="need-name">Hunger</span
+                              ><span data-v-16df6199="" class="need-wb wb-met">+1</span>
+                            </div>
+                            <div data-v-16df6199="" class="need-card" role="button" tabindex="0">
+                              <img
+                                data-v-16df6199=""
+                                src="images/others/thirst.png"
+                                class="need-img"
+                                alt="Thirst"
+                              /><span data-v-16df6199="" class="need-name">Thirst</span
+                              ><span data-v-16df6199="" class="need-wb wb-met">+1</span>
+                            </div>
+                            <div data-v-16df6199="" class="need-card" role="button" tabindex="0">
+                              <img
+                                data-v-16df6199=""
+                                src="images/others/sleep.png"
+                                class="need-img"
+                                alt="Sleep"
+                              /><span data-v-16df6199="" class="need-name">Sleep</span
+                              ><span data-v-16df6199="" class="need-wb wb-met">+1</span>
+                            </div>
+                            <div data-v-16df6199="" class="need-card" role="button" tabindex="0">
+                              <img
+                                data-v-16df6199=""
+                                src="images/buildings/shelter.png"
+                                class="need-img"
+                                alt="Shelter"
+                              /><span data-v-16df6199="" class="need-name">Shelter</span
+                              ><span data-v-16df6199="" class="need-wb wb-met">+1</span>
+                            </div>
+                            <div
+                              data-v-16df6199=""
+                              class="need-card need-card--inactive"
+                              role="button"
+                              tabindex="0"
+                            >
+                              <img
+                                data-v-16df6199=""
+                                src="images/buildings/shower.png"
+                                class="need-img"
+                                alt="Wet fur"
+                              /><span data-v-16df6199="" class="need-name">Wet fur</span
+                              ><span data-v-16df6199="" class="need-wb wb-unmet"></span>
+                            </div>
+                          </div>
+                        </div>
+                        <hr data-v-16df6199="" class="need-type-separator" />
+                        <div data-v-16df6199="" class="need-type-line">
+                          <span data-v-16df6199="" class="need-group-label-inline">Nutrition</span>
+                          <div data-v-16df6199="" class="needs-grid needs-grid--row">
+                            <div
+                              data-v-16df6199=""
+                              class="need-card need-card--inactive"
+                              role="button"
+                              tabindex="0"
+                            >
+                              <img
+                                data-v-16df6199=""
+                                src="images/items/carrot.png"
+                                class="need-img"
+                                alt="Carrots"
+                              /><span data-v-16df6199="" class="need-name">Carrots</span
+                              ><span data-v-16df6199="" class="need-wb wb-unmet"></span>
+                            </div>
+                            <div
+                              data-v-16df6199=""
+                              class="need-card need-card--inactive"
+                              role="button"
+                              tabindex="0"
+                            >
+                              <img
+                                data-v-16df6199=""
+                                src="images/items/sunflower_seeds.png"
+                                class="need-img"
+                                alt="Sunflower seeds"
+                              /><span data-v-16df6199="" class="need-name">Sunflower seeds</span
+                              ><span data-v-16df6199="" class="need-wb wb-unmet"></span>
+                            </div>
+                            <div
+                              data-v-16df6199=""
+                              class="need-card need-card--inactive"
+                              role="button"
+                              tabindex="0"
+                            >
+                              <img
+                                data-v-16df6199=""
+                                src="images/items/grilled_potato.png"
+                                class="need-img"
+                                alt="Grilled potatoes"
+                              /><span data-v-16df6199="" class="need-name">Grilled potatoes</span
+                              ><span data-v-16df6199="" class="need-wb wb-unmet"></span>
+                            </div>
+                            <div
+                              data-v-16df6199=""
+                              class="need-card need-card--inactive"
+                              role="button"
+                              tabindex="0"
+                            >
+                              <img
+                                data-v-16df6199=""
+                                src="images/items/grilled_chestnut.png"
+                                class="need-img"
+                                alt="Grilled chestnuts"
+                              /><span data-v-16df6199="" class="need-name">Grilled chestnuts</span
+                              ><span data-v-16df6199="" class="need-wb wb-unmet"></span>
+                            </div>
+                            <div
+                              data-v-16df6199=""
+                              class="need-card need-card--inactive"
+                              role="button"
+                              tabindex="0"
+                            >
+                              <img
+                                data-v-16df6199=""
+                                src="images/items/grilled_spadderdock.png"
+                                class="need-img"
+                                alt="Grilled spadderdock"
+                              /><span data-v-16df6199="" class="need-name">Grilled spadderdock</span
+                              ><span data-v-16df6199="" class="need-wb wb-unmet"></span>
+                            </div>
+                            <div
+                              data-v-16df6199=""
+                              class="need-card need-card--inactive"
+                              role="button"
+                              tabindex="0"
+                            >
+                              <img
+                                data-v-16df6199=""
+                                src="images/items/bread.png"
+                                class="need-img"
+                                alt="Bread"
+                              /><span data-v-16df6199="" class="need-name">Bread</span
+                              ><span data-v-16df6199="" class="need-wb wb-unmet"></span>
+                            </div>
+                            <div
+                              data-v-16df6199=""
+                              class="need-card need-card--inactive"
+                              role="button"
+                              tabindex="0"
+                            >
+                              <img
+                                data-v-16df6199=""
+                                src="images/items/cattail_cracker.png"
+                                class="need-img"
+                                alt="Cattail crackers"
+                              /><span data-v-16df6199="" class="need-name">Cattail crackers</span
+                              ><span data-v-16df6199="" class="need-wb wb-unmet"></span>
+                            </div>
+                            <div
+                              data-v-16df6199=""
+                              class="need-card need-card--inactive"
+                              role="button"
+                              tabindex="0"
+                            >
+                              <img
+                                data-v-16df6199=""
+                                src="images/items/maple_pastry.png"
+                                class="need-img"
+                                alt="Maple pastries"
+                              /><span data-v-16df6199="" class="need-name">Maple pastries</span
+                              ><span data-v-16df6199="" class="need-wb wb-unmet"></span>
+                            </div>
+                          </div>
+                        </div>
+                        <hr data-v-16df6199="" class="need-type-separator" />
+                        <div data-v-16df6199="" class="need-type-line">
+                          <span data-v-16df6199="" class="need-group-label-inline">Fun</span>
+                          <div data-v-16df6199="" class="needs-grid needs-grid--row">
+                            <div
+                              data-v-16df6199=""
+                              class="need-card need-card--inactive"
+                              role="button"
+                              tabindex="0"
+                            >
+                              <img
+                                data-v-16df6199=""
+                                src="images/items/book.png"
+                                class="need-img"
+                                alt="Books"
+                              /><span data-v-16df6199="" class="need-name">Books</span
+                              ><span data-v-16df6199="" class="need-wb wb-unmet"></span>
+                            </div>
+                            <div
+                              data-v-16df6199=""
+                              class="need-card need-card--inactive"
+                              role="button"
+                              tabindex="0"
+                            >
+                              <img
+                                data-v-16df6199=""
+                                src="images/buildings/detailer.png"
+                                class="need-img"
+                                alt="Detailer"
+                              /><span data-v-16df6199="" class="need-name">Detailer</span
+                              ><span data-v-16df6199="" class="need-wb wb-unmet"></span>
+                            </div>
+                            <div
+                              data-v-16df6199=""
+                              class="need-card need-card--inactive"
+                              role="button"
+                              tabindex="0"
+                            >
+                              <img
+                                data-v-16df6199=""
+                                src="images/buildings/lido.png"
+                                class="need-img"
+                                alt="Lido"
+                              /><span data-v-16df6199="" class="need-name">Lido</span
+                              ><span data-v-16df6199="" class="need-wb wb-unmet"></span>
+                            </div>
+                            <div
+                              data-v-16df6199=""
+                              class="need-card need-card--inactive"
+                              role="button"
+                              tabindex="0"
+                            >
+                              <img
+                                data-v-16df6199=""
+                                src="images/buildings/carousel.png"
+                                class="need-img"
+                                alt="Carousel"
+                              /><span data-v-16df6199="" class="need-name">Carousel</span
+                              ><span data-v-16df6199="" class="need-wb wb-unmet"></span>
+                            </div>
+                            <div
+                              data-v-16df6199=""
+                              class="need-card need-card--inactive"
+                              role="button"
+                              tabindex="0"
+                            >
+                              <img
+                                data-v-16df6199=""
+                                src="images/buildings/mud_pit.png"
+                                class="need-img"
+                                alt="Mud Pit"
+                              /><span data-v-16df6199="" class="need-name">Mud Pit</span
+                              ><span data-v-16df6199="" class="need-wb wb-unmet"></span>
+                            </div>
+                          </div>
+                        </div>
+                        <hr data-v-16df6199="" class="need-type-separator" />
+                        <div data-v-16df6199="" class="need-type-line">
+                          <span data-v-16df6199="" class="need-group-label-inline"
+                            >Social Life</span
+                          >
+                          <div data-v-16df6199="" class="needs-grid needs-grid--row">
+                            <div
+                              data-v-16df6199=""
+                              class="need-card need-card--inactive"
+                              role="button"
+                              tabindex="0"
+                            >
+                              <img
+                                data-v-16df6199=""
+                                src="images/buildings/campfire.png"
+                                class="need-img"
+                                alt="Campfire"
+                              /><span data-v-16df6199="" class="need-name">Campfire</span
+                              ><span data-v-16df6199="" class="need-wb wb-unmet"></span>
+                            </div>
+                            <div
+                              data-v-16df6199=""
+                              class="need-card need-card--inactive"
+                              role="button"
+                              tabindex="0"
+                            >
+                              <img
+                                data-v-16df6199=""
+                                src="images/buildings/rooftop_terrace.png"
+                                class="need-img"
+                                alt="Rooftop Terrace"
+                              /><span data-v-16df6199="" class="need-name">Rooftop Terrace</span
+                              ><span data-v-16df6199="" class="need-wb wb-unmet"></span>
+                            </div>
+                            <div
+                              data-v-16df6199=""
+                              class="need-card need-card--inactive"
+                              role="button"
+                              tabindex="0"
+                            >
+                              <img
+                                data-v-16df6199=""
+                                src="images/buildings/contemplation_spot.png"
+                                class="need-img"
+                                alt="Contemplation Spot"
+                              /><span data-v-16df6199="" class="need-name">Contemplation Spot</span
+                              ><span data-v-16df6199="" class="need-wb wb-unmet"></span>
+                            </div>
+                            <div
+                              data-v-16df6199=""
+                              class="need-card need-card--inactive"
+                              role="button"
+                              tabindex="0"
+                            >
+                              <img
+                                data-v-16df6199=""
+                                src="images/buildings/agora.png"
+                                class="need-img"
+                                alt="Agora"
+                              /><span data-v-16df6199="" class="need-name">Agora</span
+                              ><span data-v-16df6199="" class="need-wb wb-unmet"></span>
+                            </div>
+                            <div
+                              data-v-16df6199=""
+                              class="need-card need-card--inactive"
+                              role="button"
+                              tabindex="0"
+                            >
+                              <img
+                                data-v-16df6199=""
+                                src="images/buildings/dance_hall.png"
+                                class="need-img"
+                                alt="Dance Hall"
+                              /><span data-v-16df6199="" class="need-name">Dance Hall</span
+                              ><span data-v-16df6199="" class="need-wb wb-unmet"></span>
+                            </div>
+                          </div>
+                        </div>
+                        <hr data-v-16df6199="" class="need-type-separator" />
+                        <div data-v-16df6199="" class="need-type-line">
+                          <span data-v-16df6199="" class="need-group-label-inline">Aesthetics</span>
+                          <div data-v-16df6199="" class="needs-grid needs-grid--row">
+                            <div
+                              data-v-16df6199=""
+                              class="need-card need-card--inactive"
+                              role="button"
+                              tabindex="0"
+                            >
+                              <img
+                                data-v-16df6199=""
+                                src="images/buildings/shrub.png"
+                                class="need-img"
+                                alt="Shrub"
+                              /><span data-v-16df6199="" class="need-name">Shrub</span
+                              ><span data-v-16df6199="" class="need-wb wb-unmet"></span>
+                            </div>
+                            <div
+                              data-v-16df6199=""
+                              class="need-card need-card--inactive"
+                              role="button"
+                              tabindex="0"
+                            >
+                              <img
+                                data-v-16df6199=""
+                                src="images/buildings/lantern.png"
+                                class="need-img"
+                                alt="Lantern"
+                              /><span data-v-16df6199="" class="need-name">Lantern</span
+                              ><span data-v-16df6199="" class="need-wb wb-unmet"></span>
+                            </div>
+                            <div
+                              data-v-16df6199=""
+                              class="need-card need-card--inactive"
+                              role="button"
+                              tabindex="0"
+                            >
+                              <img
+                                data-v-16df6199=""
+                                src="images/buildings/roof.png"
+                                class="need-img"
+                                alt="Roofs"
+                              /><span data-v-16df6199="" class="need-name">Roofs</span
+                              ><span data-v-16df6199="" class="need-wb wb-unmet"></span>
+                            </div>
+                            <div
+                              data-v-16df6199=""
+                              class="need-card need-card--inactive"
+                              role="button"
+                              tabindex="0"
+                            >
+                              <img
+                                data-v-16df6199=""
+                                src="images/buildings/scarecrow.png"
+                                class="need-img"
+                                alt="Scarecrow"
+                              /><span data-v-16df6199="" class="need-name">Scarecrow</span
+                              ><span data-v-16df6199="" class="need-wb wb-unmet"></span>
+                            </div>
+                            <div
+                              data-v-16df6199=""
+                              class="need-card need-card--inactive"
+                              role="button"
+                              tabindex="0"
+                            >
+                              <img
+                                data-v-16df6199=""
+                                src="images/buildings/wind_gauge.png"
+                                class="need-img"
+                                alt="Wind Gauge"
+                              /><span data-v-16df6199="" class="need-name">Wind Gauge</span
+                              ><span data-v-16df6199="" class="need-wb wb-unmet"></span>
+                            </div>
+                            <div
+                              data-v-16df6199=""
+                              class="need-card need-card--inactive"
+                              role="button"
+                              tabindex="0"
+                            >
+                              <img
+                                data-v-16df6199=""
+                                src="images/buildings/beaver_statue.png"
+                                class="need-img"
+                                alt="Beaver Statue"
+                              /><span data-v-16df6199="" class="need-name">Beaver Statue</span
+                              ><span data-v-16df6199="" class="need-wb wb-unmet"></span>
+                            </div>
+                            <div
+                              data-v-16df6199=""
+                              class="need-card need-card--inactive"
+                              role="button"
+                              tabindex="0"
+                            >
+                              <img
+                                data-v-16df6199=""
+                                src="images/buildings/bulletin_pole.png"
+                                class="need-img"
+                                alt="Bulletin Pole"
+                              /><span data-v-16df6199="" class="need-name">Bulletin Pole</span
+                              ><span data-v-16df6199="" class="need-wb wb-unmet"></span>
+                            </div>
+                          </div>
+                        </div>
+                        <hr data-v-16df6199="" class="need-type-separator" />
+                        <div data-v-16df6199="" class="need-type-line">
+                          <span data-v-16df6199="" class="need-group-label-inline">Awe</span>
+                          <div data-v-16df6199="" class="needs-grid needs-grid--row">
+                            <div
+                              data-v-16df6199=""
+                              class="need-card need-card--inactive"
+                              role="button"
+                              tabindex="0"
+                            >
+                              <img
+                                data-v-16df6199=""
+                                src="images/buildings/farmer_monument.png"
+                                class="need-img"
+                                alt="Farmer Monument"
+                              /><span data-v-16df6199="" class="need-name">Farmer Monument</span
+                              ><span data-v-16df6199="" class="need-wb wb-unmet"></span>
+                            </div>
+                            <div
+                              data-v-16df6199=""
+                              class="need-card need-card--inactive"
+                              role="button"
+                              tabindex="0"
+                            >
+                              <img
+                                data-v-16df6199=""
+                                src="images/buildings/brazier_of_bonding.png"
+                                class="need-img"
+                                alt="Brazier of Bonding"
+                              /><span data-v-16df6199="" class="need-name">Brazier of Bonding</span
+                              ><span data-v-16df6199="" class="need-wb wb-unmet"></span>
+                            </div>
+                            <div
+                              data-v-16df6199=""
+                              class="need-card need-card--inactive"
+                              role="button"
+                              tabindex="0"
+                            >
+                              <img
+                                data-v-16df6199=""
+                                src="images/buildings/fountain_of_joy.png"
+                                class="need-img"
+                                alt="Fountain of Joy"
+                              /><span data-v-16df6199="" class="need-name">Fountain of Joy</span
+                              ><span data-v-16df6199="" class="need-wb wb-unmet"></span>
+                            </div>
+                            <div
+                              data-v-16df6199=""
+                              class="need-card need-card--inactive"
+                              role="button"
+                              tabindex="0"
+                            >
+                              <img
+                                data-v-16df6199=""
+                                src="images/buildings/earth_recultivator.png"
+                                class="need-img"
+                                alt="Earth Recultivator"
+                              /><span data-v-16df6199="" class="need-name">Earth Recultivator</span
+                              ><span data-v-16df6199="" class="need-wb wb-unmet"></span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <hr data-v-16df6199="" class="needs-section-divider" />
+                    <button
+                      data-v-16df6199=""
+                      type="button"
+                      class="section-header-row section-header-row--bots section-header-row--collapsible"
+                      aria-expanded="true"
+                      aria-controls="bot-needs-section"
+                    >
+                      <div data-v-16df6199="" class="section-header-main">
+                        <div data-v-16df6199="" class="pop-section-label">
+                          <img
+                            data-v-16df6199=""
+                            src="images/others/timberbot.png"
+                            class="section-icon"
+                            alt=""
+                          /><span data-v-16df6199="">Timberbots</span>
+                        </div>
+                        <div
+                          data-v-16df6199=""
+                          class="wb-stats-row wb-stats-row--section wb-stats-row--bots"
+                        >
+                          <div data-v-16df6199="" class="wb-stat">
+                            <span data-v-16df6199="" class="wb-label">Working Speed</span
+                            ><span data-v-16df6199="" class="wb-value bonus-positive">+65% </span>
+                          </div>
+                          <div data-v-16df6199="" class="wb-stat">
+                            <span data-v-16df6199="" class="wb-label">Movement Speed</span
+                            ><span data-v-16df6199="" class="wb-value bonus-positive">+30% </span>
+                          </div>
+                          <div data-v-16df6199="" class="wb-score">
+                            <img
+                              data-v-16df6199=""
+                              src="images/others/well_being.png"
+                              class="wb-icon"
+                              alt="Condition"
+                            /><span data-v-16df6199="" class="wb-score-pill">0</span>
+                          </div>
+                        </div>
+                      </div></button
+                    ><button
+                      data-v-16df6199=""
+                      type="button"
+                      class="section-expand-banner"
+                      aria-expanded="true"
+                      aria-controls="bot-needs-section"
+                    >
+                      <span data-v-16df6199="" class="section-expand-arrow" aria-hidden="true"
+                        >▲</span
+                      >
+                    </button>
+                    <div data-v-16df6199="" id="bot-needs-section" class="needs-section">
+                      <div data-v-16df6199="" class="needs-controls">
+                        <span data-v-16df6199="" class="needs-header-label">Needs</span>
+                        <div data-v-16df6199="" class="needs-filter-btns">
+                          <button data-v-16df6199="" type="button" class="ctrl-btn ctrl-btn--all">
+                            All</button
+                          ><button
+                            data-v-16df6199=""
+                            type="button"
+                            class="ctrl-btn ctrl-btn--type ctrl-btn--type-active"
+                          >
+                            Basic</button
+                          ><button data-v-16df6199="" type="button" class="ctrl-btn ctrl-btn--type">
+                            Boost
+                          </button>
+                        </div>
+                      </div>
+                      <div data-v-16df6199="" class="needs-by-type">
+                        <!---->
+                        <div data-v-16df6199="" class="need-type-line">
+                          <span data-v-16df6199="" class="need-group-label-inline">Basic</span>
+                          <div data-v-16df6199="" class="needs-grid needs-grid--row">
+                            <div data-v-16df6199="" class="need-card" role="button" tabindex="0">
+                              <img
+                                data-v-16df6199=""
+                                src="images/items/biofuel.png"
+                                class="need-img"
+                                alt="Biofuel"
+                              /><span data-v-16df6199="" class="need-name">Biofuel</span
+                              ><span data-v-16df6199="" class="need-wb wb-met">0</span>
+                            </div>
+                          </div>
+                        </div>
+                        <hr data-v-16df6199="" class="need-type-separator" />
+                        <div data-v-16df6199="" class="need-type-line">
+                          <span data-v-16df6199="" class="need-group-label-inline">Boost</span>
+                          <div data-v-16df6199="" class="needs-grid needs-grid--row">
+                            <div
+                              data-v-16df6199=""
+                              class="need-card need-card--inactive"
+                              role="button"
+                              tabindex="0"
+                            >
+                              <img
+                                data-v-16df6199=""
+                                src="images/items/catalyst.png"
+                                class="need-img"
+                                alt="Catalyst"
+                              /><span data-v-16df6199="" class="need-name">Catalyst</span
+                              ><span data-v-16df6199="" class="need-wb wb-unmet"></span>
+                            </div>
+                            <div
+                              data-v-16df6199=""
+                              class="need-card need-card--inactive"
+                              role="button"
+                              tabindex="0"
+                            >
+                              <img
+                                data-v-16df6199=""
+                                src="images/items/punchcard.png"
+                                class="need-img"
+                                alt="Punchcards"
+                              /><span data-v-16df6199="" class="need-name">Punchcards</span
+                              ><span data-v-16df6199="" class="need-wb wb-unmet"></span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div data-v-616be918="" data-v-342f470e="" class="water-mgmt">
+                  <div data-v-616be918="" class="power-table-wrap">
+                    <div data-v-616be918="" class="power-table-title-row">
+                      <span data-v-616be918="" class="calc-section-heading"
+                        >Seasons and storage</span
+                      ><button
+                        data-v-616be918=""
+                        type="button"
+                        class="water-toggle-btn water-toggle-btn--off"
+                      >
+                        Off
+                      </button>
+                    </div>
+                    <p data-v-616be918="" class="water-mgmt-off-hint">
+                      Activate this to account for hostile seasons and calculate the water, food,
+                      and log storage required to endure the worst-case scenario. The production
+                      table will include the buildings needed to replenish your storage to full
+                      capacity.
+                    </p>
+                    <!---->
+                  </div>
+                </div>
+                <div data-v-cb1ff42b="" data-v-342f470e="" class="auto-prod">
+                  <div data-v-cb1ff42b="" class="surplus-section">
+                    <div data-v-cb1ff42b="" class="surplus-header-row">
+                      <span data-v-cb1ff42b="" class="section-title">Desired Surplus</span>
+                      <div data-v-cb1ff42b="" class="surplus-picker-wrap">
+                        <button data-v-cb1ff42b="" type="button" class="surplus-picker-trigger">
+                          <span data-v-cb1ff42b="" class="surplus-picker-trigger-label"
+                            >Add item…</span
+                          ><span
+                            data-v-cb1ff42b=""
+                            class="surplus-picker-chevron"
+                            aria-hidden="true"
+                            >▾</span
+                          >
+                        </button>
+                        <div
+                          data-v-cb1ff42b=""
+                          class="surplus-picker-dropdown"
+                          role="listbox"
+                          style="display: none"
+                        >
+                          <div data-v-cb1ff42b="" class="surplus-picker-group">
+                            <div data-v-cb1ff42b="" class="surplus-picker-group-label">A</div>
+                            <button
+                              data-v-cb1ff42b=""
+                              type="button"
+                              class="surplus-picker-option"
+                              role="option"
+                            >
+                              <img
+                                data-v-cb1ff42b=""
+                                src="images/items/antidote.png"
+                                class="surplus-picker-opt-img"
+                                alt=""
+                              /><span data-v-cb1ff42b="" class="surplus-picker-opt-name"
+                                >Antidotes</span
+                              >
+                            </button>
+                          </div>
+                          <div data-v-cb1ff42b="" class="surplus-picker-group">
+                            <div data-v-cb1ff42b="" class="surplus-picker-group-label">B</div>
+                            <button
+                              data-v-cb1ff42b=""
+                              type="button"
+                              class="surplus-picker-option"
+                              role="option"
+                            >
+                              <img
+                                data-v-cb1ff42b=""
+                                src="images/items/badwater.png"
+                                class="surplus-picker-opt-img"
+                                alt=""
+                              /><span data-v-cb1ff42b="" class="surplus-picker-opt-name"
+                                >Badwater</span
+                              ></button
+                            ><button
+                              data-v-cb1ff42b=""
+                              type="button"
+                              class="surplus-picker-option"
+                              role="option"
+                            >
+                              <img
+                                data-v-cb1ff42b=""
+                                src="images/items/berries.png"
+                                class="surplus-picker-opt-img"
+                                alt=""
+                              /><span data-v-cb1ff42b="" class="surplus-picker-opt-name"
+                                >Berries</span
+                              ></button
+                            ><button
+                              data-v-cb1ff42b=""
+                              type="button"
+                              class="surplus-picker-option"
+                              role="option"
+                            >
+                              <img
+                                data-v-cb1ff42b=""
+                                src="images/items/biofuel.png"
+                                class="surplus-picker-opt-img"
+                                alt=""
+                              /><span data-v-cb1ff42b="" class="surplus-picker-opt-name"
+                                >Biofuel</span
+                              ></button
+                            ><button
+                              data-v-cb1ff42b=""
+                              type="button"
+                              class="surplus-picker-option"
+                              role="option"
+                            >
+                              <img
+                                data-v-cb1ff42b=""
+                                src="images/items/book.png"
+                                class="surplus-picker-opt-img"
+                                alt=""
+                              /><span data-v-cb1ff42b="" class="surplus-picker-opt-name"
+                                >Books</span
+                              ></button
+                            ><button
+                              data-v-cb1ff42b=""
+                              type="button"
+                              class="surplus-picker-option"
+                              role="option"
+                            >
+                              <img
+                                data-v-cb1ff42b=""
+                                src="images/items/bot_chassis.png"
+                                class="surplus-picker-opt-img"
+                                alt=""
+                              /><span data-v-cb1ff42b="" class="surplus-picker-opt-name"
+                                >Bot chassis</span
+                              ></button
+                            ><button
+                              data-v-cb1ff42b=""
+                              type="button"
+                              class="surplus-picker-option"
+                              role="option"
+                            >
+                              <img
+                                data-v-cb1ff42b=""
+                                src="images/items/bot_head.png"
+                                class="surplus-picker-opt-img"
+                                alt=""
+                              /><span data-v-cb1ff42b="" class="surplus-picker-opt-name"
+                                >Bot heads</span
+                              ></button
+                            ><button
+                              data-v-cb1ff42b=""
+                              type="button"
+                              class="surplus-picker-option"
+                              role="option"
+                            >
+                              <img
+                                data-v-cb1ff42b=""
+                                src="images/items/bot_limb.png"
+                                class="surplus-picker-opt-img"
+                                alt=""
+                              /><span data-v-cb1ff42b="" class="surplus-picker-opt-name"
+                                >Bot limbs</span
+                              ></button
+                            ><button
+                              data-v-cb1ff42b=""
+                              type="button"
+                              class="surplus-picker-option"
+                              role="option"
+                            >
+                              <img
+                                data-v-cb1ff42b=""
+                                src="images/items/bread.png"
+                                class="surplus-picker-opt-img"
+                                alt=""
+                              /><span data-v-cb1ff42b="" class="surplus-picker-opt-name"
+                                >Bread</span
+                              >
+                            </button>
+                          </div>
+                          <div data-v-cb1ff42b="" class="surplus-picker-group">
+                            <div data-v-cb1ff42b="" class="surplus-picker-group-label">C</div>
+                            <button
+                              data-v-cb1ff42b=""
+                              type="button"
+                              class="surplus-picker-option"
+                              role="option"
+                            >
+                              <img
+                                data-v-cb1ff42b=""
+                                src="images/items/carrot.png"
+                                class="surplus-picker-opt-img"
+                                alt=""
+                              /><span data-v-cb1ff42b="" class="surplus-picker-opt-name"
+                                >Carrots</span
+                              ></button
+                            ><button
+                              data-v-cb1ff42b=""
+                              type="button"
+                              class="surplus-picker-option"
+                              role="option"
+                            >
+                              <img
+                                data-v-cb1ff42b=""
+                                src="images/items/catalyst.png"
+                                class="surplus-picker-opt-img"
+                                alt=""
+                              /><span data-v-cb1ff42b="" class="surplus-picker-opt-name"
+                                >Catalyst</span
+                              ></button
+                            ><button
+                              data-v-cb1ff42b=""
+                              type="button"
+                              class="surplus-picker-option"
+                              role="option"
+                            >
+                              <img
+                                data-v-cb1ff42b=""
+                                src="images/items/cattail_cracker.png"
+                                class="surplus-picker-opt-img"
+                                alt=""
+                              /><span data-v-cb1ff42b="" class="surplus-picker-opt-name"
+                                >Cattail crackers</span
+                              ></button
+                            ><button
+                              data-v-cb1ff42b=""
+                              type="button"
+                              class="surplus-picker-option"
+                              role="option"
+                            >
+                              <img
+                                data-v-cb1ff42b=""
+                                src="images/items/cattail_flour.png"
+                                class="surplus-picker-opt-img"
+                                alt=""
+                              /><span data-v-cb1ff42b="" class="surplus-picker-opt-name"
+                                >Cattail flour</span
+                              ></button
+                            ><button
+                              data-v-cb1ff42b=""
+                              type="button"
+                              class="surplus-picker-option"
+                              role="option"
+                            >
+                              <img
+                                data-v-cb1ff42b=""
+                                src="images/items/cattail_root.png"
+                                class="surplus-picker-opt-img"
+                                alt=""
+                              /><span data-v-cb1ff42b="" class="surplus-picker-opt-name"
+                                >Cattail roots</span
+                              ></button
+                            ><button
+                              data-v-cb1ff42b=""
+                              type="button"
+                              class="surplus-picker-option"
+                              role="option"
+                            >
+                              <img
+                                data-v-cb1ff42b=""
+                                src="images/items/chestnut.png"
+                                class="surplus-picker-opt-img"
+                                alt=""
+                              /><span data-v-cb1ff42b="" class="surplus-picker-opt-name"
+                                >Chestnuts</span
+                              >
+                            </button>
+                          </div>
+                          <div data-v-cb1ff42b="" class="surplus-picker-group">
+                            <div data-v-cb1ff42b="" class="surplus-picker-group-label">D</div>
+                            <button
+                              data-v-cb1ff42b=""
+                              type="button"
+                              class="surplus-picker-option"
+                              role="option"
+                            >
+                              <img
+                                data-v-cb1ff42b=""
+                                src="images/items/dandelion.png"
+                                class="surplus-picker-opt-img"
+                                alt=""
+                              /><span data-v-cb1ff42b="" class="surplus-picker-opt-name"
+                                >Dandelions</span
+                              ></button
+                            ><button
+                              data-v-cb1ff42b=""
+                              type="button"
+                              class="surplus-picker-option"
+                              role="option"
+                            >
+                              <img
+                                data-v-cb1ff42b=""
+                                src="images/items/dirt.png"
+                                class="surplus-picker-opt-img"
+                                alt=""
+                              /><span data-v-cb1ff42b="" class="surplus-picker-opt-name">Dirt</span>
+                            </button>
+                          </div>
+                          <div data-v-cb1ff42b="" class="surplus-picker-group">
+                            <div data-v-cb1ff42b="" class="surplus-picker-group-label">E</div>
+                            <button
+                              data-v-cb1ff42b=""
+                              type="button"
+                              class="surplus-picker-option"
+                              role="option"
+                            >
+                              <img
+                                data-v-cb1ff42b=""
+                                src="images/items/explosive.png"
+                                class="surplus-picker-opt-img"
+                                alt=""
+                              /><span data-v-cb1ff42b="" class="surplus-picker-opt-name"
+                                >Explosives</span
+                              ></button
+                            ><button
+                              data-v-cb1ff42b=""
+                              type="button"
+                              class="surplus-picker-option"
+                              role="option"
+                            >
+                              <img
+                                data-v-cb1ff42b=""
+                                src="images/items/extract.png"
+                                class="surplus-picker-opt-img"
+                                alt=""
+                              /><span data-v-cb1ff42b="" class="surplus-picker-opt-name"
+                                >Extract</span
+                              >
+                            </button>
+                          </div>
+                          <div data-v-cb1ff42b="" class="surplus-picker-group">
+                            <div data-v-cb1ff42b="" class="surplus-picker-group-label">F</div>
+                            <button
+                              data-v-cb1ff42b=""
+                              type="button"
+                              class="surplus-picker-option"
+                              role="option"
+                            >
+                              <img
+                                data-v-cb1ff42b=""
+                                src="images/items/fireworks.png"
+                                class="surplus-picker-opt-img"
+                                alt=""
+                              /><span data-v-cb1ff42b="" class="surplus-picker-opt-name"
+                                >Fireworks</span
+                              >
+                            </button>
+                          </div>
+                          <div data-v-cb1ff42b="" class="surplus-picker-group">
+                            <div data-v-cb1ff42b="" class="surplus-picker-group-label">G</div>
+                            <button
+                              data-v-cb1ff42b=""
+                              type="button"
+                              class="surplus-picker-option"
+                              role="option"
+                            >
+                              <img
+                                data-v-cb1ff42b=""
+                                src="images/items/gear.png"
+                                class="surplus-picker-opt-img"
+                                alt=""
+                              /><span data-v-cb1ff42b="" class="surplus-picker-opt-name"
+                                >Gears</span
+                              ></button
+                            ><button
+                              data-v-cb1ff42b=""
+                              type="button"
+                              class="surplus-picker-option"
+                              role="option"
+                            >
+                              <img
+                                data-v-cb1ff42b=""
+                                src="images/items/grilled_chestnut.png"
+                                class="surplus-picker-opt-img"
+                                alt=""
+                              /><span data-v-cb1ff42b="" class="surplus-picker-opt-name"
+                                >Grilled chestnuts</span
+                              ></button
+                            ><button
+                              data-v-cb1ff42b=""
+                              type="button"
+                              class="surplus-picker-option"
+                              role="option"
+                            >
+                              <img
+                                data-v-cb1ff42b=""
+                                src="images/items/grilled_potato.png"
+                                class="surplus-picker-opt-img"
+                                alt=""
+                              /><span data-v-cb1ff42b="" class="surplus-picker-opt-name"
+                                >Grilled potatoes</span
+                              ></button
+                            ><button
+                              data-v-cb1ff42b=""
+                              type="button"
+                              class="surplus-picker-option"
+                              role="option"
+                            >
+                              <img
+                                data-v-cb1ff42b=""
+                                src="images/items/grilled_spadderdock.png"
+                                class="surplus-picker-opt-img"
+                                alt=""
+                              /><span data-v-cb1ff42b="" class="surplus-picker-opt-name"
+                                >Grilled spadderdock</span
+                              >
+                            </button>
+                          </div>
+                          <div data-v-cb1ff42b="" class="surplus-picker-group">
+                            <div data-v-cb1ff42b="" class="surplus-picker-group-label">L</div>
+                            <button
+                              data-v-cb1ff42b=""
+                              type="button"
+                              class="surplus-picker-option"
+                              role="option"
+                            >
+                              <img
+                                data-v-cb1ff42b=""
+                                src="images/items/log.png"
+                                class="surplus-picker-opt-img"
+                                alt=""
+                              /><span data-v-cb1ff42b="" class="surplus-picker-opt-name">Logs</span>
+                            </button>
+                          </div>
+                          <div data-v-cb1ff42b="" class="surplus-picker-group">
+                            <div data-v-cb1ff42b="" class="surplus-picker-group-label">M</div>
+                            <button
+                              data-v-cb1ff42b=""
+                              type="button"
+                              class="surplus-picker-option"
+                              role="option"
+                            >
+                              <img
+                                data-v-cb1ff42b=""
+                                src="images/items/maple_pastry.png"
+                                class="surplus-picker-opt-img"
+                                alt=""
+                              /><span data-v-cb1ff42b="" class="surplus-picker-opt-name"
+                                >Maple pastries</span
+                              ></button
+                            ><button
+                              data-v-cb1ff42b=""
+                              type="button"
+                              class="surplus-picker-option"
+                              role="option"
+                            >
+                              <img
+                                data-v-cb1ff42b=""
+                                src="images/items/maple_syrup.png"
+                                class="surplus-picker-opt-img"
+                                alt=""
+                              /><span data-v-cb1ff42b="" class="surplus-picker-opt-name"
+                                >Maple syrup</span
+                              ></button
+                            ><button
+                              data-v-cb1ff42b=""
+                              type="button"
+                              class="surplus-picker-option"
+                              role="option"
+                            >
+                              <img
+                                data-v-cb1ff42b=""
+                                src="images/items/metal_block.png"
+                                class="surplus-picker-opt-img"
+                                alt=""
+                              /><span data-v-cb1ff42b="" class="surplus-picker-opt-name"
+                                >Metal blocks</span
+                              >
+                            </button>
+                          </div>
+                          <div data-v-cb1ff42b="" class="surplus-picker-group">
+                            <div data-v-cb1ff42b="" class="surplus-picker-group-label">P</div>
+                            <button
+                              data-v-cb1ff42b=""
+                              type="button"
+                              class="surplus-picker-option"
+                              role="option"
+                            >
+                              <img
+                                data-v-cb1ff42b=""
+                                src="images/items/paper.png"
+                                class="surplus-picker-opt-img"
+                                alt=""
+                              /><span data-v-cb1ff42b="" class="surplus-picker-opt-name"
+                                >Paper</span
+                              ></button
+                            ><button
+                              data-v-cb1ff42b=""
+                              type="button"
+                              class="surplus-picker-option"
+                              role="option"
+                            >
+                              <img
+                                data-v-cb1ff42b=""
+                                src="images/items/pine_resin.png"
+                                class="surplus-picker-opt-img"
+                                alt=""
+                              /><span data-v-cb1ff42b="" class="surplus-picker-opt-name"
+                                >Pine resin</span
+                              ></button
+                            ><button
+                              data-v-cb1ff42b=""
+                              type="button"
+                              class="surplus-picker-option"
+                              role="option"
+                            >
+                              <img
+                                data-v-cb1ff42b=""
+                                src="images/items/plank.png"
+                                class="surplus-picker-opt-img"
+                                alt=""
+                              /><span data-v-cb1ff42b="" class="surplus-picker-opt-name"
+                                >Planks</span
+                              ></button
+                            ><button
+                              data-v-cb1ff42b=""
+                              type="button"
+                              class="surplus-picker-option"
+                              role="option"
+                            >
+                              <img
+                                data-v-cb1ff42b=""
+                                src="images/items/potato.png"
+                                class="surplus-picker-opt-img"
+                                alt=""
+                              /><span data-v-cb1ff42b="" class="surplus-picker-opt-name"
+                                >Potatoes</span
+                              ></button
+                            ><button
+                              data-v-cb1ff42b=""
+                              type="button"
+                              class="surplus-picker-option"
+                              role="option"
+                            >
+                              <img
+                                data-v-cb1ff42b=""
+                                src="images/items/punchcard.png"
+                                class="surplus-picker-opt-img"
+                                alt=""
+                              /><span data-v-cb1ff42b="" class="surplus-picker-opt-name"
+                                >Punchcards</span
+                              >
+                            </button>
+                          </div>
+                          <div data-v-cb1ff42b="" class="surplus-picker-group">
+                            <div data-v-cb1ff42b="" class="surplus-picker-group-label">S</div>
+                            <button
+                              data-v-cb1ff42b=""
+                              type="button"
+                              class="surplus-picker-option"
+                              role="option"
+                            >
+                              <img
+                                data-v-cb1ff42b=""
+                                src="images/items/science_point.png"
+                                class="surplus-picker-opt-img"
+                                alt=""
+                              /><span data-v-cb1ff42b="" class="surplus-picker-opt-name"
+                                >Science point</span
+                              ></button
+                            ><button
+                              data-v-cb1ff42b=""
+                              type="button"
+                              class="surplus-picker-option"
+                              role="option"
+                            >
+                              <img
+                                data-v-cb1ff42b=""
+                                src="images/items/scrap_metal.png"
+                                class="surplus-picker-opt-img"
+                                alt=""
+                              /><span data-v-cb1ff42b="" class="surplus-picker-opt-name"
+                                >Scrap metal</span
+                              ></button
+                            ><button
+                              data-v-cb1ff42b=""
+                              type="button"
+                              class="surplus-picker-option"
+                              role="option"
+                            >
+                              <img
+                                data-v-cb1ff42b=""
+                                src="images/items/spadderdock.png"
+                                class="surplus-picker-opt-img"
+                                alt=""
+                              /><span data-v-cb1ff42b="" class="surplus-picker-opt-name"
+                                >Spadderdock</span
+                              ></button
+                            ><button
+                              data-v-cb1ff42b=""
+                              type="button"
+                              class="surplus-picker-option"
+                              role="option"
+                            >
+                              <img
+                                data-v-cb1ff42b=""
+                                src="images/items/sunflower_seeds.png"
+                                class="surplus-picker-opt-img"
+                                alt=""
+                              /><span data-v-cb1ff42b="" class="surplus-picker-opt-name"
+                                >Sunflower seeds</span
+                              >
+                            </button>
+                          </div>
+                          <div data-v-cb1ff42b="" class="surplus-picker-group">
+                            <div data-v-cb1ff42b="" class="surplus-picker-group-label">T</div>
+                            <button
+                              data-v-cb1ff42b=""
+                              type="button"
+                              class="surplus-picker-option"
+                              role="option"
+                            >
+                              <img
+                                data-v-cb1ff42b=""
+                                src="images/others/timberbot.png"
+                                class="surplus-picker-opt-img"
+                                alt=""
+                              /><span data-v-cb1ff42b="" class="surplus-picker-opt-name"
+                                >Timberbots</span
+                              ></button
+                            ><button
+                              data-v-cb1ff42b=""
+                              type="button"
+                              class="surplus-picker-option"
+                              role="option"
+                            >
+                              <img
+                                data-v-cb1ff42b=""
+                                src="images/items/treated_plank.png"
+                                class="surplus-picker-opt-img"
+                                alt=""
+                              /><span data-v-cb1ff42b="" class="surplus-picker-opt-name"
+                                >Treated planks</span
+                              >
+                            </button>
+                          </div>
+                          <div data-v-cb1ff42b="" class="surplus-picker-group">
+                            <div data-v-cb1ff42b="" class="surplus-picker-group-label">W</div>
+                            <button
+                              data-v-cb1ff42b=""
+                              type="button"
+                              class="surplus-picker-option"
+                              role="option"
+                            >
+                              <img
+                                data-v-cb1ff42b=""
+                                src="images/items/water.png"
+                                class="surplus-picker-opt-img"
+                                alt=""
+                              /><span data-v-cb1ff42b="" class="surplus-picker-opt-name"
+                                >Water</span
+                              ></button
+                            ><button
+                              data-v-cb1ff42b=""
+                              type="button"
+                              class="surplus-picker-option"
+                              role="option"
+                            >
+                              <img
+                                data-v-cb1ff42b=""
+                                src="images/items/wheat.png"
+                                class="surplus-picker-opt-img"
+                                alt=""
+                              /><span data-v-cb1ff42b="" class="surplus-picker-opt-name"
+                                >Wheat</span
+                              ></button
+                            ><button
+                              data-v-cb1ff42b=""
+                              type="button"
+                              class="surplus-picker-option"
+                              role="option"
+                            >
+                              <img
+                                data-v-cb1ff42b=""
+                                src="images/items/wheat_flour.png"
+                                class="surplus-picker-opt-img"
+                                alt=""
+                              /><span data-v-cb1ff42b="" class="surplus-picker-opt-name"
+                                >Wheat flour</span
+                              >
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!---->
+                  </div>
+                  <div
+                    data-v-cb1ff42b=""
+                    class="prod-table-wrap"
+                    style="--prod-sticky-head-h: 66px"
+                  >
+                    <div data-v-cb1ff42b="" class="prod-table-head-sticky">
+                      <div data-v-cb1ff42b="" class="prod-table-title-row">
+                        <div data-v-cb1ff42b="" class="prod-table-title-start">
+                          <button
+                            data-v-cb1ff42b=""
+                            type="button"
+                            class="calc-section-heading"
+                            aria-label="Scroll to top of Production table"
+                          >
+                            Production/day</button
+                          ><label data-v-cb1ff42b="" class="prod-header-difficulty"
+                            ><span data-v-cb1ff42b="" class="prod-header-difficulty-label"
+                              >Difficulty</span
+                            ><select data-v-cb1ff42b="" class="prod-header-difficulty-select">
+                              <option data-v-cb1ff42b="" value="easy">Easy</option>
+                              <option data-v-cb1ff42b="" value="normal">Normal</option>
+                              <option data-v-cb1ff42b="" value="hard">Hard</option>
+                            </select></label
+                          ><button data-v-cb1ff42b="" type="button" class="prod-reset-sliders-btn">
+                            Reset sliders
+                          </button>
+                        </div>
+                        <div data-v-cb1ff42b="" class="prod-checkboxes">
+                          <label data-v-cb1ff42b="" class="prod-checkbox prod-checkbox--custom"
+                            ><input
+                              data-v-cb1ff42b=""
+                              type="checkbox"
+                              class="prod-checkbox-input"
+                            /><span data-v-cb1ff42b="" class="prod-checkbox-box"
+                              ><img
+                                data-v-cb1ff42b=""
+                                class="prod-checkbox-icon"
+                                src="images/others/box_tick.png"
+                                alt="" /></span
+                            ><span data-v-cb1ff42b="" class="prod-checkbox-text"
+                              >Beavers needs</span
+                            ></label
+                          ><!----><!----><!---->
+                        </div>
+                      </div>
+                      <div class="prod-head prod-row-grid prod-head-cols" data-v-cb1ff42b="">
+                        <span class="prod-head-cell prod-head-span2" data-v-cb1ff42b=""
+                          >Item/day needed</span
+                        ><span class="prod-head-cell col-bp-header" data-v-cb1ff42b=""
+                          >Building/Plants needed</span
+                        ><span class="prod-head-cell col-r col-land-header" data-v-cb1ff42b=""
+                          >Land use</span
+                        ><span class="prod-head-cell col-r" data-v-cb1ff42b="">Workers</span
+                        ><span class="prod-head-cell col-r" data-v-cb1ff42b="">Power/day</span
+                        ><span class="prod-head-cell col-bot-header" data-v-cb1ff42b="">Bots</span>
+                      </div>
+                    </div>
+                    <div data-v-cb1ff42b="" class="table-scroll-x">
+                      <div data-v-cb1ff42b="" class="prod-table">
+                        <!----><button
+                          data-v-cb1ff42b=""
+                          type="button"
+                          class="prod-section-header prod-section-header--collapsible"
+                          aria-expanded="true"
+                          title="Hide rows"
+                        >
+                          <span data-v-cb1ff42b="" class="prod-section-chevron" aria-hidden="true"
+                            >▾</span
+                          ><span data-v-cb1ff42b="" class="prod-section-header-label">Water</span>
+                        </button>
+                        <div data-v-cb1ff42b="" class="prod-type-rows">
+                          <div data-v-cb1ff42b="" class="prod-row prod-row-grid">
+                            <div data-v-cb1ff42b="" class="prod-row-line1">
+                              <div data-v-cb1ff42b="" class="col-r cell-prod-day prod-cell-col1">
+                                21.3
+                              </div>
+                              <div data-v-cb1ff42b="" class="cell-item prod-cell-col2">
+                                <div data-v-cb1ff42b="" class="cell-item-col">
+                                  <div data-v-cb1ff42b="" class="cell-item-main">
+                                    <img
+                                      data-v-cb1ff42b=""
+                                      src="images/items/water.png"
+                                      class="item-img-sm"
+                                      alt="Water"
+                                    /><span data-v-cb1ff42b="" class="item-label">Water</span>
+                                    <div data-v-cb1ff42b="" class="slider-chip slider-chip--recipe">
+                                      <div
+                                        data-v-d8a7165d=""
+                                        class="app-tooltip-activator"
+                                        aria-describedby="v-tooltip-v-4"
+                                      >
+                                        <img
+                                          data-v-cb1ff42b=""
+                                          src="images/items/water.png"
+                                          class="slider-chip-icon"
+                                          alt=""
+                                        />
+                                      </div>
+                                      <div data-v-cb1ff42b="" class="slider-chip-track">
+                                        <div
+                                          data-v-d8a7165d=""
+                                          class="app-tooltip-activator"
+                                          aria-describedby="v-tooltip-v-5"
+                                        >
+                                          <input
+                                            data-v-cb1ff42b=""
+                                            type="range"
+                                            min="0"
+                                            max="100"
+                                            step="1"
+                                            class="prop-slider"
+                                            value="100"
+                                          />
+                                        </div>
+                                        <span data-v-cb1ff42b="" class="prop-pct-wrap"
+                                          ><input
+                                            data-v-cb1ff42b=""
+                                            type="text"
+                                            inputmode="numeric"
+                                            class="prop-pct prop-pct-input"
+                                            aria-label="Mix % for Water"
+                                            value="100"
+                                          /><span data-v-cb1ff42b="" class="prop-pct-suffix"
+                                            >%</span
+                                          ></span
+                                        >
+                                      </div>
+                                    </div>
+                                    <!---->
+                                  </div>
+                                  <!---->
+                                </div>
+                              </div>
+                            </div>
+                            <div data-v-cb1ff42b="" class="prod-row-line2">
+                              <div data-v-cb1ff42b="" class="cell-bld-plants">
+                                <div data-v-cb1ff42b="" class="col-bld-count col-r">
+                                  1
+                                  <span data-v-cb1ff42b="" class="bld-used-paren eff-red"
+                                    >(0.45)</span
+                                  >
+                                </div>
+                                <div data-v-cb1ff42b="" class="cell-building-bee">
+                                  <div data-v-cb1ff42b="" class="cell-building-main">
+                                    <img
+                                      data-v-cb1ff42b=""
+                                      src="images/buildings/water_pump.png"
+                                      class="item-img-sm"
+                                      alt="Water Pump"
+                                    /><span data-v-cb1ff42b="">Water Pump</span>
+                                  </div>
+                                  <!---->
+                                </div>
+                              </div>
+                              <div data-v-cb1ff42b="" class="col-r col-land prod-cell-col5">
+                                4 tiles
+                              </div>
+                              <div
+                                data-v-cb1ff42b=""
+                                class="col-r prod-workers-cell prod-cell-col6"
+                              >
+                                1
+                                <!----><span data-v-cb1ff42b="" class="worker-label">beavers</span>
+                              </div>
+                              <div
+                                data-v-cb1ff42b=""
+                                class="col-r prod-power-cell prod-cell-col7 prod-mobile-chip--empty"
+                              ></div>
+                            </div>
+                            <div data-v-cb1ff42b="" class="col-bot prod-cell-col8">
+                              <div
+                                data-v-d8a7165d=""
+                                class="app-tooltip-activator"
+                                aria-describedby="v-tooltip-v-6"
+                              >
+                                <img
+                                  data-v-cb1ff42b=""
+                                  src="images/others/timberbot.png"
+                                  class="bot-icon bot-icon--off bot-icon--locked"
+                                  alt=""
+                                />
+                              </div>
+                            </div>
+                            <!---->
+                          </div>
+                          <div data-v-cb1ff42b="" class="prod-row prod-row-grid prod-row--inactive">
+                            <div data-v-cb1ff42b="" class="prod-row-line1">
+                              <div data-v-cb1ff42b="" class="col-r cell-prod-day prod-cell-col1">
+                                0.00
+                              </div>
+                              <div data-v-cb1ff42b="" class="cell-item prod-cell-col2">
+                                <div data-v-cb1ff42b="" class="cell-item-col">
+                                  <div data-v-cb1ff42b="" class="cell-item-main">
+                                    <img
+                                      data-v-cb1ff42b=""
+                                      src="images/items/water.png"
+                                      class="item-img-sm"
+                                      alt="Water"
+                                    /><span data-v-cb1ff42b="" class="item-label">Water</span>
+                                    <div data-v-cb1ff42b="" class="slider-chip slider-chip--recipe">
+                                      <div
+                                        data-v-d8a7165d=""
+                                        class="app-tooltip-activator"
+                                        aria-describedby="v-tooltip-v-7"
+                                      >
+                                        <img
+                                          data-v-cb1ff42b=""
+                                          src="images/items/water.png"
+                                          class="slider-chip-icon"
+                                          alt=""
+                                        />
+                                      </div>
+                                      <div data-v-cb1ff42b="" class="slider-chip-track">
+                                        <div
+                                          data-v-d8a7165d=""
+                                          class="app-tooltip-activator"
+                                          aria-describedby="v-tooltip-v-8"
+                                        >
+                                          <input
+                                            data-v-cb1ff42b=""
+                                            type="range"
+                                            min="0"
+                                            max="100"
+                                            step="1"
+                                            class="prop-slider"
+                                            value="0"
+                                          />
+                                        </div>
+                                        <span data-v-cb1ff42b="" class="prop-pct-wrap"
+                                          ><input
+                                            data-v-cb1ff42b=""
+                                            type="text"
+                                            inputmode="numeric"
+                                            class="prop-pct prop-pct-input"
+                                            aria-label="Mix % for Water"
+                                            value="0"
+                                          /><span data-v-cb1ff42b="" class="prop-pct-suffix"
+                                            >%</span
+                                          ></span
+                                        >
+                                      </div>
+                                    </div>
+                                    <!---->
+                                  </div>
+                                  <!---->
+                                </div>
+                              </div>
+                            </div>
+                            <div data-v-cb1ff42b="" class="prod-row-line2">
+                              <div data-v-cb1ff42b="" class="cell-bld-plants">
+                                <div data-v-cb1ff42b="" class="col-bld-count col-r">
+                                  0
+                                  <!---->
+                                </div>
+                                <div data-v-cb1ff42b="" class="cell-building-bee">
+                                  <div data-v-cb1ff42b="" class="cell-building-main">
+                                    <img
+                                      data-v-cb1ff42b=""
+                                      src="images/buildings/large_water_pump.png"
+                                      class="item-img-sm"
+                                      alt="Large Water Pump"
+                                    /><span data-v-cb1ff42b="">Large Water Pump</span>
+                                  </div>
+                                  <!---->
+                                </div>
+                              </div>
+                              <div
+                                data-v-cb1ff42b=""
+                                class="col-r col-land prod-cell-col5 prod-mobile-chip--empty"
+                              ></div>
+                              <div
+                                data-v-cb1ff42b=""
+                                class="col-r prod-workers-cell prod-cell-col6 prod-mobile-chip--empty"
+                              ></div>
+                              <div
+                                data-v-cb1ff42b=""
+                                class="col-r prod-power-cell prod-cell-col7 prod-mobile-chip--empty"
+                              ></div>
+                            </div>
+                            <div data-v-cb1ff42b="" class="col-bot prod-cell-col8">
+                              <div
+                                data-v-d8a7165d=""
+                                class="app-tooltip-activator"
+                                aria-describedby="v-tooltip-v-9"
+                              >
+                                <img
+                                  data-v-cb1ff42b=""
+                                  src="images/others/timberbot.png"
+                                  class="bot-icon bot-icon--off bot-icon--locked"
+                                  alt=""
+                                />
+                              </div>
+                            </div>
+                            <!---->
+                          </div>
+                        </div>
+                        <button
+                          data-v-cb1ff42b=""
+                          type="button"
+                          class="prod-section-header prod-section-header--collapsible"
+                          aria-expanded="true"
+                          title="Hide rows"
+                        >
+                          <span data-v-cb1ff42b="" class="prod-section-chevron" aria-hidden="true"
+                            >▾</span
+                          ><span data-v-cb1ff42b="" class="prod-section-header-label">Trees</span>
+                        </button>
+                        <div data-v-cb1ff42b="" class="prod-type-rows">
+                          <div data-v-cb1ff42b="" class="prod-row prod-row-grid">
+                            <div data-v-cb1ff42b="" class="prod-row-line1">
+                              <div data-v-cb1ff42b="" class="col-r cell-prod-day prod-cell-col1">
+                                26.7
+                              </div>
+                              <div data-v-cb1ff42b="" class="cell-item prod-cell-col2">
+                                <div data-v-cb1ff42b="" class="cell-item-col">
+                                  <div data-v-cb1ff42b="" class="cell-item-main">
+                                    <img
+                                      data-v-cb1ff42b=""
+                                      src="images/items/berries.png"
+                                      class="item-img-sm"
+                                      alt="Berries"
+                                    /><span data-v-cb1ff42b="" class="item-label">Berries</span
+                                    ><!---->
+                                    <div
+                                      data-v-cb1ff42b=""
+                                      class="slider-chip slider-chip--hunger slider-chip--static"
+                                    >
+                                      <div
+                                        data-v-d8a7165d=""
+                                        class="app-tooltip-activator"
+                                        aria-describedby="v-tooltip-v-10"
+                                      >
+                                        <img
+                                          data-v-cb1ff42b=""
+                                          src="images/others/hunger.png"
+                                          class="slider-chip-icon"
+                                          alt=""
+                                        />
+                                      </div>
+                                      <span data-v-cb1ff42b="" class="hunger-pct-only">100%</span>
+                                    </div>
+                                  </div>
+                                  <!---->
+                                </div>
+                              </div>
+                            </div>
+                            <div data-v-cb1ff42b="" class="prod-row-line2">
+                              <div data-v-cb1ff42b="" class="cell-bld-plants">
+                                <div data-v-cb1ff42b="" class="col-bld-count col-r">
+                                  54
+                                  <span data-v-cb1ff42b="" class="bld-used-paren eff-green"
+                                    >(53.40)</span
+                                  >
+                                </div>
+                                <div data-v-cb1ff42b="" class="cell-building-bee">
+                                  <div data-v-cb1ff42b="" class="cell-building-main">
+                                    <img
+                                      data-v-cb1ff42b=""
+                                      src="images/plants/blueberry_bush.png"
+                                      class="item-img-sm"
+                                      alt="Blueberry bush"
+                                    /><span data-v-cb1ff42b="">Blueberry bush</span>
+                                  </div>
+                                  <!---->
+                                </div>
+                              </div>
+                              <div data-v-cb1ff42b="" class="col-r col-land prod-cell-col5">
+                                54 terrain
+                              </div>
+                              <div
+                                data-v-cb1ff42b=""
+                                class="col-r prod-workers-cell prod-cell-col6 prod-mobile-chip--empty"
+                              ></div>
+                              <div
+                                data-v-cb1ff42b=""
+                                class="col-r prod-power-cell prod-cell-col7 prod-mobile-chip--empty"
+                              ></div>
+                            </div>
+                            <div data-v-cb1ff42b="" class="col-bot prod-cell-col8"><!----></div>
+                            <!---->
+                          </div>
+                        </div>
+                        <button
+                          data-v-cb1ff42b=""
+                          type="button"
+                          class="prod-section-header prod-section-header--collapsible"
+                          aria-expanded="true"
+                          title="Hide rows"
+                        >
+                          <span data-v-cb1ff42b="" class="prod-section-chevron" aria-hidden="true"
+                            >▾</span
+                          ><span data-v-cb1ff42b="" class="prod-section-header-label">Food</span>
+                        </button>
+                        <div data-v-cb1ff42b="" class="prod-type-rows">
+                          <div data-v-cb1ff42b="" class="prod-row prod-row-grid prod-row--gather">
+                            <div data-v-cb1ff42b="" class="prod-row-line1">
+                              <div
+                                data-v-cb1ff42b=""
+                                class="col-r cell-prod-day prod-cell-col1"
+                              ></div>
+                              <div
+                                data-v-cb1ff42b=""
+                                class="cell-item prod-cell-col2 cell-item--gather"
+                              >
+                                <div data-v-cb1ff42b="" class="gather-line gather-line--inline">
+                                  <div data-v-cb1ff42b="" class="gather-chips-wrap">
+                                    <span data-v-cb1ff42b="" class="gather-segment-chip"
+                                      ><span data-v-cb1ff42b="" class="gather-segment-qty">9</span
+                                      ><span data-v-cb1ff42b="" class="gather-segment-name"
+                                        >Blueberry bush</span
+                                      ><span data-v-cb1ff42b="" class="gather-segment-unit"
+                                        >/day</span
+                                      ></span
+                                    >
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div data-v-cb1ff42b="" class="prod-row-line2">
+                              <div data-v-cb1ff42b="" class="cell-bld-plants">
+                                <div data-v-cb1ff42b="" class="gather-bld-name-chip">
+                                  <span data-v-cb1ff42b="" class="col-bld-count col-r"
+                                    >1
+                                    <span data-v-cb1ff42b="" class="bld-used-paren eff-yellow"
+                                      >(0.70)</span
+                                    ></span
+                                  >
+                                  <div data-v-cb1ff42b="" class="cell-building-bee">
+                                    <div data-v-cb1ff42b="" class="cell-building-main">
+                                      <img
+                                        data-v-cb1ff42b=""
+                                        src="images/buildings/gatherer_flag.png"
+                                        class="item-img-sm"
+                                        alt="Gatherer Flag"
+                                      /><span data-v-cb1ff42b="">Gatherer Flag</span>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div data-v-cb1ff42b="" class="gather-bld-meta">
+                                  <span
+                                    data-v-cb1ff42b=""
+                                    class="gather-bld-meta-chip gather-bld-meta-chip--land"
+                                    >1 tiles</span
+                                  ><span data-v-cb1ff42b="" class="gather-bld-meta-chip"
+                                    >1
+                                    <!----><span data-v-cb1ff42b="" class="worker-label"
+                                      >beavers</span
+                                    ></span
+                                  >
+                                </div>
+                              </div>
+                              <div data-v-cb1ff42b="" class="col-r col-land prod-cell-col5">
+                                1 tiles
+                              </div>
+                              <div
+                                data-v-cb1ff42b=""
+                                class="col-r prod-workers-cell prod-cell-col6"
+                              >
+                                1
+                                <!----><span data-v-cb1ff42b="" class="worker-label">beavers</span>
+                              </div>
+                              <div
+                                data-v-cb1ff42b=""
+                                class="col-r prod-power-cell prod-cell-col7 prod-mobile-chip--empty"
+                              ></div>
+                            </div>
+                            <div data-v-cb1ff42b="" class="col-bot prod-cell-col8">
+                              <div
+                                data-v-d8a7165d=""
+                                class="app-tooltip-activator"
+                                aria-describedby="v-tooltip-v-11"
+                              >
+                                <img
+                                  data-v-cb1ff42b=""
+                                  src="images/others/timberbot.png"
+                                  class="bot-icon bot-icon--off bot-icon--locked"
+                                  alt=""
+                                />
+                              </div>
+                            </div>
+                            <!---->
+                          </div>
+                        </div>
+                        <div data-v-cb1ff42b="" class="prod-totals prod-row-grid">
+                          <div data-v-cb1ff42b="" class="col-r prod-totals-total-label">Total</div>
+                          <div data-v-cb1ff42b="" class="prod-totals-item-day-chip totals-chip">
+                            <span data-v-cb1ff42b="" class="prod-totals-prod-value"
+                              ><strong data-v-cb1ff42b="">48.0</strong
+                              ><span data-v-cb1ff42b="" class="prod-totals-unit">
+                                item/day</span
+                              ></span
+                            >
+                          </div>
+                          <div data-v-cb1ff42b="" class="prod-totals-bld-strip totals-chip">
+                            <div data-v-cb1ff42b="" class="prod-totals-bld-metric">
+                              <strong data-v-cb1ff42b="">2</strong> buildings
+                            </div>
+                            <!---->
+                            <div data-v-cb1ff42b="" class="prod-totals-bld-metric">
+                              <strong data-v-cb1ff42b="">54</strong> trees
+                            </div>
+                          </div>
+                          <div data-v-cb1ff42b="" class="prod-totals-land-group">
+                            <div data-v-cb1ff42b="" class="totals-chip prod-totals-land-chip">
+                              <strong data-v-cb1ff42b="">5</strong> tiles
+                            </div>
+                            <!---->
+                            <div data-v-cb1ff42b="" class="totals-chip prod-totals-land-chip">
+                              <strong data-v-cb1ff42b="">54</strong> terrain
+                            </div>
+                          </div>
+                          <div data-v-cb1ff42b="" class="col-r prod-totals-workers totals-chip">
+                            <div data-v-cb1ff42b="">
+                              <strong data-v-cb1ff42b="">2</strong> beavers
+                            </div>
+                            <!---->
+                          </div>
+                          <!---->
+                          <div data-v-cb1ff42b="" class="prod-totals-bot-spacer"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div data-v-9961b9fa="" data-v-342f470e="" class="auto-power">
+                  <div data-v-9961b9fa="" class="power-table-wrap">
+                    <div data-v-9961b9fa="" class="power-table-title-row">
+                      <span data-v-9961b9fa="" class="calc-section-heading">Power generation</span
+                      ><!---->
+                    </div>
+                    <div data-v-9961b9fa="" class="empty-state power-no-need-msg">
+                      No energy required — current production draws no power.
+                    </div>
+                  </div>
+                </div>
+                <div data-v-d751c566="" data-v-342f470e="" class="district-recap recap-in-left">
+                  <div data-v-d751c566="" class="recap-header">
+                    <span data-v-d751c566="" class="recap-title">District recap</span>
+                  </div>
+                  <div data-v-d751c566="" class="recap-body">
+                    <div data-v-d751c566="" class="kpi-row kpi-row--3eq">
+                      <div data-v-d751c566="" class="kpi-tile kpi-tile--badge">
+                        <span data-v-d751c566="" class="kpi-label">Working bvrs</span>
+                        <div data-v-d751c566="" class="kpi-tile-value-row">
+                          <span data-v-d751c566="" class="kpi-val"
+                            ><span data-v-d751c566="" class="">2</span
+                            ><span data-v-d751c566="" class="kv-sep"> / </span
+                            ><span data-v-d751c566="">9</span></span
+                          >
+                          <div data-v-d751c566="" class="kpi-pct-badge kpi-pct-badge--green">
+                            22%
+                          </div>
+                        </div>
+                      </div>
+                      <div data-v-d751c566="" class="kpi-tile kpi-tile--badge">
+                        <span data-v-d751c566="" class="kpi-label">Working bots</span>
+                        <div data-v-d751c566="" class="kpi-tile-value-row">
+                          <span data-v-d751c566="" class="kpi-val kpi-val--muted">no bots</span>
+                        </div>
+                      </div>
+                      <div data-v-d751c566="" class="kpi-tile kpi-tile--badge">
+                        <span data-v-d751c566="" class="kpi-label">Available (all)</span>
+                        <div data-v-d751c566="" class="kpi-tile-value-row">
+                          <span data-v-d751c566="" class="kpi-val"
+                            >7<span data-v-d751c566="" class="kv-u"> carriers</span></span
+                          >
+                          <div data-v-d751c566="" class="kpi-pct-badge kpi-pct-badge--green">
+                            78%
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div data-v-d751c566="" class="kpi-row kpi-row--3eq">
+                      <div data-v-d751c566="" class="kpi-tile">
+                        <span data-v-d751c566="" class="kpi-label">Food consumed</span
+                        ><span data-v-d751c566="" class="kpi-val"
+                          >26.7<span data-v-d751c566="" class="kv-u"> /day</span></span
+                        >
+                      </div>
+                      <div data-v-d751c566="" class="kpi-tile">
+                        <span data-v-d751c566="" class="kpi-label">Water consumed</span
+                        ><span data-v-d751c566="" class="kpi-val"
+                          >21.3<span data-v-d751c566="" class="kv-u"> /day</span></span
+                        >
+                      </div>
+                      <div data-v-d751c566="" class="kpi-tile">
+                        <span data-v-d751c566="" class="kpi-label">Production</span
+                        ><span data-v-d751c566="" class="kpi-val"
+                          >48<span data-v-d751c566="" class="kv-u"> items/day</span></span
+                        >
+                      </div>
+                    </div>
+                    <div data-v-d751c566="" class="kpi-row kpi-row--4">
+                      <div data-v-d751c566="" class="kpi-tile">
+                        <span data-v-d751c566="" class="kpi-label">Buildings</span
+                        ><span data-v-d751c566="" class="kpi-val">2</span>
+                      </div>
+                      <div data-v-d751c566="" class="kpi-tile">
+                        <span data-v-d751c566="" class="kpi-label">Trees</span
+                        ><span data-v-d751c566="" class="kpi-val">54</span>
+                      </div>
+                      <div data-v-d751c566="" class="kpi-tile">
+                        <span data-v-d751c566="" class="kpi-label">Crops</span
+                        ><span data-v-d751c566="" class="kpi-val">0</span>
+                      </div>
+                      <div data-v-d751c566="" class="kpi-tile">
+                        <span data-v-d751c566="" class="kpi-label">Land use</span
+                        ><span data-v-d751c566="" class="kpi-val"
+                          >5<span data-v-d751c566="" class="kv-u"> tiles</span
+                          ><span data-v-d751c566="" class="kv-sep">+</span>54<span
+                            data-v-d751c566=""
+                            class="kv-u"
+                          >
+                            terrain</span
+                          ></span
+                        >
+                      </div>
+                    </div>
+                    <div data-v-d751c566="" class="kpi-row kpi-row--3">
+                      <div data-v-d751c566="" class="kpi-tile">
+                        <span data-v-d751c566="" class="kpi-label">HP used</span
+                        ><span data-v-d751c566="" class="kpi-val">0 hp</span>
+                      </div>
+                      <div data-v-d751c566="" class="kpi-tile">
+                        <span data-v-d751c566="" class="kpi-label">HP generated</span
+                        ><span data-v-d751c566="" class="kpi-val">0 hp</span>
+                      </div>
+                      <div data-v-d751c566="" class="kpi-tile">
+                        <span data-v-d751c566="" class="kpi-label">Net balance</span
+                        ><span data-v-d751c566="" class="kpi-val">+0 hp</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div data-v-342f470e="" class="right-column">
+              <div data-v-342f470e="" class="panel panel-population">
+                <div data-v-342f470e="" class="pop-header-row">
+                  <span data-v-342f470e="" class="pop-header-title">Population</span>
+                  <div data-v-342f470e="" class="faction-inline">
+                    <span data-v-342f470e="" class="fi-label active">Folktails</span
+                    ><label data-v-342f470e="" class="toggle-switch"
+                      ><input data-v-342f470e="" type="checkbox" /><span
+                        data-v-342f470e=""
+                        class="toggle-track"
+                        ><span data-v-342f470e="" class="toggle-thumb"></span></span></label
+                    ><span data-v-342f470e="" class="fi-label">Iron Teeth</span>
+                  </div>
+                </div>
+                <div data-v-342f470e="" class="pop-grid">
+                  <div data-v-342f470e="" class="pop-col pop-col--beavers">
+                    <div data-v-342f470e="" class="pop-beaver-row">
+                      <div data-v-342f470e="" class="pop-total-block">
+                        <button data-v-342f470e="" type="button" class="pop-step-btn">
+                          <img
+                            data-v-342f470e=""
+                            src="images/others/minus.png"
+                            class="pop-step-icon"
+                            alt="−"
+                          /></button
+                        ><input
+                          data-v-342f470e=""
+                          type="number"
+                          min="0"
+                          max="10000"
+                          class="pop-num-input"
+                          aria-label="Total beaver population"
+                        /><button data-v-342f470e="" type="button" class="pop-step-btn">
+                          <img
+                            data-v-342f470e=""
+                            src="images/others/plus.png"
+                            class="pop-step-icon"
+                            alt="+"
+                          />
+                        </button>
+                      </div>
+                      <div
+                        data-v-d8a7165d=""
+                        class="app-tooltip-activator app-tooltip-activator--block"
+                        aria-describedby="v-tooltip-v-0"
+                      >
+                        <div data-v-342f470e="" class="pop-split">
+                          <div data-v-342f470e="" class="pop-split-item">
+                            <img
+                              data-v-342f470e=""
+                              src="images/others/folktails_adult.png"
+                              class="pop-inline-icon"
+                              alt=""
+                            /><span data-v-342f470e="" class="pop-split-count">9</span>
+                          </div>
+                          <div data-v-342f470e="" class="pop-split-item">
+                            <img
+                              data-v-342f470e=""
+                              src="images/others/folktails_kit.png"
+                              class="pop-inline-icon"
+                              alt=""
+                            /><span data-v-342f470e="" class="pop-split-count">1</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <span data-v-342f470e="" class="pop-stat-deaths">0.20 deaths/day</span>
+                    <div data-v-342f470e="" class="pop-time-adjust-row">
+                      <span data-v-342f470e="" class="pop-time-label">
+                        Wandering time
+                        <div
+                          data-v-d8a7165d=""
+                          class="app-tooltip-activator"
+                          aria-describedby="v-tooltip-v-1"
+                        >
+                          <button
+                            data-v-342f470e=""
+                            type="button"
+                            class="pop-info-btn"
+                            aria-label="Pause time info"
+                          >
+                            i
+                          </button>
+                        </div></span
+                      >
+                      <div data-v-342f470e="" class="pop-time-controls">
+                        <button data-v-342f470e="" type="button" class="pop-step-btn">
+                          <img
+                            data-v-342f470e=""
+                            src="images/others/minus.png"
+                            class="pop-step-icon"
+                            alt="−"
+                          /></button
+                        ><span data-v-342f470e="" class="pop-time-value">0.5 h</span
+                        ><button data-v-342f470e="" type="button" class="pop-step-btn">
+                          <img
+                            data-v-342f470e=""
+                            src="images/others/plus.png"
+                            class="pop-step-icon"
+                            alt="+"
+                          />
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <div data-v-342f470e="" class="pop-divider"></div>
+                  <div data-v-342f470e="" class="pop-col pop-col--bots">
+                    <div data-v-342f470e="" class="pop-input-row">
+                      <button data-v-342f470e="" type="button" class="pop-step-btn">
+                        <img
+                          data-v-342f470e=""
+                          src="images/others/minus.png"
+                          class="pop-step-icon"
+                          alt="−"
+                        /></button
+                      ><img
+                        data-v-342f470e=""
+                        src="images/others/timberbot.png"
+                        class="pop-faction-img"
+                      /><input
+                        data-v-342f470e=""
+                        type="number"
+                        min="0"
+                        max="10000"
+                        class="pop-num-input"
+                      /><button data-v-342f470e="" type="button" class="pop-step-btn">
+                        <img
+                          data-v-342f470e=""
+                          src="images/others/plus.png"
+                          class="pop-step-icon"
+                          alt="+"
+                        />
+                      </button>
+                    </div>
+                    <span data-v-342f470e="" class="pop-stat-deaths">0.00 retired/day</span>
+                    <div data-v-342f470e="" class="pop-time-adjust-row">
+                      <span data-v-342f470e="" class="pop-time-label">
+                        Downtime
+                        <div
+                          data-v-d8a7165d=""
+                          class="app-tooltip-activator"
+                          aria-describedby="v-tooltip-v-2"
+                        >
+                          <button
+                            data-v-342f470e=""
+                            type="button"
+                            class="pop-info-btn"
+                            aria-label="Downtime info"
+                          >
+                            i
+                          </button>
+                        </div></span
+                      >
+                      <div data-v-342f470e="" class="pop-time-controls">
+                        <button data-v-342f470e="" type="button" class="pop-step-btn">
+                          <img
+                            data-v-342f470e=""
+                            src="images/others/minus.png"
+                            class="pop-step-icon"
+                            alt="−"
+                          /></button
+                        ><span data-v-342f470e="" class="pop-time-value">1 h</span
+                        ><button data-v-342f470e="" type="button" class="pop-step-btn">
+                          <img
+                            data-v-342f470e=""
+                            src="images/others/plus.png"
+                            class="pop-step-icon"
+                            alt="+"
+                          />
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div data-v-342f470e="" class="panel panel-hours">
+                <div data-v-342f470e="" class="hours-panel-header">
+                  <span data-v-342f470e="" class="panel-title">Beavers Working hours</span
+                  ><span data-v-342f470e="" class="hours-slider-badge">16 / 24h</span>
+                </div>
+                <div
+                  data-v-342f470e=""
+                  class="hours-slider-wrapper"
+                  style="--work-pct: 66.67%; --leisure-pct: 83.33%"
+                >
+                  <div
+                    data-v-342f470e=""
+                    class="v-input v-input--horizontal v-input--center-affix v-input--density-compact v-theme--timberbornDark v-locale--is-ltr v-input--dirty v-slider v-locale--is-ltr hours-slider"
+                  >
+                    <!---->
+                    <div class="v-input__control">
+                      <div class="v-slider__container">
+                        <input id="input-v-3" name="input-v-3" tabindex="-1" value="16" />
+                        <div
+                          class="v-slider-track"
+                          style="--v-slider-track-size: 4px; --v-slider-tick-size: 2px"
+                        >
+                          <div
+                            class="v-slider-track__background bg-transparent v-slider-track__background--opacity"
+                            style="inset-inline-start: 0%; width: 100%"
+                          ></div>
+                          <div
+                            class="v-slider-track__fill v-theme-on-light"
+                            style="
+                              inset-inline-start: 0%;
+                              width: 66.6667%;
+                              background-color: rgb(255, 255, 255);
+                            "
+                          ></div>
+                          <!---->
+                        </div>
+                        <div
+                          class="v-slider-thumb v-locale--is-ltr"
+                          role="slider"
+                          tabindex="0"
+                          aria-valuemin="0"
+                          aria-valuemax="24"
+                          aria-valuenow="16"
+                          aria-readonly="false"
+                          aria-orientation="horizontal"
+                          elevation="1"
+                          style="
+                            --v-slider-thumb-position: 66.66666666666666%;
+                            --v-slider-thumb-size: 20px;
+                          "
+                        >
+                          <div
+                            class="v-slider-thumb__surface elevation-1"
+                            style="color: rgb(255, 255, 255); caret-color: rgb(255, 255, 255)"
+                          ></div>
+                          <div
+                            class="v-slider-thumb__ripple"
+                            style="color: rgb(255, 255, 255); caret-color: rgb(255, 255, 255)"
+                          ></div>
+                          <div class="v-slider-thumb__label-container" style="display: none">
+                            <div class="v-slider-thumb__label">
+                              <div>16</div>
+                              <div class="v-slider-thumb__label-wedge"></div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!----><!---->
+                  </div>
+                </div>
+                <div data-v-342f470e="" class="hours-stats-grid">
+                  <div data-v-342f470e="" class="hours-stat-item">
+                    <span data-v-342f470e="" class="hours-stat-label">Work time</span
+                    ><span
+                      data-v-342f470e=""
+                      class="hours-stat-value"
+                      style="color: rgb(224, 144, 80)"
+                      >16 h</span
+                    >
+                  </div>
+                  <div data-v-342f470e="" class="hours-stat-item">
+                    <span data-v-342f470e="" class="hours-stat-label">Leisure time</span
+                    ><span
+                      data-v-342f470e=""
+                      class="hours-stat-value"
+                      style="color: rgb(96, 212, 128)"
+                      >4 h
+                      <!----></span
+                    >
+                  </div>
+                  <div data-v-342f470e="" class="hours-stat-item">
+                    <span data-v-342f470e="" class="hours-stat-label">Sleep time</span>
+                    <div data-v-342f470e="" class="hours-stat-sleep-row">
+                      <!----><span
+                        data-v-342f470e=""
+                        class="hours-stat-value"
+                        style="color: rgb(74, 144, 217)"
+                        >4 h</span
+                      ><!---->
+                    </div>
+                  </div>
+                </div>
+                <button
+                  data-v-342f470e=""
+                  type="button"
+                  class="full-bot-workforce-btn full-bot-workforce-btn--no-bots"
+                  disabled=""
+                  aria-disabled="true"
+                >
+                  <span
+                    data-v-342f470e=""
+                    class="full-bot-workforce-btn__icon-wrap"
+                    aria-hidden="true"
+                    ><img
+                      data-v-342f470e=""
+                      src="images/others/timberbot.png"
+                      alt=""
+                      class="full-bot-workforce-btn__icon" /></span
+                  ><span data-v-342f470e="" class="full-bot-workforce-btn__label"
+                    ><span data-v-342f470e="" class="full-bot-workforce-btn__no-pop"
+                      >No bot population</span
+                    ></span
+                  >
+                </button>
+              </div>
+              <div data-v-d751c566="" data-v-342f470e="" class="district-recap recap-in-right">
+                <div data-v-d751c566="" class="recap-header">
+                  <span data-v-d751c566="" class="recap-title">District recap</span>
+                </div>
+                <div data-v-d751c566="" class="recap-body">
+                  <div data-v-d751c566="" class="kpi-row kpi-row--3eq">
+                    <div data-v-d751c566="" class="kpi-tile kpi-tile--badge">
+                      <span data-v-d751c566="" class="kpi-label">Working bvrs</span>
+                      <div data-v-d751c566="" class="kpi-tile-value-row">
+                        <span data-v-d751c566="" class="kpi-val"
+                          ><span data-v-d751c566="" class="">2</span
+                          ><span data-v-d751c566="" class="kv-sep"> / </span
+                          ><span data-v-d751c566="">9</span></span
+                        >
+                        <div data-v-d751c566="" class="kpi-pct-badge kpi-pct-badge--green">22%</div>
+                      </div>
+                    </div>
+                    <div data-v-d751c566="" class="kpi-tile kpi-tile--badge">
+                      <span data-v-d751c566="" class="kpi-label">Working bots</span>
+                      <div data-v-d751c566="" class="kpi-tile-value-row">
+                        <span data-v-d751c566="" class="kpi-val kpi-val--muted">no bots</span>
+                      </div>
+                    </div>
+                    <div data-v-d751c566="" class="kpi-tile kpi-tile--badge">
+                      <span data-v-d751c566="" class="kpi-label">Available (all)</span>
+                      <div data-v-d751c566="" class="kpi-tile-value-row">
+                        <span data-v-d751c566="" class="kpi-val"
+                          >7<span data-v-d751c566="" class="kv-u"> carriers</span></span
+                        >
+                        <div data-v-d751c566="" class="kpi-pct-badge kpi-pct-badge--green">78%</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div data-v-d751c566="" class="kpi-row kpi-row--3eq">
+                    <div data-v-d751c566="" class="kpi-tile">
+                      <span data-v-d751c566="" class="kpi-label">Food consumed</span
+                      ><span data-v-d751c566="" class="kpi-val"
+                        >26.7<span data-v-d751c566="" class="kv-u"> /day</span></span
+                      >
+                    </div>
+                    <div data-v-d751c566="" class="kpi-tile">
+                      <span data-v-d751c566="" class="kpi-label">Water consumed</span
+                      ><span data-v-d751c566="" class="kpi-val"
+                        >21.3<span data-v-d751c566="" class="kv-u"> /day</span></span
+                      >
+                    </div>
+                    <div data-v-d751c566="" class="kpi-tile">
+                      <span data-v-d751c566="" class="kpi-label">Production</span
+                      ><span data-v-d751c566="" class="kpi-val"
+                        >48<span data-v-d751c566="" class="kv-u"> items/day</span></span
+                      >
+                    </div>
+                  </div>
+                  <div data-v-d751c566="" class="kpi-row kpi-row--4">
+                    <div data-v-d751c566="" class="kpi-tile">
+                      <span data-v-d751c566="" class="kpi-label">Buildings</span
+                      ><span data-v-d751c566="" class="kpi-val">2</span>
+                    </div>
+                    <div data-v-d751c566="" class="kpi-tile">
+                      <span data-v-d751c566="" class="kpi-label">Trees</span
+                      ><span data-v-d751c566="" class="kpi-val">54</span>
+                    </div>
+                    <div data-v-d751c566="" class="kpi-tile">
+                      <span data-v-d751c566="" class="kpi-label">Crops</span
+                      ><span data-v-d751c566="" class="kpi-val">0</span>
+                    </div>
+                    <div data-v-d751c566="" class="kpi-tile">
+                      <span data-v-d751c566="" class="kpi-label">Land use</span
+                      ><span data-v-d751c566="" class="kpi-val"
+                        >5<span data-v-d751c566="" class="kv-u"> tiles</span
+                        ><span data-v-d751c566="" class="kv-sep">+</span>54<span
+                          data-v-d751c566=""
+                          class="kv-u"
+                        >
+                          terrain</span
+                        ></span
+                      >
+                    </div>
+                  </div>
+                  <div data-v-d751c566="" class="kpi-row kpi-row--3">
+                    <div data-v-d751c566="" class="kpi-tile">
+                      <span data-v-d751c566="" class="kpi-label">HP used</span
+                      ><span data-v-d751c566="" class="kpi-val">0 hp</span>
+                    </div>
+                    <div data-v-d751c566="" class="kpi-tile">
+                      <span data-v-d751c566="" class="kpi-label">HP generated</span
+                      ><span data-v-d751c566="" class="kpi-val">0 hp</span>
+                    </div>
+                    <div data-v-d751c566="" class="kpi-tile">
+                      <span data-v-d751c566="" class="kpi-label">Net balance</span
+                      ><span data-v-d751c566="" class="kpi-val">+0 hp</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+        <footer data-v-182539b8="" class="app-footer">
+          <p data-v-182539b8="" class="app-footer__line">
+            <span data-v-182539b8="" class="app-footer__brand">CalcSpirit.com © 2026</span
+            ><span data-v-182539b8="" class="app-footer__sep" aria-hidden="true"> | </span
+            ><button data-v-182539b8="" type="button" class="app-footer__policy-btn">
+              Privacy Policy
+            </button>
+          </p>
+          <p data-v-182539b8="" class="app-footer__disclaimer">
+            This website is an unofficial fan-made project and is not affiliated with or endorsed by
+            Mechanistry. The assets are derived from Timberborn, a game developed by Mechanistry.
+            All trademarks and registered trademarks are the property of their respective owners.
+          </p>
+        </footer>
+      </div>
+    </div>
+
+    <div class="v-overlay-container">
+      <div
+        class="v-overlay v-overlay--absolute v-theme--timberbornDark v-locale--is-ltr v-tooltip v-tooltip--interactive"
+        id="v-tooltip-v-0"
+        role="tooltip"
+        data-v-d8a7165d=""
+        style="z-index: 10052"
+      >
+        <!---->
+        <div
+          class="v-overlay__content app-tooltip__surface"
+          target="[object HTMLDivElement]"
+          style="max-width: 320px; min-width: 0px; display: none"
+        >
+          Estimated kits vs adults from age distribution.
+        </div>
+      </div>
+      <div
+        class="v-overlay v-overlay--absolute v-theme--timberbornDark v-locale--is-ltr v-tooltip v-tooltip--interactive"
+        id="v-tooltip-v-1"
+        role="tooltip"
+        data-v-d8a7165d=""
+        style="z-index: 10052"
+      >
+        <!---->
+        <div
+          class="v-overlay__content app-tooltip__surface"
+          target="[object HTMLDivElement]"
+          style="max-width: 320px; min-width: 0px; display: none"
+        >
+          Mean time spent fulfilling basic needs during work time. Highly dependant on your district
+          size and organization. Recommended values : 0.5 to 2 hours
+        </div>
+      </div>
+      <div
+        class="v-overlay v-overlay--absolute v-theme--timberbornDark v-locale--is-ltr v-tooltip v-tooltip--interactive"
+        id="v-tooltip-v-2"
+        role="tooltip"
+        data-v-d8a7165d=""
+        style="z-index: 10052"
+      >
+        <!---->
+        <div
+          class="v-overlay__content app-tooltip__surface"
+          target="[object HTMLDivElement]"
+          style="max-width: 320px; min-width: 0px; display: none"
+        >
+          Mean time spent refueling and collecting boosts during work time. Highly dependant on your
+          district size and organization. Recommended values : 1 to 3 hours
+        </div>
+      </div>
+      <div
+        class="v-overlay v-overlay--absolute v-theme--timberbornDark v-locale--is-ltr v-tooltip v-tooltip--interactive"
+        id="v-tooltip-v-4"
+        role="tooltip"
+        data-v-d8a7165d=""
+        style="z-index: 10052"
+      >
+        <!---->
+        <div
+          class="v-overlay__content app-tooltip__surface"
+          target="[object HTMLDivElement]"
+          style="max-width: 320px; min-width: 0px; display: none"
+        >
+          This slider allows you to choose your preferred ways to produce Water.
+        </div>
+      </div>
+      <div
+        class="v-overlay v-overlay--absolute v-theme--timberbornDark v-locale--is-ltr v-tooltip v-tooltip--interactive"
+        id="v-tooltip-v-5"
+        role="tooltip"
+        data-v-d8a7165d=""
+        style="z-index: 10052"
+      >
+        <!---->
+        <div
+          class="v-overlay__content app-tooltip__surface"
+          target="[object HTMLDivElement]"
+          style="max-width: 320px; min-width: 0px; display: none"
+        >
+          This slider allows you to choose your preferred ways to produce Water.
+        </div>
+      </div>
+      <div
+        class="v-overlay v-overlay--absolute v-theme--timberbornDark v-locale--is-ltr v-tooltip v-tooltip--interactive"
+        id="v-tooltip-v-6"
+        role="tooltip"
+        data-v-d8a7165d=""
+        style="z-index: 10052"
+      >
+        <!---->
+        <div
+          class="v-overlay__content app-tooltip__surface"
+          target="[object HTMLDivElement]"
+          style="max-width: 320px; min-width: 0px; display: none"
+        >
+          No bot population
+        </div>
+      </div>
+      <div
+        class="v-overlay v-overlay--absolute v-theme--timberbornDark v-locale--is-ltr v-tooltip v-tooltip--interactive"
+        id="v-tooltip-v-7"
+        role="tooltip"
+        data-v-d8a7165d=""
+        style="z-index: 10052"
+      >
+        <!---->
+        <div
+          class="v-overlay__content app-tooltip__surface"
+          target="[object HTMLDivElement]"
+          style="max-width: 320px; min-width: 0px; display: none"
+        >
+          This slider allows you to choose your preferred ways to produce Water.
+        </div>
+      </div>
+      <div
+        class="v-overlay v-overlay--absolute v-theme--timberbornDark v-locale--is-ltr v-tooltip v-tooltip--interactive"
+        id="v-tooltip-v-8"
+        role="tooltip"
+        data-v-d8a7165d=""
+        style="z-index: 10052"
+      >
+        <!---->
+        <div
+          class="v-overlay__content app-tooltip__surface"
+          target="[object HTMLDivElement]"
+          style="max-width: 320px; min-width: 0px; display: none"
+        >
+          This slider allows you to choose your preferred ways to produce Water.
+        </div>
+      </div>
+      <div
+        class="v-overlay v-overlay--absolute v-theme--timberbornDark v-locale--is-ltr v-tooltip v-tooltip--interactive"
+        id="v-tooltip-v-9"
+        role="tooltip"
+        data-v-d8a7165d=""
+        style="z-index: 10052"
+      >
+        <!---->
+        <div
+          class="v-overlay__content app-tooltip__surface"
+          target="[object HTMLDivElement]"
+          style="max-width: 320px; min-width: 0px; display: none"
+        >
+          No bot population
+        </div>
+      </div>
+      <div
+        class="v-overlay v-overlay--absolute v-theme--timberbornDark v-locale--is-ltr v-tooltip v-tooltip--interactive"
+        id="v-tooltip-v-10"
+        role="tooltip"
+        data-v-d8a7165d=""
+        style="z-index: 10052"
+      >
+        <!---->
+        <div
+          class="v-overlay__content app-tooltip__surface"
+          target="[object HTMLDivElement]"
+          style="max-width: 320px; min-width: 0px; display: none"
+        >
+          You can adjust the food production, but beware : beavers may eat any closeby food when
+          they have satisfied their need for each. Keeping the equilibrium is the safe option.
+        </div>
+      </div>
+      <div
+        class="v-overlay v-overlay--absolute v-theme--timberbornDark v-locale--is-ltr v-tooltip v-tooltip--interactive"
+        id="v-tooltip-v-11"
+        role="tooltip"
+        data-v-d8a7165d=""
+        style="z-index: 10052"
+      >
+        <!---->
+        <div
+          class="v-overlay__content app-tooltip__surface"
+          target="[object HTMLDivElement]"
+          style="max-width: 320px; min-width: 0px; display: none"
+        >
+          No bot population
+        </div>
+      </div>
+    </div>
+    <!---->
+  </body>
+</html>
