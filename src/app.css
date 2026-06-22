@@ -2,3 +2,163 @@
 @import "@tohuhono/ui/theme.css";
 
 @source ".";
+
+body {
+  background: #152722;
+  color: #e8f0ec;
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+.app-header,
+.app-footer,
+.reference-calculator {
+  margin: 0 auto;
+  max-width: 1180px;
+  padding: 1rem;
+}
+
+.app-header,
+.app-footer {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: space-between;
+}
+
+.app-logo {
+  display: grid;
+  font-size: 1.25rem;
+  font-weight: 800;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.app-nav__button,
+.steam-page-cta,
+button {
+  background: #2e654f;
+  border: 1px solid #7ec59b;
+  border-radius: 0.5rem;
+  color: #fff;
+  cursor: pointer;
+  padding: 0.45rem 0.75rem;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.steam-page-cta {
+  text-decoration: none;
+}
+
+.reference-calculator {
+  display: grid;
+  gap: 1rem;
+}
+
+.pop-panel,
+.water-mgmt,
+.surplus-section,
+.prod-table-wrap,
+.district-recap {
+  background: #1e3a30;
+  border: 1px solid rgb(255 255 255 / 15%);
+  border-radius: 0.85rem;
+  padding: 1rem;
+}
+
+.calc-section-heading,
+.section-title {
+  font-size: 1.25rem;
+  font-weight: 800;
+}
+
+.population-grid,
+.needs-filter-btns,
+.needs-grid,
+.prod-checkboxes,
+.prod-table-title-row,
+.power-table-title-row,
+.surplus-header-row {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+}
+
+.pop-col {
+  display: grid;
+  gap: 0.25rem;
+}
+
+input,
+select {
+  background: #f7fff9;
+  border: 1px solid #9ccdb0;
+  border-radius: 0.4rem;
+  color: #102018;
+  padding: 0.35rem 0.5rem;
+}
+
+.needs-section,
+.prod-section,
+.district-recap {
+  margin-top: 1rem;
+}
+
+.section-title-row {
+  align-items: center;
+  display: flex;
+  gap: 0.75rem;
+  justify-content: space-between;
+}
+
+.need-card--active {
+  background: #6fae72;
+}
+
+.surplus-picker-dropdown {
+  background: #102018;
+  border: 1px solid rgb(255 255 255 / 20%);
+  border-radius: 0.5rem;
+  display: grid;
+  gap: 0.4rem;
+  margin-top: 0.5rem;
+  max-width: 18rem;
+  padding: 0.5rem;
+}
+
+.surplus-row {
+  align-items: center;
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.prod-table {
+  display: grid;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.prod-row,
+.empty-state {
+  background: rgb(255 255 255 / 6%);
+  border-radius: 0.6rem;
+  padding: 0.75rem;
+}
+
+.prod-row p,
+.district-recap p,
+.season-storage p {
+  margin: 0.25rem 0;
+}

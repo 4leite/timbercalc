@@ -1,5 +1,23 @@
 export type FactionId = "folktails" | "iron-teeth" | "emberpelts"
 
+export {
+  beaverNeedCategories,
+  botNeedCategories,
+  surplusOptions,
+  useTimberbornCalculator,
+  type ControlsPanelViewModel,
+  type NeedCardViewModel,
+  type NeedCategory,
+  type NeedMode,
+  type ProductionPanelViewModel,
+  type RecapViewModel,
+  type SeasonsPanelViewModel,
+  type SurplusItem,
+  type SurplusPanelViewModel,
+  type TimberbornCalculatorViewModel,
+  type Totals,
+} from "./useTimberbornCalculator"
+
 export type ResourceCategory = "drink" | "food" | "fuel" | "material"
 
 export type SettlementConfig = {
