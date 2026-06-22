@@ -14,5 +14,5 @@ todos.json
 .tmp
 tmp
 
-test/playwright-report/*
-test/results/*
+test/playwright-report/
+test/results/
