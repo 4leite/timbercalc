@@ -24,7 +24,7 @@ test.describe("Reference production calculations", { tag: "@reference" }, () => 
   })
 
   test("removes need-driven production when beaver needs are disabled", async ({ page }) => {
-    await page.getByRole("checkbox", { name: "Beavers needs" }).click()
+    await page.getByText("Beavers needs", { exact: true }).click()
 
     await expect(page.getByRole("checkbox", { name: "Beavers needs" })).not.toBeChecked()
     await expectCalculatorText(page, /No buildings required/)

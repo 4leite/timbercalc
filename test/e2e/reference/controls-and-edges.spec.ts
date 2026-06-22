@@ -1,11 +1,6 @@
 import { expect, test } from "@playwright/test"
 
-import {
-  expectCalculatorText,
-  expectNoCalculatorText,
-  openCalculator,
-  productionMixInput,
-} from "./helpers"
+import { expectCalculatorText, expectNoCalculatorText, openCalculator } from "./helpers"
 
 test.describe("Reference controls and edge inputs", { tag: "@reference" }, () => {
   test.beforeEach(async ({ page }) => {
@@ -27,8 +22,9 @@ test.describe("Reference controls and edge inputs", { tag: "@reference" }, () =>
   })
 
   test("resets production mix sliders back to the water-pump baseline", async ({ page }) => {
-    const waterPumpMix = productionMixInput(page, "Water", /Water Pump\s+4 tiles/)
-    const largeWaterPumpMix = productionMixInput(page, "Water", "Large Water Pump")
+    const waterMixInputs = page.getByRole("textbox", { name: "Mix % for Water" })
+    const waterPumpMix = waterMixInputs.first()
+    const largeWaterPumpMix = waterMixInputs.nth(1)
 
     await waterPumpMix.fill("0")
     await largeWaterPumpMix.click()
