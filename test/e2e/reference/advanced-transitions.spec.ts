@@ -7,6 +7,7 @@ import {
   expectNoCalculatorText,
   openCalculator,
   selectBotNeeds,
+  surplusRow,
 } from "./helpers"
 
 const numericValueForLabel = async (page: Page, label: string): Promise<number> => {
@@ -104,14 +105,9 @@ test.describe("Reference advanced transitions", { tag: "@reference" }, () => {
     await expectCalculatorText(page, /Gear Workshop\s+12 tiles\s+2 beavers\s+3\.84 Khp/)
 
     await page
-      .locator(".surplus-row")
-      .filter({ hasText: /^Gears\s*\/day$/i })
-      .getByRole("button", { name: "Remove" })
-      .click()
+    surplusRow(page, "Gears").getByRole("button", { name: "Remove" }).click()
 
-    await expect(page.locator(".surplus-row").filter({ hasText: /^Gears\s*\/day$/i })).toHaveCount(
-      0,
-    )
+    await expect(surplusRow(page, "Gears")).toHaveCount(0)
     await expectNoCalculatorText(page, /Gear Workshop/)
     await expectCalculatorText(page, /Planks\s+2\s+\(1\.01\)/)
     await expectCalculatorText(page, /Lumber Mill\s+12 tiles\s+2 beavers\s+1\.6 Khp/)

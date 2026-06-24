@@ -1,7 +1,6 @@
-import { TanStackDevtools } from "@tanstack/react-devtools"
 import { createRootRoute, HeadContent, Outlet, Scripts } from "@tanstack/react-router"
-import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools"
 import { Antifouc } from "@tohuhono/ui/antifouc"
+import type { ReactNode } from "react"
 
 import { AppProvider } from "#/components/AppProvider"
 import Footer from "#/components/Footer"
@@ -53,7 +52,7 @@ function RootComponent() {
   return <Outlet />
 }
 
-function RootDocument({ children }: { children: React.ReactNode }) {
+function RootDocument({ children }: { children: ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
@@ -68,17 +67,6 @@ function RootDocument({ children }: { children: React.ReactNode }) {
             <Footer />
           </Layout>
         </AppProvider>
-        <TanStackDevtools
-          config={{
-            position: "bottom-right",
-          }}
-          plugins={[
-            {
-              name: "Tanstack Router",
-              render: <TanStackRouterDevtoolsPanel />,
-            },
-          ]}
-        />
         <Scripts />
       </body>
     </html>

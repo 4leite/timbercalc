@@ -1,18 +1,27 @@
-/* eslint-disable better-tailwindcss/no-unknown-classes */
 export default function Header() {
   return (
-    <header className="app-header">
-      <div className="app-logo" aria-label="Timberborn Calculator">
+    <header
+      className="
+        mx-auto flex max-w-[1180px] flex-wrap items-center justify-between gap-4
+        p-4
+      "
+    >
+      <div
+        className="grid text-xl leading-none font-extrabold uppercase"
+        aria-label="Timberborn Calculator"
+      >
         <span>Timberborn</span>
         <span>Calculator</span>
       </div>
-      <nav aria-label="Main sections" className="app-nav">
-        <button type="button" className="app-nav__button">
-          Calculator
-        </button>
+      <nav aria-label="Main sections">
+        <button type="button">Calculator</button>
       </nav>
       <a
-        className="steam-page-cta"
+        className="
+          steam-page-cta
+          cursor-pointer rounded-lg border border-[#7ec59b] bg-[#2e654f] px-3
+          py-[0.45rem] text-white no-underline
+        "
         href="https://store.steampowered.com/app/1062090/Timberborn/"
         target="_blank"
         rel="noopener noreferrer"
