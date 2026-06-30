@@ -3,9 +3,9 @@ import { expect, test } from "@playwright/test"
 import {
   expectCalculatorText,
   expectNoCalculatorText,
+  firstSurplusQuantityInput,
   openCalculator,
   selectBeaverNeeds,
-  surplusQuantityInput,
 } from "./helpers"
 
 test.describe("Reference needs and surplus planning", { tag: "@reference" }, () => {
@@ -41,7 +41,7 @@ test.describe("Reference needs and surplus planning", { tag: "@reference" }, () 
     await page.getByRole("button", { name: /Add item/ }).click()
     await page.getByRole("option", { name: "Planks", exact: true }).click()
 
-    const planksPerDay = surplusQuantityInput(page, "Planks")
+    const planksPerDay = firstSurplusQuantityInput(page)
     await expect(planksPerDay).toHaveValue("0")
     await planksPerDay.fill("12")
 

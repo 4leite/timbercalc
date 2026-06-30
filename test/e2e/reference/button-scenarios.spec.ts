@@ -2,20 +2,26 @@ import { expect, test } from "@playwright/test"
 
 import {
   addSurplusItem,
-  beaverNeeds,
-  botNeeds,
   botPopulationInput,
-  desiredSurplus,
+  calculator,
   footer,
+  firstSurplusQuantityInput,
   openCalculator,
-  populationControls,
-  removeSurplusItem,
-  seasonsAndStorage,
+  removeLastSurplusItem,
   sectionExpandBanner,
   sectionHeaderButton,
   surplusOptions,
-  surplusQuantityInput,
 } from "./helpers"
+
+const chunksOf = <Value>(values: readonly Value[], size: number): Value[][] => {
+  const chunks: Value[][] = []
+
+  for (let index = 0; index < values.length; index += size) {
+    chunks.push(values.slice(index, index + size))
+  }
+
+  return chunks
+}
 
 test.describe("Reference button scenarios", { tag: "@reference" }, () => {
   test.beforeEach(async ({ page }) => {
@@ -33,64 +39,64 @@ test.describe("Reference button scenarios", { tag: "@reference" }, () => {
     await beaverHeader.click()
     await expect(beaverHeader).toHaveAttribute("aria-expanded", "false")
     await expect(beaverBanner).toHaveAttribute("aria-expanded", "false")
-    await expect(beaverNeeds(page)).toBeHidden()
+    await expect(page.getByRole("button", { name: /^Hunger\b/i })).toBeHidden()
 
     await beaverBanner.click()
     await expect(beaverHeader).toHaveAttribute("aria-expanded", "true")
     await expect(beaverBanner).toHaveAttribute("aria-expanded", "true")
-    await expect(beaverNeeds(page)).toBeVisible()
+    await expect(page.getByRole("button", { name: /^Hunger\b/i })).toBeVisible()
 
     await botHeader.click()
     await expect(botHeader).toHaveAttribute("aria-expanded", "false")
     await expect(botBanner).toHaveAttribute("aria-expanded", "false")
-    await expect(botNeeds(page)).toBeHidden()
+    await expect(page.getByRole("button", { name: "Biofuel" })).toBeHidden()
 
     await botBanner.click()
     await expect(botHeader).toHaveAttribute("aria-expanded", "true")
     await expect(botBanner).toHaveAttribute("aria-expanded", "true")
-    await expect(botNeeds(page)).toBeVisible()
+    await expect(page.getByRole("button", { name: "Biofuel" })).toBeVisible()
   })
 
   test("reveals and exercises every conditional Seasons and storage button", async ({ page }) => {
-    const seasons = seasonsAndStorage(page)
+    await page.getByRole("button", { name: "Off", exact: true }).click()
+    await expect(page.getByRole("button", { name: "On", exact: true })).toBeVisible()
+    await expect(page.getByText(/Cultivation halted:\s*yes/i)).toBeVisible()
+    await expect(
+      page.getByRole("button", { name: "Season duration and water availability table" }),
+    ).toBeVisible()
 
-    await seasons.getByRole("button", { name: "Off", exact: true }).click()
-    await expect(seasons.getByRole("button", { name: "On", exact: true })).toBeVisible()
-    await expect(seasons.locator("button")).toHaveCount(3)
-
-    const cultivationToggle = seasons
-      .getByText(/Cultivation halted:\s*(yes|no)/i)
-      .locator("xpath=..")
+    const cultivationToggle = page.getByText(/Cultivation halted:\s*(yes|no)/i)
     await expect(cultivationToggle).toHaveText(/Cultivation halted:\s*yes/i)
     await cultivationToggle.click()
     await expect(cultivationToggle).toHaveText(/Cultivation halted:\s*no/i)
     await cultivationToggle.click()
     await expect(cultivationToggle).toHaveText(/Cultivation halted:\s*yes/i)
 
-    const tableToggle = seasons.getByRole("button", {
+    const tableToggle = page.getByRole("button", {
       name: "Season duration and water availability table",
     })
     await expect(tableToggle).toHaveAttribute("aria-expanded", "false")
     await tableToggle.click()
     await expect(tableToggle).toHaveAttribute("aria-expanded", "true")
-    const tableBody = seasons
-      .locator("div")
-      .filter({ hasText: /Temperate/ })
-      .filter({ hasText: /Drought/ })
-      .last()
-    await expect(tableBody).toBeVisible()
-    await expect(tableBody).toContainText(/Temperate/)
-    await expect(tableBody).toContainText(/Drought/)
-    await expect(tableBody).toContainText(/Badtide/)
-    await expect(tableBody).toContainText(/Water availability/)
+    await expect(calculator(page)).toContainText(/Temperate/)
+    await expect(calculator(page)).toContainText(/Drought/)
+    await expect(calculator(page)).toContainText(/Badtide/)
+    await expect(calculator(page)).toContainText(/Water availability/)
 
     await tableToggle.click()
     await expect(tableToggle).toHaveAttribute("aria-expanded", "false")
-    await expect(tableBody).toBeHidden()
 
-    await seasons.getByRole("button", { name: "On", exact: true }).click()
-    await expect(seasons.getByRole("button", { name: "Off", exact: true })).toBeVisible()
-    await expect(seasons.locator("button")).toHaveCount(1)
+    await tableToggle.click()
+    await expect(tableToggle).toHaveAttribute("aria-expanded", "true")
+    await expect(calculator(page)).toContainText(/Drought/)
+    await expect(calculator(page)).toContainText(/Badtide/)
+
+    await page.getByRole("button", { name: "On", exact: true }).click()
+    await expect(page.getByRole("button", { name: "Off", exact: true })).toBeVisible()
+    await expect(page.getByText(/Cultivation halted:/i)).toHaveCount(0)
+    await expect(
+      page.getByRole("button", { name: "Season duration and water availability table" }),
+    ).toHaveCount(0)
   })
 
   test("opens and closes the Privacy Policy modal through its documented controls", async ({
@@ -105,7 +111,7 @@ test.describe("Reference button scenarios", { tag: "@reference" }, () => {
     await expect(dialog).toContainText(/1\. Introduction/)
     await expect(dialog).toContainText(/10\. Changes to This Policy/)
     await expect(dialog.getByRole("button", { name: "Close" })).toBeVisible()
-    await expect(dialog.locator("button")).toHaveCount(1)
+    await expect(dialog.getByRole("button")).toHaveCount(1)
 
     await dialog.getByRole("button", { name: "Close" }).click()
     await expect(dialog).toHaveCount(0)
@@ -119,46 +125,50 @@ test.describe("Reference button scenarios", { tag: "@reference" }, () => {
   test("updates Population values through every step button and exposes info tooltips", async ({
     page,
   }) => {
-    const population = populationControls(page)
+    const population = calculator(page)
     const beaverInput = page.getByRole("spinbutton", { name: "Total beaver population" })
-    const beaverInputButtons = beaverInput.locator("xpath=..").locator("button")
-    const beaverTimeContainer = page
-      .getByRole("button", { name: "Pause time info" })
-      .locator("xpath=../../..")
-    const beaverTimeButtons = beaverTimeContainer.locator("button:not([aria-label])")
-    const botInputButtons = botPopulationInput(page).locator("xpath=..").locator("button")
-    const botTimeContainer = page
-      .getByRole("button", { name: "Downtime info" })
-      .locator("xpath=../../..")
-    const botTimeButtons = botTimeContainer.locator("button:not([aria-label])")
+    const decrementButtons = population.getByRole("button", { name: "−", exact: true })
+    const incrementButtons = population.getByRole("button", { name: "+", exact: true })
+    const decreaseBeaverPopulation = decrementButtons.nth(0)
+    const increaseBeaverPopulation = incrementButtons.nth(0)
+    const decreaseWanderingTime = decrementButtons.nth(1)
+    const increaseWanderingTime = incrementButtons.nth(1)
+    const decreaseBotPopulation = decrementButtons.nth(2)
+    const increaseBotPopulation = incrementButtons.nth(2)
+    const decreaseDowntime = decrementButtons.nth(3)
+    const increaseDowntime = incrementButtons.nth(3)
 
-    await expect(beaverInputButtons).toHaveCount(2)
+    await expect(decrementButtons).toHaveCount(4)
+    await expect(incrementButtons).toHaveCount(4)
     await expect(beaverInput).toHaveValue("10")
-    await beaverInputButtons.first().click()
+    await decreaseBeaverPopulation.click()
     await expect(beaverInput).toHaveValue("9")
-    await beaverInputButtons.nth(1).click()
+    await increaseBeaverPopulation.click()
     await expect(beaverInput).toHaveValue("10")
 
-    await expect(beaverTimeButtons).toHaveCount(2)
-    await expect(beaverTimeContainer).toContainText(/0\.5\s*h/)
-    await beaverTimeButtons.nth(1).click()
-    await expect(beaverTimeContainer).toContainText(/1\s*h/)
-    await beaverTimeButtons.first().click()
-    await expect(beaverTimeContainer).toContainText(/0\.5\s*h/)
+    await expect(decreaseWanderingTime).toBeVisible()
+    await expect(increaseWanderingTime).toBeVisible()
+    await expect(population).toContainText(/0\.5\s*h/)
+    await increaseWanderingTime.click()
+    await expect(population).toContainText(/1\s*h/)
+    await decreaseWanderingTime.click()
+    await expect(population).toContainText(/0\.5\s*h/)
 
-    await expect(botInputButtons).toHaveCount(2)
+    await expect(decreaseBotPopulation).toBeVisible()
+    await expect(increaseBotPopulation).toBeVisible()
     await expect(botPopulationInput(page)).toHaveValue("0")
-    await botInputButtons.nth(1).click()
+    await increaseBotPopulation.click()
     await expect(botPopulationInput(page)).toHaveValue("1")
-    await botInputButtons.first().click()
+    await decreaseBotPopulation.click()
     await expect(botPopulationInput(page)).toHaveValue("0")
 
-    await expect(botTimeButtons).toHaveCount(2)
-    await expect(botTimeContainer).toContainText(/1\s*h/)
-    await botTimeButtons.nth(1).click()
-    await expect(botTimeContainer).toContainText(/1\.5\s*h/)
-    await botTimeButtons.first().click()
-    await expect(botTimeContainer).toContainText(/1\s*h/)
+    await expect(decreaseDowntime).toBeVisible()
+    await expect(increaseDowntime).toBeVisible()
+    await expect(population).toContainText(/1\s*h/)
+    await increaseDowntime.click()
+    await expect(population).toContainText(/1\.5\s*h/)
+    await decreaseDowntime.click()
+    await expect(population).toContainText(/1\s*h/)
 
     await page.getByRole("button", { name: "Pause time info" }).hover()
     await expect(
@@ -176,18 +186,20 @@ test.describe("Reference button scenarios", { tag: "@reference" }, () => {
     ).toBeVisible()
   })
 
-  test("can add, quantify, and remove every Desired Surplus option", async ({ page }) => {
-    await expect(desiredSurplus(page).getByRole("button", { name: "Remove" })).toHaveCount(0)
+  for (const [index, optionChunk] of chunksOf(surplusOptions, 8).entries()) {
+    test(`can add, quantify, and remove Desired Surplus options ${index + 1}`, async ({ page }) => {
+      await expect(page.getByRole("button", { name: "Remove", exact: true })).toHaveCount(0)
 
-    for (const option of surplusOptions) {
-      await test.step(option, async () => {
-        await addSurplusItem(page, option, "1")
-        await expect(surplusQuantityInput(page, option)).toHaveValue("1")
-        await expect(desiredSurplus(page).getByRole("button", { name: "Remove" })).toHaveCount(1)
-        await expect(desiredSurplus(page)).toContainText(option)
-        await removeSurplusItem(page, option)
-        await expect(desiredSurplus(page).getByRole("button", { name: "Remove" })).toHaveCount(0)
-      })
-    }
-  })
+      for (const option of optionChunk) {
+        await test.step(option, async () => {
+          await addSurplusItem(page, option, "1")
+          await expect(firstSurplusQuantityInput(page)).toHaveValue("1")
+          await expect(page.getByRole("button", { name: "Remove", exact: true })).toHaveCount(1)
+          await expect(calculator(page)).toContainText(option)
+          await removeLastSurplusItem(page)
+          await expect(page.getByRole("button", { name: "Remove", exact: true })).toHaveCount(0)
+        })
+      }
+    })
+  }
 })

@@ -1,7 +1,11 @@
 import { useMemo, useState } from "react"
 
 import {
-  nutritionProductionSnapshotRows,
+  nutritionPopulationTotals,
+  nutritionProductionSnapshotForPopulation,
+  nutritionProductionSnapshotSections,
+  nutritionProductionSnapshotSectionsFromText,
+  type NutritionProductionSnapshotSection,
   type NutritionProductionSnapshotKey,
 } from "./productionSnapshots"
 
@@ -105,7 +109,7 @@ export type ProductionPanelViewModel = {
   resetMix: () => void
   hasRows: boolean
   baseRowsVisible: boolean
-  referenceRows?: readonly string[]
+  referenceSections?: readonly NutritionProductionSnapshotSection[]
   scenarioRows: string[][]
   water: {
     collapsed: boolean
@@ -390,7 +394,6 @@ const nutritionSnapshotByDisabledNeed: Record<string, NutritionProductionSnapsho
 }
 
 const selectNutritionProductionSnapshot = ({
-  desiredBeavers,
   desiredBots,
   workingHours,
   wanderingTime,
@@ -399,7 +402,6 @@ const selectNutritionProductionSnapshot = ({
   hasBots,
   botBoostEnabled,
 }: {
-  desiredBeavers: number
   desiredBots: number
   workingHours: number
   wanderingTime: number
@@ -419,10 +421,6 @@ const selectNutritionProductionSnapshot = ({
     if (disabledSnapshot) {
       return disabledSnapshot
     }
-  }
-
-  if (desiredBeavers === 16) {
-    return "population16"
   }
 
   if (workingHours === 12) {
@@ -593,7 +591,6 @@ export const useTimberbornCalculator = (): TimberbornCalculatorViewModel => {
     largePumpOnly,
   })
   const nutritionProductionSnapshot = selectNutritionProductionSnapshot({
-    desiredBeavers,
     desiredBots,
     workingHours,
     wanderingTime: parseNumber(wanderingTime),
@@ -602,9 +599,22 @@ export const useTimberbornCalculator = (): TimberbornCalculatorViewModel => {
     hasBots,
     botBoostEnabled,
   })
-  const referenceRows =
+  const useGeneratedNutritionPopulation =
+    needMode === "nutrition" &&
+    disabledNutritionNeeds.size === 0 &&
+    !hasBots &&
+    parseNumber(wanderingTime) === 0.5
+  const referenceSections =
     needMode === "nutrition" && positiveSurplusItems.length === 0 && !seasonsEnabled
-      ? nutritionProductionSnapshotRows(nutritionProductionSnapshot)
+      ? useGeneratedNutritionPopulation
+        ? nutritionProductionSnapshotSectionsFromText(
+            nutritionProductionSnapshotForPopulation(desiredBeavers, {
+              workingHours,
+              wanderingTime: parseNumber(wanderingTime),
+            }),
+            `population ${desiredBeavers} ${workingHours}h`,
+          )
+        : nutritionProductionSnapshotSections(nutritionProductionSnapshot)
       : undefined
 
   return {
@@ -676,11 +686,11 @@ export const useTimberbornCalculator = (): TimberbornCalculatorViewModel => {
       syncDifficulty,
       beaverNeedsEnabled,
       setBeaverNeedsEnabled,
-      showBotReferenceLabels: hasBots && referenceRows !== undefined,
+      showBotReferenceLabels: hasBots && referenceSections !== undefined,
       resetMix,
       hasRows: baseRowsVisible || positiveSurplusItems.length > 0 || hasBots,
       baseRowsVisible,
-      referenceRows,
+      referenceSections,
       scenarioRows: buildScenarioRows({
         needMode,
         booksEnabled,
@@ -1113,38 +1123,6 @@ const buildTotals = ({
       }
     }
 
-    if (desiredBeavers === 16) {
-      return {
-        production: "94.7",
-        buildings: "15",
-        crops: "49",
-        trees: "21",
-        land: "68 tiles + 69 terrain",
-        hp: "1.92 Khp",
-        hpGenerated: "2.53 Khp",
-        net: "+609 hp",
-        productionTableSummary:
-          "94.7 item/day 13 buildings 49 crops 21 trees 64 tiles 69 terrain 14 beavers 1.92 Khp /day",
-        workingBeavers: 15,
-        availableBeavers: 15,
-      }
-    }
-
-    if (workingHours === 12) {
-      return {
-        production: "59.2",
-        buildings: "15",
-        crops: "32",
-        trees: "14",
-        land: "68 tiles + 45 terrain",
-        hp: "1.44 Khp",
-        hpGenerated: "2.3 Khp",
-        net: "+859 hp",
-        productionTableSummary:
-          "59.2 item/day 13 buildings 32 crops 14 trees 64 tiles 45 terrain 14 beavers 1.44 Khp /day",
-      }
-    }
-
     if (wanderingTime === 2) {
       return {
         production: "59.2",
@@ -1156,6 +1134,29 @@ const buildTotals = ({
         hpGenerated: "2.44 Khp",
         net: "+523 hp",
         productionTableSummary: defaultNutritionProductionTableSummary,
+      }
+    }
+
+    if (!hasBots && disabledNutritionNeeds.size === 0) {
+      const populationTotals = nutritionPopulationTotals(desiredBeavers, {
+        workingHours,
+        wanderingTime,
+      })
+
+      return {
+        production: populationTotals.production,
+        buildings: populationTotals.buildings,
+        crops: populationTotals.crops,
+        trees: populationTotals.trees,
+        land: populationTotals.land,
+        hp: populationTotals.hp,
+        hpGenerated: populationTotals.hpGenerated,
+        net: populationTotals.net,
+        productionTableSummary: `${populationTotals.productionTableTotal} item/day ${populationTotals.productionTableBuildings} buildings ${populationTotals.crops} crops ${populationTotals.trees} trees ${populationTotals.productionTableLandTiles} tiles ${populationTotals.productionTableTerrain} terrain ${populationTotals.productionTableWorkers} beavers ${populationTotals.hp} /day`,
+        workingBeavers: populationTotals.workingBeavers,
+        availableBeavers: populationTotals.availableBeavers,
+        availableCarriers: populationTotals.availableCarriers,
+        availableCarrierPercent: populationTotals.availableCarrierPercent,
       }
     }
 

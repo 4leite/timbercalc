@@ -5,9 +5,9 @@ import {
   botPopulationInput,
   expectCalculatorText,
   expectNoCalculatorText,
+  lastSurplusRemoveButton,
   openCalculator,
   selectBotNeeds,
-  surplusRow,
 } from "./helpers"
 
 const numericValueForLabel = async (page: Page, label: string): Promise<number> => {
@@ -104,10 +104,9 @@ test.describe("Reference advanced transitions", { tag: "@reference" }, () => {
     await expectCalculatorText(page, /Planks\s+2\s+\(1\.85\)/)
     await expectCalculatorText(page, /Gear Workshop\s+12 tiles\s+2 beavers\s+3\.84 Khp/)
 
-    await page
-    surplusRow(page, "Gears").getByRole("button", { name: "Remove" }).click()
+    await lastSurplusRemoveButton(page).click()
 
-    await expect(surplusRow(page, "Gears")).toHaveCount(0)
+    await expect(page.getByText(/^Gears\s*\/day$/i)).toHaveCount(0)
     await expectNoCalculatorText(page, /Gear Workshop/)
     await expectCalculatorText(page, /Planks\s+2\s+\(1\.01\)/)
     await expectCalculatorText(page, /Lumber Mill\s+12 tiles\s+2 beavers\s+1\.6 Khp/)

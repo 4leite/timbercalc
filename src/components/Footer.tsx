@@ -1,14 +1,30 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 export default function Footer() {
   const [policyOpen, setPolicyOpen] = useState(false)
+
+  useEffect(() => {
+    if (!policyOpen) {
+      return
+    }
+
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setPolicyOpen(false)
+      }
+    }
+
+    document.addEventListener("keydown", closeOnEscape)
+
+    return () => document.removeEventListener("keydown", closeOnEscape)
+  }, [policyOpen])
 
   return (
     <>
       <footer
         className="
-          mx-auto flex max-w-[1180px] flex-wrap items-center justify-between
-          gap-4 p-4
+          mx-auto flex max-w-295 flex-wrap items-center justify-between gap-4
+          p-4
         "
       >
         <p>
@@ -25,9 +41,9 @@ export default function Footer() {
         </p>
       </footer>
       {policyOpen ? (
-        <div className="privacy-modal-root fixed inset-0 z-50" role="presentation">
+        <div className="fixed inset-0 z-50" role="presentation">
           <div
-            className="privacy-modal-backdrop absolute inset-0 bg-black/65"
+            className="absolute inset-0 bg-black/65"
             aria-hidden="true"
             onClick={() => setPolicyOpen(false)}
           />

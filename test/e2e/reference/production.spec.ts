@@ -1,17 +1,20 @@
 import { expect, test, type Page } from "@playwright/test"
 
 import {
+  nutritionPopulationTotals,
+  nutritionProductionSnapshotForPopulation,
   nutritionProductionSnapshots,
   type NutritionProductionSnapshotKey,
 } from "../../../src/lib/timberborn-calculator/productionSnapshots"
 import {
   botPopulationInput,
   calculator,
-  districtRecaps,
   expectCalculatorText,
   expectNoCalculatorText,
+  lastDistrictRecapText,
   openCalculator,
-  productionTable,
+  populationControls,
+  productionTableText,
   selectBeaverNeeds,
   workingHoursPanel,
 } from "./helpers"
@@ -21,6 +24,15 @@ type ProductionMatrixCase = {
   apply: (page: Page) => Promise<void>
   productionSnapshot: NutritionProductionSnapshotKey
   districtRecap: string
+}
+
+type NutritionPopulationMatrixCase = {
+  population: number
+}
+
+type NutritionWorkingHoursMatrixCase = {
+  population: number
+  workingHours: number
 }
 
 const normalizeText = (text: string) =>
@@ -48,19 +60,93 @@ const nutritionDistrictRecapText = normalizeText(`
   NET BALANCE +609 hp
 `)
 
+const nutritionPopulationMatrixCases: NutritionPopulationMatrixCase[] = [
+  { population: 1 },
+  { population: 2 },
+  { population: 3 },
+  { population: 7 },
+  { population: 10 },
+  { population: 13 },
+  { population: 16 },
+  { population: 19 },
+  { population: 22 },
+  { population: 25 },
+]
+
+const nutritionWorkingHoursMatrixCases: NutritionWorkingHoursMatrixCase[] = [
+  { population: 25, workingHours: 16 },
+  { population: 25, workingHours: 15 },
+  { population: 25, workingHours: 12 },
+]
+
+const nutritionPopulationRecapText = (
+  population: number,
+  options?: { workingHours?: number; wanderingTime?: number },
+) => {
+  const totals = nutritionPopulationTotals(population, options)
+  const workingPercent = Math.min(
+    100,
+    Math.round((totals.workingBeavers / Math.max(1, totals.availableBeavers)) * 100),
+  )
+
+  return normalizeText(`
+    DISTRICT RECAP
+    WORKING BVRS ${totals.workingBeavers} / ${totals.availableBeavers} ${workingPercent}%
+    WORKING BOTS no bots
+    AVAILABLE (ALL) ${totals.availableCarriers} carriers ${totals.availableCarrierPercent}%
+    FOOD CONSUMED ${(population * 2.67).toFixed(1)} /day
+    WATER CONSUMED ${(population * 2.13).toFixed(1)} /day
+    PRODUCTION ${totals.production} items/day
+    BUILDINGS ${totals.buildings}
+    TREES ${totals.trees}
+    CROPS ${totals.crops}
+    LAND USE ${totals.land}
+    HP USED ${totals.hp}
+    HP GENERATED ${totals.hpGenerated}
+    NET BALANCE ${totals.net}
+  `)
+}
+
 const clickNutritionNeed = async (page: Page, need: string) => {
-  await page
-    .locator("#beaver-needs-section")
-    .getByRole("button", { name: new RegExp(`^${escapedRegExp(need)}\\b`, "i") })
-    .click()
+  await page.getByRole("button", { name: new RegExp(`^${escapedRegExp(need)}\\b`, "i") }).click()
+}
+
+const productionBodyStructure = async (page: Page) => {
+  return await page
+    .getByRole("button", { name: "Scroll to top of Production table" })
+    .evaluate((button) => {
+      const normalize = (text: string | null | undefined) =>
+        (text ?? "").replace(/[\s\u00a0]+/g, " ").trim()
+      const allElements = Array.from(document.body.getElementsByTagName("*"))
+      const productionIndex = allElements.indexOf(button)
+      const powerIndex = allElements.findIndex(
+        (element, index) =>
+          index > productionIndex &&
+          normalize(element.textContent).toLowerCase() === "power generation",
+      )
+      const isBetweenProductionAndPower = (element: Element) => {
+        const index = allElements.indexOf(element)
+        return index > productionIndex && powerIndex !== -1 && index < powerIndex
+      }
+
+      return {
+        paragraphCount: Array.from(document.getElementsByTagName("p")).filter(
+          isBetweenProductionAndPower,
+        ).length,
+        longTextLeafs: allElements
+          .filter(
+            (element) => element.children.length === 0 && isBetweenProductionAndPower(element),
+          )
+          .map((element) => normalize(element.textContent))
+          .filter((text) => text.length > 120),
+      }
+    })
 }
 
 const increaseWanderingTime = async (page: Page, steps: number) => {
-  const increaseButton = page
-    .getByRole("button", { name: "Pause time info" })
-    .locator("xpath=../../..")
-    .locator("button:not([aria-label])")
-    .last()
+  const increaseButton = populationControls(page)
+    .getByRole("button", { name: "+", exact: true })
+    .nth(1)
 
   for (let step = 0; step < steps; step += 1) {
     await increaseButton.click()
@@ -68,11 +154,9 @@ const increaseWanderingTime = async (page: Page, steps: number) => {
 }
 
 const increaseDowntime = async (page: Page, steps: number) => {
-  const increaseButton = page
-    .getByRole("button", { name: "Downtime info" })
-    .locator("xpath=../../..")
-    .locator("button:not([aria-label])")
-    .last()
+  const increaseButton = populationControls(page)
+    .getByRole("button", { name: "+", exact: true })
+    .nth(3)
 
   for (let step = 0; step < steps; step += 1) {
     await increaseButton.click()
@@ -80,7 +164,7 @@ const increaseDowntime = async (page: Page, steps: number) => {
 }
 
 const reduceWorkingHours = async (page: Page, steps: number) => {
-  const workingHours = workingHoursPanel(page).getByRole("slider")
+  const workingHours = workingHoursPanel(page).getByRole("slider").last()
   await workingHours.focus()
 
   for (let step = 0; step < steps; step += 1) {
@@ -89,25 +173,6 @@ const reduceWorkingHours = async (page: Page, steps: number) => {
 }
 
 const nutritionMatrixCases: ProductionMatrixCase[] = [
-  {
-    name: "baseline nutrition",
-    apply: async () => {},
-    productionSnapshot: "baselineNutrition",
-    districtRecap: nutritionDistrictRecapText,
-  },
-  {
-    name: "population 16",
-    apply: async (page) => {
-      await page.getByRole("spinbutton", { name: "Total beaver population" }).fill("16")
-    },
-    productionSnapshot: "population16",
-    districtRecap: normalizeText(`
-      DISTRICT RECAP WORKING BVRS 15 / 15 100% WORKING BOTS no bots AVAILABLE (ALL) 0 carriers 0%
-      FOOD CONSUMED 42.7 /day WATER CONSUMED 34.1 /day PRODUCTION 94.7 items/day BUILDINGS 15
-      TREES 21 CROPS 49 LAND USE 68 tiles + 69 terrain HP USED 1.92 Khp HP GENERATED 2.53 Khp
-      NET BALANCE +609 hp
-    `),
-  },
   {
     name: "wandering time 2.0h",
     apply: async (page) => {
@@ -291,12 +356,77 @@ test.describe("Reference production calculations", { tag: "@reference" }, () => 
     await selectBeaverNeeds(page, "Nutrition")
 
     await expect
-      .poll(async () => normalizeText(await productionTable(page).innerText()))
+      .poll(async () => normalizeText(await productionTableText(page)))
       .toBe(nutritionProductionSnapshots.baselineNutrition)
     await expect
-      .poll(async () => normalizeText(await districtRecaps(page).last().innerText()))
+      .poll(async () => normalizeText(await lastDistrictRecapText(page)))
       .toBe(nutritionDistrictRecapText)
   })
+
+  test("renders the Nutrition production table as expanded production sections", async ({
+    page,
+  }) => {
+    await selectBeaverNeeds(page, "Nutrition")
+
+    const productionSections = page.getByRole("button", {
+      name: /^▾?\s*(Water|Crops|Trees|Food|Wood)$/i,
+    })
+    await expect(productionSections).toHaveCount(5)
+
+    for (const section of ["Water", "Crops", "Trees", "Food", "Wood"]) {
+      await expect(
+        page.getByRole("button", { name: new RegExp(`^▾?\\s*${section}$`, "i") }),
+      ).toHaveAttribute("aria-expanded", "true")
+    }
+
+    await expect.poll(async () => (await productionBodyStructure(page)).paragraphCount).toBe(0)
+    await expect.poll(async () => (await productionBodyStructure(page)).longTextLeafs).toEqual([])
+  })
+
+  for (const scenario of nutritionPopulationMatrixCases) {
+    test(`matches full Nutrition production table and recap for population ${scenario.population}`, async ({
+      page,
+    }) => {
+      await selectBeaverNeeds(page, "Nutrition")
+      await page
+        .getByRole("spinbutton", { name: "Total beaver population" })
+        .fill(String(scenario.population))
+
+      await expect
+        .poll(async () => normalizeText(await productionTableText(page)))
+        .toBe(nutritionProductionSnapshotForPopulation(scenario.population))
+      await expect
+        .poll(async () => normalizeText(await lastDistrictRecapText(page)))
+        .toBe(nutritionPopulationRecapText(scenario.population))
+    })
+  }
+
+  for (const scenario of nutritionWorkingHoursMatrixCases) {
+    test(`matches full Nutrition production table and recap for population ${scenario.population} at ${scenario.workingHours}h`, async ({
+      page,
+    }) => {
+      await selectBeaverNeeds(page, "Nutrition")
+      await page
+        .getByRole("spinbutton", { name: "Total beaver population" })
+        .fill(String(scenario.population))
+      await reduceWorkingHours(page, 16 - scenario.workingHours)
+
+      await expect
+        .poll(async () => normalizeText(await productionTableText(page)))
+        .toBe(
+          nutritionProductionSnapshotForPopulation(scenario.population, {
+            workingHours: scenario.workingHours,
+          }),
+        )
+      await expect
+        .poll(async () => normalizeText(await lastDistrictRecapText(page)))
+        .toBe(
+          nutritionPopulationRecapText(scenario.population, {
+            workingHours: scenario.workingHours,
+          }),
+        )
+    })
+  }
 
   for (const scenario of nutritionMatrixCases) {
     test(`matches full Nutrition production table for ${scenario.name}`, async ({ page }) => {
@@ -304,10 +434,10 @@ test.describe("Reference production calculations", { tag: "@reference" }, () => 
       await scenario.apply(page)
 
       await expect
-        .poll(async () => normalizeText(await productionTable(page).innerText()))
+        .poll(async () => normalizeText(await productionTableText(page)))
         .toBe(nutritionProductionSnapshots[scenario.productionSnapshot])
       await expect
-        .poll(async () => normalizeText(await districtRecaps(page).last().innerText()))
+        .poll(async () => normalizeText(await lastDistrictRecapText(page)))
         .toBe(scenario.districtRecap)
     })
   }

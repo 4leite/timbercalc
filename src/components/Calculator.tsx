@@ -16,7 +16,7 @@ export const Calculator = () => {
   const calculator = useTimberbornCalculator()
 
   return (
-    <section className="mx-auto grid max-w-[1180px] gap-4 p-4" aria-label="Timberborn calculator">
+    <section className="mx-auto grid max-w-295 gap-4 p-4" aria-label="Timberborn calculator">
       <div className="grid grid-cols-[minmax(0,1fr)_minmax(18rem,24rem)] gap-4">
         <div className="grid gap-4">
           <ControlsPanel controls={calculator.controls} />
@@ -48,12 +48,7 @@ const ControlsPanel = ({ controls }: { controls: ControlsPanelViewModel }) => {
       className="rounded-[0.85rem] border border-white/15 bg-[#1e3a30] p-4"
       aria-labelledby="needs-heading"
     >
-      <div
-        className="panel-header panel-header--clickable"
-        role="button"
-        tabIndex={0}
-        aria-label="Scroll to top of Needs configuration"
-      >
+      <div role="button" tabIndex={0} aria-label="Scroll to top of Needs configuration">
         <span id="needs-heading" className="text-xl font-extrabold">
           Needs configuration
         </span>
@@ -61,7 +56,7 @@ const ControlsPanel = ({ controls }: { controls: ControlsPanelViewModel }) => {
 
       <button
         type="button"
-        className="section-header-row mt-3 flex gap-2"
+        className="mt-3 flex gap-2"
         aria-expanded={beaversExpanded}
         aria-controls="beaver-needs-section"
         onClick={toggleBeavers}
@@ -75,12 +70,12 @@ const ControlsPanel = ({ controls }: { controls: ControlsPanelViewModel }) => {
       </button>
       <button
         type="button"
-        className="section-expand-banner mt-3 flex gap-2"
+        className="mt-3 flex gap-2"
         aria-expanded={beaversExpanded}
         aria-controls="beaver-needs-section"
         onClick={toggleBeavers}
       >
-        {beaversExpanded ? "▲" : "▼"}
+        <span aria-hidden="true">{beaversExpanded ? "▲" : "▼"}</span>
       </button>
 
       {beaversExpanded ? (
@@ -111,7 +106,7 @@ const ControlsPanel = ({ controls }: { controls: ControlsPanelViewModel }) => {
 
       <button
         type="button"
-        className="section-header-row mt-3 flex gap-2"
+        className="mt-3 flex gap-2"
         aria-expanded={botsExpanded}
         aria-controls="bot-needs-section"
         onClick={toggleBots}
@@ -123,12 +118,12 @@ const ControlsPanel = ({ controls }: { controls: ControlsPanelViewModel }) => {
       </button>
       <button
         type="button"
-        className="section-expand-banner mt-3 flex gap-2"
+        className="mt-3 flex gap-2"
         aria-expanded={botsExpanded}
         aria-controls="bot-needs-section"
         onClick={toggleBots}
       >
-        {botsExpanded ? "▲" : "▼"}
+        <span aria-hidden="true">{botsExpanded ? "▲" : "▼"}</span>
       </button>
 
       {botsExpanded ? (
@@ -203,7 +198,7 @@ const SeasonsPanel = ({ seasons }: { seasons: SeasonsPanelViewModel }) => {
   const [tableExpanded, setTableExpanded] = useState(false)
 
   return (
-    <section className="water-mgmt rounded-[0.85rem] border border-white/15 bg-[#1e3a30] p-4">
+    <section className="rounded-[0.85rem] border border-white/15 bg-[#1e3a30] p-4">
       <div className="mt-3 flex flex-wrap items-center gap-3">
         <span className="text-xl font-extrabold">Seasons and storage</span>
         <button type="button" onClick={seasons.toggleSeasons}>
@@ -247,11 +242,7 @@ const SeasonsPanel = ({ seasons }: { seasons: SeasonsPanelViewModel }) => {
               <option value="hard">Hard</option>
             </select>
           </label>
-          <button
-            type="button"
-            className="water-inline-toggle"
-            onClick={() => setCultivationHalted((current) => !current)}
-          >
+          <button type="button" onClick={() => setCultivationHalted((current) => !current)}>
             Cultivation halted: {cultivationHalted ? "yes" : "no"}
           </button>
           <div>
@@ -268,10 +259,7 @@ const SeasonsPanel = ({ seasons }: { seasons: SeasonsPanelViewModel }) => {
               <span aria-hidden="true">▾</span>
               <span>Season duration and water availability table</span>
             </button>
-            <div
-              className="water-season-table-body"
-              style={{ display: tableExpanded ? "block" : "none" }}
-            >
+            <div style={{ display: tableExpanded ? "block" : "none" }}>
               <div
                 className="
                   mt-3 grid grid-cols-5 gap-2 rounded-[0.6rem] bg-white/10 p-3
@@ -307,7 +295,7 @@ const SeasonsPanel = ({ seasons }: { seasons: SeasonsPanelViewModel }) => {
 
 const SurplusPanel = ({ surplus }: { surplus: SurplusPanelViewModel }) => {
   return (
-    <section className="surplus-section rounded-[0.85rem] border border-white/15 bg-[#1e3a30] p-4">
+    <section className="rounded-[0.85rem] border border-white/15 bg-[#1e3a30] p-4">
       <div className="mt-3 flex flex-wrap items-center gap-3">
         <span className="text-xl font-extrabold">Desired Surplus</span>
         <button type="button" onClick={surplus.toggleSurplusPicker}>
@@ -336,7 +324,7 @@ const SurplusPanel = ({ surplus }: { surplus: SurplusPanelViewModel }) => {
       </div>
       <div>
         {surplus.surplusRows.map((row) => (
-          <div key={row.name} className="surplus-row mt-2 flex items-center gap-2">
+          <div key={row.name} className="mt-2 flex items-center gap-2">
             <span>{row.name}</span>
             <input
               type="number"
@@ -360,7 +348,7 @@ const SurplusPanel = ({ surplus }: { surplus: SurplusPanelViewModel }) => {
 
 const ProductionPanel = ({ production }: { production: ProductionPanelViewModel }) => {
   return (
-    <section className="prod-table-wrap rounded-[0.85rem] border border-white/15 bg-[#1e3a30] p-4">
+    <section className="rounded-[0.85rem] border border-white/15 bg-[#1e3a30] p-4">
       <div className="mt-3 flex flex-wrap items-center gap-3">
         <button
           type="button"
@@ -401,15 +389,23 @@ const ProductionPanel = ({ production }: { production: ProductionPanelViewModel 
 
       {production.hasRows ? (
         <div className="mt-4 grid gap-3">
-          {production.referenceRows ? (
+          {production.referenceSections ? (
             <div className="grid gap-2 rounded-[0.6rem] bg-white/6 p-3">
-              <p className="text-sm font-semibold text-white/80">
+              <div className="text-sm font-semibold text-white/80">
                 ITEM/DAY NEEDED BUILDING/PLANTS NEEDED LAND USE WORKERS POWER/DAY BOTS
-              </p>
-              {production.referenceRows.map((row) => (
-                <div key={row} className="prod-row rounded-[0.6rem] bg-white/6 p-3">
-                  <p className="whitespace-pre-wrap break-words">{row}</p>
-                </div>
+              </div>
+              {production.referenceSections.map((section) => (
+                <section key={section.title} className="rounded-[0.6rem] bg-white/6 p-3">
+                  <button type="button" aria-expanded="true">
+                    <span aria-hidden="true">▾ </span>
+                    {section.title}
+                  </button>
+                  <div className="mt-2 grid gap-2 rounded-[0.6rem] bg-white/6 p-3">
+                    {section.rows.map((row) => (
+                      <ProductionSnapshotRow key={row.text} text={row.text} />
+                    ))}
+                  </div>
+                </section>
               ))}
             </div>
           ) : (
@@ -435,7 +431,7 @@ const ProductionPanel = ({ production }: { production: ProductionPanelViewModel 
                 <div
                   key={row.join("|")}
                   className="
-                    prod-row grid grid-cols-1 gap-2
+                    grid grid-cols-1 gap-2
                     md:grid-cols-[minmax(0,2fr)_minmax(0,3fr)_minmax(0,1.25fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)]
                   "
                 >
@@ -455,6 +451,21 @@ const ProductionPanel = ({ production }: { production: ProductionPanelViewModel 
         </div>
       )}
     </section>
+  )
+}
+
+const ProductionSnapshotRow = ({ text }: { text: string }) => {
+  const words = text.split(" ")
+
+  return (
+    <div className="wrap-break-word">
+      {words.map((word, index) => (
+        <span key={`${word}-${index}`}>
+          {index > 0 ? " " : ""}
+          {word}
+        </span>
+      ))}
+    </div>
   )
 }
 
@@ -558,7 +569,7 @@ const PowerGenerationPanel = ({
   const requiresPower = recap.hpUsed !== "0 hp"
 
   return (
-    <section className="power-table-wrap rounded-[0.85rem] border border-white/15 bg-[#1e3a30] p-4">
+    <section className="rounded-[0.85rem] border border-white/15 bg-[#1e3a30] p-4">
       <span className="text-xl font-extrabold">Power generation</span>
       {requiresPower ? (
         <div>
@@ -577,11 +588,11 @@ const PowerGenerationPanel = ({
 
 const PopulationPanel = ({ controls }: { controls: ControlsPanelViewModel }) => {
   return (
-    <section className="panel-population rounded-[0.85rem] border border-white/15 bg-[#1e3a30] p-4">
+    <section className="rounded-[0.85rem] border border-white/15 bg-[#1e3a30] p-4">
       <span className="text-xl font-extrabold">Population</span>
-      <div className="pop-col--beavers mt-1 grid gap-1">
-        <div className="pop-total-block">
-          <button type="button" className="pop-step-btn" onClick={controls.decrementPopulation}>
+      <div className="mt-1 grid gap-1">
+        <div>
+          <button type="button" aria-label="−" onClick={controls.decrementPopulation}>
             <span aria-hidden="true">−</span>
           </button>
           <label>
@@ -592,7 +603,7 @@ const PopulationPanel = ({ controls }: { controls: ControlsPanelViewModel }) => 
               onChange={(event) => controls.setPopulation(event.target.value)}
             />
           </label>
-          <button type="button" className="pop-step-btn" onClick={controls.incrementPopulation}>
+          <button type="button" aria-label="+" onClick={controls.incrementPopulation}>
             <span aria-hidden="true">+</span>
           </button>
         </div>
@@ -606,31 +617,23 @@ const PopulationPanel = ({ controls }: { controls: ControlsPanelViewModel }) => 
               </button>
             </Tooltip>
           </span>
-          <div className="pop-time-controls">
-            <button
-              type="button"
-              className="pop-step-btn"
-              onClick={controls.decrementWanderingTime}
-            >
+          <div>
+            <button type="button" aria-label="−" onClick={controls.decrementWanderingTime}>
               <span aria-hidden="true">−</span>
             </button>
-            <span className="pop-time-value">
+            <span>
               {controls.wanderingTime}
               {thinSpace}h
             </span>
-            <button
-              type="button"
-              className="pop-step-btn"
-              onClick={controls.incrementWanderingTime}
-            >
+            <button type="button" aria-label="+" onClick={controls.incrementWanderingTime}>
               <span aria-hidden="true">+</span>
             </button>
           </div>
         </div>
       </div>
-      <div className="pop-col--bots mt-1 grid gap-1">
-        <div className="pop-input-row">
-          <button type="button" className="pop-step-btn" onClick={controls.decrementBotPopulation}>
+      <div className="mt-1 grid gap-1">
+        <div>
+          <button type="button" aria-label="−" onClick={controls.decrementBotPopulation}>
             <span aria-hidden="true">−</span>
           </button>
           <label>
@@ -641,7 +644,7 @@ const PopulationPanel = ({ controls }: { controls: ControlsPanelViewModel }) => 
               onChange={(event) => controls.setBotPopulation(event.target.value)}
             />
           </label>
-          <button type="button" className="pop-step-btn" onClick={controls.incrementBotPopulation}>
+          <button type="button" aria-label="+" onClick={controls.incrementBotPopulation}>
             <span aria-hidden="true">+</span>
           </button>
         </div>
@@ -655,15 +658,15 @@ const PopulationPanel = ({ controls }: { controls: ControlsPanelViewModel }) => 
               </button>
             </Tooltip>
           </span>
-          <div className="pop-time-controls">
-            <button type="button" className="pop-step-btn" onClick={controls.decrementDowntime}>
+          <div>
+            <button type="button" aria-label="−" onClick={controls.decrementDowntime}>
               <span aria-hidden="true">−</span>
             </button>
-            <span className="pop-time-value">
+            <span>
               {controls.downtime}
               {thinSpace}h
             </span>
-            <button type="button" className="pop-step-btn" onClick={controls.incrementDowntime}>
+            <button type="button" aria-label="+" onClick={controls.incrementDowntime}>
               <span aria-hidden="true">+</span>
             </button>
           </div>
@@ -678,8 +681,9 @@ const Tooltip = ({ children, text }: { children: React.ReactNode; text: string }
     <span className="group relative inline-block">
       {children}
       <span
+        role="tooltip"
         className="
-          app-tooltip__surface absolute top-full left-0 z-20 hidden w-max max-w-88 rounded-lg border
+          absolute top-full left-0 z-20 hidden w-max max-w-88 rounded-lg border
           border-white/25 bg-[#08150f] p-2
           group-focus-within:block
           group-hover:block
@@ -706,7 +710,7 @@ const WorkingHoursPanel = ({ controls }: { controls: ControlsPanelViewModel }) =
   }
 
   return (
-    <section className="panel-hours rounded-[0.85rem] border border-white/15 bg-[#1e3a30] p-4">
+    <section className="rounded-[0.85rem] border border-white/15 bg-[#1e3a30] p-4">
       <div className="flex items-center justify-between">
         <span className="text-xl font-extrabold">Beavers Working hours</span>
         <span>
@@ -741,7 +745,7 @@ const WorkingHoursPanel = ({ controls }: { controls: ControlsPanelViewModel }) =
 
 const Recap = ({ recap }: { recap: RecapViewModel; variant: "left" | "right" }) => {
   return (
-    <section className="district-recap mt-4 rounded-[0.85rem] border border-white/15 bg-[#1e3a30] p-4">
+    <section className="mt-4 rounded-[0.85rem] border border-white/15 bg-[#1e3a30] p-4">
       <span className="text-xl font-extrabold">District recap</span>
       <p>{recap.workingBeavers}</p>
       <p>{recap.workingBots}</p>

@@ -2,8 +2,7 @@ export default function Header() {
   return (
     <header
       className="
-        mx-auto flex max-w-[1180px] flex-wrap items-center justify-between gap-4
-        p-4
+        mx-auto flex max-w-295 flex-wrap items-center justify-between gap-4 p-4
       "
     >
       <div
@@ -18,7 +17,6 @@ export default function Header() {
       </nav>
       <a
         className="
-          steam-page-cta
           cursor-pointer rounded-lg border border-[#7ec59b] bg-[#2e654f] px-3
           py-[0.45rem] text-white no-underline
         "

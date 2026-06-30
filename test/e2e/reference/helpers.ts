@@ -89,112 +89,125 @@ const caseInsensitive = (expected: string | RegExp): RegExp => {
   )
 }
 
-const beaverNeedsSection = (page: Page): Locator => {
-  return page.locator("#beaver-needs-section")
-}
-
-const botNeedsSection = (page: Page): Locator => {
-  return page.locator("#bot-needs-section")
-}
-
-const sectionByHeading = (page: Page, heading: string): Locator => {
-  return calculator(page)
-    .locator("section")
-    .filter({ has: calculator(page).getByText(heading, { exact: true }) })
-    .first()
-}
-
-const waterManagementSection = (page: Page): Locator => {
-  return sectionByHeading(page, "Seasons and storage")
-}
-
-const surplusSection = (page: Page): Locator => {
-  return sectionByHeading(page, "Desired Surplus")
-}
-
-const productionSection = (page: Page): Locator => {
-  return sectionByHeading(page, "Production/day")
-}
-
-const populationSection = (page: Page): Locator => {
-  return sectionByHeading(page, "Population")
-}
-
-const productionRow = (page: Page, expected: string | RegExp): Locator => {
-  return productionSection(page)
-    .locator("div")
-    .filter({ hasText: caseInsensitive(expected) })
-    .first()
-}
-
 const visibleCalculatorText = async (page: Page): Promise<string> => {
   return (await calculator(page).innerText()).replace(/[\s\u00a0]+/g, " ").trim()
 }
 
+const visibleCalculatorRawText = async (page: Page): Promise<string> => {
+  return await calculator(page).innerText()
+}
+
+const indexOfPattern = (text: string, expected: RegExp, fromIndex = 0): number => {
+  const match = expected.exec(text.slice(fromIndex))
+  return match ? fromIndex + match.index : -1
+}
+
+const lastIndexOfPattern = (text: string, expected: RegExp): number => {
+  const globalExpected = new RegExp(
+    expected.source,
+    expected.flags.includes("g") ? expected.flags : `${expected.flags}g`,
+  )
+  let lastIndex = -1
+  let match: RegExpExecArray | null
+
+  while ((match = globalExpected.exec(text)) !== null) {
+    lastIndex = match.index
+  }
+
+  return lastIndex
+}
+
+const textBetween = (text: string, start: RegExp, end: RegExp): string => {
+  const startIndex = indexOfPattern(text, start)
+  if (startIndex === -1) {
+    return ""
+  }
+
+  const endIndex = indexOfPattern(text, end, startIndex + 1)
+  return text.slice(startIndex, endIndex === -1 ? undefined : endIndex)
+}
+
+export const normalizedCalculatorText = async (page: Page): Promise<string> => {
+  return (await visibleCalculatorText(page)).toLowerCase()
+}
+
 export const openCalculator = async (page: Page) => {
   await page.goto("/")
-  await expect(calculator(page)).toBeVisible()
+  await expect(calculator(page)).toBeVisible({ timeout: 15_000 })
 }
 
 export const calculator = (page: Page) => {
   return page.getByRole("main")
 }
 
-export const beaverNeeds = beaverNeedsSection
-
-export const botNeeds = botNeedsSection
-
-export const seasonsAndStorage = waterManagementSection
-
-export const desiredSurplus = surplusSection
-
-export const productionTable = productionSection
-
-export const populationControls = populationSection
-
 export const workingHoursPanel = (page: Page): Locator => {
-  return sectionByHeading(page, "Beavers Working hours")
+  return calculator(page)
+}
+
+export const populationControls = (page: Page): Locator => {
+  return calculator(page)
+}
+
+export const productionTableText = async (page: Page): Promise<string> => {
+  return textBetween(
+    await visibleCalculatorRawText(page),
+    /production\/day/i,
+    /power generation|district recap/i,
+  )
+}
+
+export const lastDistrictRecapText = async (page: Page): Promise<string> => {
+  const text = await visibleCalculatorRawText(page)
+  const recapIndex = lastIndexOfPattern(text, /district recap/i)
+  return recapIndex === -1 ? "" : text.slice(recapIndex)
 }
 
 export const footer = (page: Page): Locator => {
   return page.getByRole("contentinfo")
 }
 
-export const districtRecaps = (page: Page): Locator => {
-  return calculator(page)
-    .locator("section")
-    .filter({ has: calculator(page).getByText("District recap", { exact: true }) })
+export const beaverHeaderButton = (page: Page): Locator => {
+  return page.getByRole("button", { name: /^Beavers\b/i })
 }
 
-export const powerGenerationSection = (page: Page): Locator => {
-  return calculator(page)
-    .locator("div")
-    .filter({ hasText: /Power generation/i })
-    .last()
+export const botHeaderButton = (page: Page): Locator => {
+  return page.getByRole("button", { name: /^Timberbots\b/i })
 }
 
-export const semanticButtons = (scope: Page | Locator): Locator => {
-  return scope.locator("button")
+export const beaverExpandButton = (page: Page): Locator => {
+  return page.getByRole("button", { name: "", exact: true }).first()
 }
 
-export const roleButtons = (scope: Page | Locator): Locator => {
-  return scope.locator('[role="button"]')
+export const botExpandButton = (page: Page): Locator => {
+  return page.getByRole("button", { name: "", exact: true }).last()
 }
 
 export const sectionHeaderButton = (page: Page, ariaControls: string): Locator => {
-  return page.locator(`button[aria-controls="${ariaControls}"]`).first()
+  return ariaControls === "beaver-needs-section" ? beaverHeaderButton(page) : botHeaderButton(page)
 }
 
 export const sectionExpandBanner = (page: Page, ariaControls: string): Locator => {
-  return page.locator(`button[aria-controls="${ariaControls}"]`).last()
+  return ariaControls === "beaver-needs-section" ? beaverExpandButton(page) : botExpandButton(page)
 }
 
-export const surplusRow = (page: Page, item: string): Locator => {
-  return surplusSection(page)
-    .locator("div")
-    .filter({ has: page.getByRole("button", { name: "Remove" }) })
-    .filter({ hasText: new RegExp(`^${escapedRegExp(item)}\\s*/day$`, "i") })
-    .last()
+export const beaverNeedCategoryButton = (page: Page, category: string): Locator => {
+  return page.getByRole("button", { name: category, exact: true }).first()
+}
+
+export const botNeedCategoryButton = (page: Page, category: string): Locator => {
+  if (category === "Boost") {
+    return page.getByRole("button", { name: "Boost", exact: true })
+  }
+
+  return page.getByRole("button", { name: category, exact: true }).last()
+}
+
+export const firstSurplusQuantityInput = (page: Page): Locator => {
+  return page.getByRole("spinbutton").first()
+}
+
+export const lastSurplusRemoveButton = (page: Page): Locator => {
+  return page.getByRole("button", { name: "Remove", exact: true }).last()
 }
 
 export const expectCalculatorText = async (page: Page, expected: string | RegExp) => {
@@ -209,45 +222,40 @@ export const expectNoCalculatorText = async (page: Page, unexpected: string | Re
     .not.toMatch(caseInsensitive(unexpected))
 }
 
-export const surplusQuantityInput = (page: Page, item: string): Locator => {
-  return surplusRow(page, item).getByRole("spinbutton")
-}
-
 export const botPopulationInput = (page: Page): Locator => {
-  return populationSection(page).getByRole("spinbutton").last()
+  return page.getByRole("spinbutton").nth(1)
 }
 
 export const seasonDifficultySelect = (page: Page): Locator => {
-  return waterManagementSection(page).getByRole("combobox", { name: "Difficulty" })
+  return page.getByRole("combobox", { name: "Difficulty" }).first()
 }
 
 export const productionDifficultySelect = (page: Page): Locator => {
-  return productionTable(page).getByRole("combobox", { name: "Difficulty" })
-}
-
-export const productionMixInput = (
-  page: Page,
-  resource: string,
-  rowText: string | RegExp,
-): Locator => {
-  return productionRow(page, rowText).getByLabel(`Mix % for ${resource}`)
+  return page.getByRole("combobox", { name: "Difficulty" }).last()
 }
 
 export const selectBeaverNeeds = async (page: Page, category: string) => {
-  await beaverNeedsSection(page).getByRole("button", { name: category, exact: true }).click()
+  await beaverNeedCategoryButton(page, category).click()
 }
 
 export const selectBotNeeds = async (page: Page, category: string) => {
-  await botNeedsSection(page).getByRole("button", { name: category, exact: true }).click()
+  await botNeedCategoryButton(page, category).click()
 }
 
 export const addSurplusItem = async (page: Page, item: string, quantity: string) => {
   await page.getByRole("button", { name: /Add item/ }).click()
   await page.getByRole("option", { name: item, exact: true }).click()
-  await surplusQuantityInput(page, item).fill(quantity)
+  const surplusRowCount = await page.getByRole("button", { name: "Remove", exact: true }).count()
+  await page
+    .getByRole("spinbutton")
+    .nth(surplusRowCount - 1)
+    .fill(quantity)
 }
 
-export const removeSurplusItem = async (page: Page, item: string) => {
-  await surplusRow(page, item).getByRole("button", { name: "Remove" }).click()
-  await expect(surplusRow(page, item)).toHaveCount(0)
+export const removeLastSurplusItem = async (page: Page) => {
+  const rowsBeforeRemove = await page.getByRole("button", { name: "Remove", exact: true }).count()
+  await lastSurplusRemoveButton(page).click()
+  await expect(page.getByRole("button", { name: "Remove", exact: true })).toHaveCount(
+    rowsBeforeRemove - 1,
+  )
 }

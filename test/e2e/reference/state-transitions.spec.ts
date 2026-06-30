@@ -4,11 +4,11 @@ import {
   botPopulationInput,
   expectCalculatorText,
   expectNoCalculatorText,
+  firstSurplusQuantityInput,
+  lastSurplusRemoveButton,
   openCalculator,
   productionDifficultySelect,
   seasonDifficultySelect,
-  surplusQuantityInput,
-  surplusRow,
 } from "./helpers"
 
 test.describe("Reference state transitions", { tag: "@reference" }, () => {
@@ -32,14 +32,13 @@ test.describe("Reference state transitions", { tag: "@reference" }, () => {
     await page.getByRole("button", { name: /Add item/ }).click()
     await page.getByRole("option", { name: "Planks", exact: true }).click()
 
-    const planksPerDay = surplusQuantityInput(page, "Planks")
+    const planksPerDay = firstSurplusQuantityInput(page)
     await planksPerDay.fill("12")
     await expectCalculatorText(page, /Lumber Mill\s+12 tiles\s+2 beavers\s+1\.6 Khp/)
 
-    await page
-    surplusRow(page, "Planks").getByRole("button", { name: "Remove" }).click()
+    await lastSurplusRemoveButton(page).click()
 
-    await expect(surplusRow(page, "Planks")).toHaveCount(0)
+    await expect(page.getByText(/^Planks\s*\/day$/i)).toHaveCount(0)
     await expectNoCalculatorText(page, /Lumber Mill/)
     await expectNoCalculatorText(page, /Oak tree\s+45 terrain/)
     await expectCalculatorText(page, /Production\s+48 items\/day/)

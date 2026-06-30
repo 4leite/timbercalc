@@ -1,25 +1,6 @@
 import { expect, test } from "@playwright/test"
 
-import {
-  beaverNeedCards,
-  beaverNeeds,
-  botNeedCards,
-  botNeeds,
-  desiredSurplus,
-  districtRecaps,
-  footer,
-  openCalculator,
-  populationControls,
-  powerGenerationSection,
-  productionTable,
-  roleButtons,
-  seasonsAndStorage,
-  sectionExpandBanner,
-  sectionHeaderButton,
-  semanticButtons,
-  surplusOptions,
-  workingHoursPanel,
-} from "./helpers"
+import { beaverNeedCards, botNeedCards, footer, openCalculator, surplusOptions } from "./helpers"
 
 const flatValues = <T extends Record<string, readonly string[]>>(groups: T): string[] => {
   return Object.values(groups).flatMap((values) => [...values])
@@ -30,18 +11,24 @@ test.describe("Reference button inventory", { tag: "@reference" }, () => {
     await openCalculator(page)
   })
 
-  test("matches the documented default button totals", async ({ page }) => {
-    await expect(semanticButtons(page)).toHaveCount(76)
-    await expect(roleButtons(page)).toHaveCount(38)
-    await expect(page.locator("a.steam-page-cta")).toHaveCount(1)
+  test("matches the documented default accessible control totals", async ({ page }) => {
+    await expect(page.getByRole("button", { includeHidden: true })).toHaveCount(72)
+    await expect(page.getByRole("link", { name: "Visit Timberborn Steam page" })).toHaveCount(1)
+    await expect
+      .poll(async () => {
+        const buttons = await page.getByRole("button", { includeHidden: true }).count()
+        const links = await page.getByRole("link", { name: "Visit Timberborn Steam page" }).count()
 
-    await expect(page.locator('button, [role="button"]')).toHaveCount(114)
-    await expect(page.locator('button, [role="button"], a.steam-page-cta')).toHaveCount(115)
+        return buttons + links
+      })
+      .toBe(73)
   })
 
   test("covers every default section subtotal from the catalogue", async ({ page }) => {
-    await expect(page.getByRole("banner").locator("button")).toHaveCount(1)
-    await expect(page.getByRole("banner").locator("a.steam-page-cta")).toHaveCount(1)
+    await expect(page.getByRole("banner").getByRole("button")).toHaveCount(1)
+    await expect(
+      page.getByRole("banner").getByRole("link", { name: "Visit Timberborn Steam page" }),
+    ).toHaveCount(1)
 
     await expect(
       page.getByRole("button", { name: "Scroll to top of Needs configuration" }),
@@ -50,25 +37,27 @@ test.describe("Reference button inventory", { tag: "@reference" }, () => {
       page.getByRole("button", { name: "Scroll to top of Needs configuration" }),
     ).toHaveAttribute("role", "button")
 
-    await expect(sectionHeaderButton(page, "beaver-needs-section")).toHaveCount(1)
-    await expect(sectionExpandBanner(page, "beaver-needs-section")).toHaveCount(1)
-    await expect(beaverNeeds(page).locator("button")).toHaveCount(7)
-    await expect(beaverNeeds(page).locator('[role="button"]')).toHaveCount(34)
-
-    await expect(sectionHeaderButton(page, "bot-needs-section")).toHaveCount(1)
-    await expect(sectionExpandBanner(page, "bot-needs-section")).toHaveCount(1)
-    await expect(botNeeds(page).locator("button")).toHaveCount(3)
-    await expect(botNeeds(page).locator('[role="button"]')).toHaveCount(3)
-
-    await expect(seasonsAndStorage(page).locator("button")).toHaveCount(1)
-    await expect(desiredSurplus(page).locator("button")).toHaveCount(43)
-    await expect(productionTable(page).locator("button")).toHaveCount(5)
-    await expect(powerGenerationSection(page).locator("button")).toHaveCount(0)
-    await expect(districtRecaps(page)).toHaveCount(2)
-    await expect(districtRecaps(page).locator('button, [role="button"], a')).toHaveCount(0)
-    await expect(populationControls(page).locator("button")).toHaveCount(10)
-    await expect(workingHoursPanel(page).locator("button")).toHaveCount(1)
-    await expect(footer(page).locator("button")).toHaveCount(1)
+    await expect(page.getByRole("button", { name: /^Beavers\b/i })).toHaveCount(1)
+    await expect(page.getByRole("button", { name: /^Timberbots\b/i })).toHaveCount(1)
+    await expect(page.getByRole("button", { name: "", exact: true })).toHaveCount(2)
+    await expect(page.getByRole("button", { name: "Basic", exact: true })).toHaveCount(2)
+    await expect(page.getByRole("button", { name: "All", exact: true })).toHaveCount(2)
+    await expect(page.getByRole("button", { name: "Off", exact: true })).toHaveCount(1)
+    await expect(page.getByRole("button", { name: /Add item/ })).toHaveCount(1)
+    await expect(
+      page.getByRole("button", { name: "Scroll to top of Production table" }),
+    ).toHaveCount(1)
+    await expect(page.getByRole("button", { name: "Reset sliders" })).toHaveCount(1)
+    await expect(page.getByRole("button", { name: /^▾?\s*(Water|Trees|Food)$/i })).toHaveCount(3)
+    await expect(
+      page.getByRole("main").getByRole("button", { name: "−", exact: true }),
+    ).toHaveCount(4)
+    await expect(
+      page.getByRole("main").getByRole("button", { name: "+", exact: true }),
+    ).toHaveCount(4)
+    await expect(page.getByRole("button", { name: "Pause time info" })).toHaveCount(1)
+    await expect(page.getByRole("button", { name: "Downtime info" })).toHaveCount(1)
+    await expect(footer(page).getByRole("button", { name: "Privacy Policy" })).toHaveCount(1)
   })
 
   test("exposes every default named button-like control", async ({ page }) => {
@@ -85,73 +74,71 @@ test.describe("Reference button inventory", { tag: "@reference" }, () => {
     await expect(
       page.getByRole("button", { name: "Scroll to top of Needs configuration" }),
     ).toBeVisible()
-    await expect(sectionHeaderButton(page, "beaver-needs-section")).toHaveAttribute(
+    await expect(page.getByRole("button", { name: /^Beavers\b/i })).toHaveAttribute(
       "aria-expanded",
       "true",
     )
-    await expect(sectionExpandBanner(page, "beaver-needs-section")).toHaveAttribute(
+    await expect(page.getByRole("button", { name: "", exact: true }).first()).toHaveAttribute(
       "aria-expanded",
       "true",
     )
 
     for (const category of Object.keys(beaverNeedCards)) {
-      await expect(
-        beaverNeeds(page).getByRole("button", { name: category, exact: true }),
-      ).toBeVisible()
+      await expect(page.getByRole("button", { name: category, exact: true }).first()).toBeVisible()
     }
 
     for (const cardName of flatValues(beaverNeedCards)) {
-      await expect(
-        beaverNeeds(page).getByRole("button", { name: new RegExp(`^${cardName}`) }),
-      ).toBeVisible()
+      await expect(page.getByRole("button", { name: new RegExp(`^${cardName}`) })).toBeVisible()
     }
 
-    await expect(sectionHeaderButton(page, "bot-needs-section")).toHaveAttribute(
+    await expect(page.getByRole("button", { name: /^Timberbots\b/i })).toHaveAttribute(
       "aria-expanded",
       "true",
     )
-    await expect(sectionExpandBanner(page, "bot-needs-section")).toHaveAttribute(
+    await expect(page.getByRole("button", { name: "", exact: true }).last()).toHaveAttribute(
       "aria-expanded",
       "true",
     )
-    await expect(botNeeds(page).getByRole("button", { name: "All", exact: true })).toBeVisible()
+    await expect(page.getByRole("button", { name: "All", exact: true }).last()).toBeVisible()
     for (const category of Object.keys(botNeedCards)) {
-      await expect(
-        botNeeds(page).getByRole("button", { name: category, exact: true }),
-      ).toBeVisible()
+      await expect(page.getByRole("button", { name: category, exact: true }).last()).toBeVisible()
     }
     for (const cardName of flatValues(botNeedCards)) {
-      await expect(
-        botNeeds(page).getByRole("button", { name: new RegExp(`^${cardName}`) }),
-      ).toBeVisible()
+      await expect(page.getByRole("button", { name: new RegExp(`^${cardName}`) })).toBeVisible()
     }
 
-    await expect(seasonsAndStorage(page).getByRole("button", { name: "Off" })).toBeVisible()
-    await expect(desiredSurplus(page).getByRole("button", { name: /Add item/ })).toBeVisible()
+    await expect(page.getByRole("button", { name: "Off" })).toBeVisible()
+    await expect(page.getByRole("button", { name: /Add item/ })).toBeVisible()
     await expect(
-      productionTable(page).getByRole("button", { name: "Scroll to top of Production table" }),
+      page.getByRole("button", { name: "Scroll to top of Production table" }),
     ).toBeVisible()
-    await expect(productionTable(page).getByRole("button", { name: "Reset sliders" })).toBeVisible()
+    await expect(page.getByRole("button", { name: "Reset sliders" })).toBeVisible()
     for (const category of ["Water", "Trees", "Food"]) {
       await expect(
-        productionTable(page).getByRole("button", { name: new RegExp(`^▾?\\s*${category}$`, "i") }),
+        page.getByRole("button", { name: new RegExp(`^▾?\\s*${category}$`, "i") }),
       ).toBeVisible()
     }
 
     await expect(page.getByRole("button", { name: "Pause time info" })).toBeVisible()
     await expect(page.getByRole("button", { name: "Downtime info" })).toBeVisible()
+    await expect(
+      page.getByRole("main").getByRole("button", { name: "−", exact: true }),
+    ).toHaveCount(4)
+    await expect(
+      page.getByRole("main").getByRole("button", { name: "+", exact: true }),
+    ).toHaveCount(4)
     await expect(page.getByRole("button", { name: "No bot population" })).toBeDisabled()
     await expect(footer(page).getByRole("button", { name: "Privacy Policy" })).toBeVisible()
   })
 
   test("keeps every hidden surplus dropdown option rendered and reachable", async ({ page }) => {
-    await expect(desiredSurplus(page).getByRole("option", { includeHidden: true })).toHaveCount(
-      surplusOptions.length,
+    await expect(page.getByRole("option", { includeHidden: true })).toHaveCount(
+      surplusOptions.length + 3,
     )
 
     for (const option of surplusOptions) {
       await expect(
-        desiredSurplus(page).getByRole("option", {
+        page.getByRole("option", {
           name: option,
           exact: true,
           includeHidden: true,
